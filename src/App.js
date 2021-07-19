@@ -8,6 +8,7 @@ import Home from './components/Home';
 import { Alert } from './features/alerts/Alert';
 import Login from './features/users/Login';
 import { Dashboard } from './features/dashboard/Dashboard';
+import Upload from './features/upload/Upload';
 
 function App() {
   const { pathname } = useLocation();
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
+        <PrivateRoute path="/upload" exact component={Upload} />
         <Redirect from="*" to="/" />
       </Switch>
     </Container>
