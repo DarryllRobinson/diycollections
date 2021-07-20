@@ -1,9 +1,9 @@
 import { fetchWrapper } from '../../helpers';
 
 export const reportService = {
-  getAging,
+  getReport,
 };
 
-function getAging() {
-  return fetchWrapper.get('/reports/aging');
+function getReport(report) {
+  return fetchWrapper.get(`/reports/${report}`);
 }

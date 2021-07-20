@@ -42,13 +42,13 @@ export const Queues = () => {
   }
 
   function PrepareUserQueues(queues, currentAssignment) {
-    //currentAssignment = 'mickeymouse';
+    //currentAssignment = 'darryllrobinson@icloud.com';
     //console.log('currentAssignment: ', currentAssignment);
     const statusList = GetStatus(queues);
     const listWithCount = UserStatusCount(
       queues,
       statusList,
-      currentAssignment
+      currentAssignment.email
     );
 
     const item = listWithCount.map((item, idx) => (
