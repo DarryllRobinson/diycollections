@@ -54,7 +54,7 @@ class Reports extends React.Component {
       this.setState({ ...this.state, reportObject });
 
       const reportData = await reportService.getReport(report);
-      console.log('reportData: ', reportData);
+      //console.log('reportData: ', reportData);
 
       reportObject.data = this.prepData(reportData);
       //console.log('reportObject: ', reportObject);

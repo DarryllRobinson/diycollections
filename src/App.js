@@ -5,6 +5,7 @@ import { Container } from 'semantic-ui-react';
 import { userService } from './features/users';
 import { PrivateRoute } from './components';
 import Home from './components/Home';
+import { Nav } from './features/nav/Nav';
 import { Alert } from './features/alerts/Alert';
 import Login from './features/users/Login';
 import { Dashboard } from './features/dashboard/Dashboard';
@@ -22,6 +23,7 @@ function App() {
   return (
     <Container fluid>
       <Alert />
+      <Nav />
       <Switch>
         <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
         <Route path="/" exact component={Home} />
