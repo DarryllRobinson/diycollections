@@ -3,13 +3,13 @@ import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
 import { userService } from './features/users';
-import { PrivateRoute } from './components';
+import { PrivateRoute, RouteDetermination } from './components';
+import { Role } from './helpers';
 import Home from './components/Home';
 import { Nav } from './features/nav/Nav';
 import { Alert } from './features/alerts/Alert';
 import Login from './features/users/Login';
-import { Dashboard } from './features/dashboard/Dashboard';
-import Upload from './features/upload/Upload';
+import { Register } from './features/users/Register';
 
 function App() {
   const { pathname } = useLocation();
@@ -22,14 +22,14 @@ function App() {
 
   return (
     <Container fluid>
-      <Alert />
       <Nav />
+      <Alert />
       <Switch>
         <Redirect from="/:url*(/+)" to={pathname.slice(0, -1)} />
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
-        <PrivateRoute path="/dashboard" exact component={Dashboard} />
-        <PrivateRoute path="/upload" exact component={Upload} />
+        <Route path="/register" exact component={Register} />
+        <PrivateRoute component={RouteDetermination} />
         <Redirect from="*" to="/" />
       </Switch>
     </Container>

@@ -37,7 +37,12 @@ export const Nav = () => {
     </Menu.Item>
   );
 
-  if (!user || history.location.pathname === '/') return null;
+  if (
+    !user ||
+    history.location.pathname === '/' ||
+    history.location.pathname === '/login'
+  )
+    return null;
 
   return (
     <Menu stackable fixed="top" inverted>
@@ -79,7 +84,7 @@ export const Nav = () => {
         Upload
       </Menu.Item>
 
-      {user.role === 'Admin' && (
+      {user.role === Role.Admin && (
         <Menu.Item
           name="users"
           active={activeItem === 'users'}
@@ -89,7 +94,7 @@ export const Nav = () => {
         </Menu.Item>
       )}
 
-      {user.role === 'Admin' && (
+      {user.role === Role.Admin && (
         <Dropdown item text="Client Admin">
           <Dropdown.Menu>
             <Dropdown.Item

@@ -1,0 +1,163 @@
+:root {
+  --BACKGROUND: #a8abac;
+  --FONT_COLOUR: #333740;
+  --HEADER: #787c82;
+}
+
+.ui.container.RouteDetermination {
+  margin-top: 65px;
+}
+
+.content.collection-card-header {
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid, rgba(0, 0, 0, 0.125);
+}
+
+.column.queues {
+  background: 'linear-gradient(to right, #031114, #597D86, #031114)' !important;
+  padding: 15px 5px !important;
+}
+
+.ui.segment.queues {
+  background-color: var(--BACKGROUND);
+  color: var(--FONT_COLOUR);
+  padding: 0;
+}
+
+/* Hidden by the items in the list */
+.ui.list.queues {
+  background-color: var(--BACKGROUND);
+  color: var(--FONT_COLOUR);
+  height: 250px;
+}
+
+/* Queues header */
+.ui.label.queues {
+  background-color: var(--HEADER);
+  color: var(--FONT_COLOUR);
+  font-size: 18px;
+  width: 100%;
+}
+
+.ui.list.queues > a.item.queues {
+  background-color: white;
+  color: var(--FONT_COLOUR);
+  height: 38px;
+  padding: 10px 20px 10px 20px !important;
+}
+
+.ui.ribbon.label.queue.label {
+  background-color: #2062ae;
+  color: white;
+  margin-bottom: 10px;
+}
+
+/*.ui.list.queues > a.item.queues:nth-child(even) {
+  background-color: var(--BACKGROUND) !important;
+}*/
+
+.column.topTips {
+  padding: 0 !important;
+}
+
+.column.topChart {
+  /*background: linear-gradient(to right, #031114, #597d86, #031114);*/
+  padding-bottom: 2px !important;
+}
+
+.ui.form input {
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  color: #7b8a8b !important;
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  opacity: 1;
+  padding: 0.375rem 0.75rem;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+.column.workzone {
+  padding: 0 !important;
+}
+
+/* Collections Workspace */
+.ui.container.collections {
+  /*margin: 60px 100px !important;*/
+  min-width: 1220px !important;
+}
+
+.ui.table.collections {
+  min-width: 1200px !important;
+}
+
+/* Header */
+.ui.table.collections th {
+  background-color: var(--HEADER);
+  color: var(--FONT_COLOUR);
+}
+
+/* User Admin */
+.ui.table.userAdmin th {
+  background-color: var(--HEADER);
+  color: var(--FONT_COLOUR);
+}
+
+/* Client Admin */
+.ui.demo.logo {
+  border: 2px solid var(--HEADER);
+  padding: 0.5em;
+}
+
+.colourDiv {
+  padding-right: 10px;
+  width: 180px;
+}
+
+.colourBox {
+  height: 25px;
+  width: 170px;
+}
+
+/* General styling */
+
+.ui.form input:read-only {
+  background: #ecf0f1;
+}
+
+.ui.form textarea {
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  color: #7b8a8b;
+  display: block;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  opacity: 1;
+  padding: 0.375rem 0.75rem;
+  transition: border-color 0.15s;
+  width: 100%;
+}
+
+.ui.form textarea:read-only {
+  background: #ecf0f1;
+}
+
+.ui.centered.fluid.raised.card {
+  padding: 15px;
+}
+
+.ui.form .field > label {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+}

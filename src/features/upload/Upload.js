@@ -356,7 +356,7 @@ class Upload extends Component {
         days150: record.days150,
         days180: record.days180,
         days180Over: record.days180Over,
-        f_customerId: record.AccountNumber,
+        customerId: record.AccountNumber,
         lastPTPDate: lastPTPDate,
         paymentDueDate: paymentDueDate,
         debitOrderDate: debitOrderDate,
@@ -374,7 +374,7 @@ class Upload extends Component {
     let cases = [];
 
     records.forEach((record) => {
-      const createdDate = record.DateCreated
+      const createdAt = record.DateCreated
         ? moment(this.ExcelDateToJSDate(record.DateCreated)).format(
             'YYYY-MM-DD HH:mm:ss'
           )
@@ -400,8 +400,8 @@ class Upload extends Component {
 
       let caseUpdate = {
         caseNumber: record.CaseNumber,
-        f_accountNumber: record.AccountNumber,
-        createdDate: createdDate,
+        accountId: record.AccountNumber,
+        createdAt: createdAt,
         createdBy: record.CreatedBy,
         currentAssignment: record.CurrentAssignment,
         nextVisitDateTime: nextVisitDateTime,
@@ -422,7 +422,7 @@ class Upload extends Component {
     let outcomes = [];
 
     records.forEach((record) => {
-      const createdDate = record.DateCreated ? record.DateCreated : null;
+      const createdAt = record.DateCreated ? record.DateCreated : null;
 
       const ptpDate = record.PTPDate
         ? moment(this.ExcelDateToJSDate(record.PTPDate)).format(
@@ -437,8 +437,8 @@ class Upload extends Component {
         : null;
 
       let outcome = {
-        f_caseId: record.CaseNumber,
-        createdDate: createdDate,
+        caseId: record.CaseNumber,
+        createdAt: createdAt,
         createdBy: record.CreatedBy,
         outcomeStatus: record.Status,
         transactionType: record.TransactionType,
@@ -464,7 +464,7 @@ class Upload extends Component {
 
     records.forEach((record) => {
       let contact = {
-        f_accountNumber: record.AccountNumber,
+        accountNumber: record.AccountNumber,
         primaryContactName: record.PrimaryContactName,
         primaryContactNumber: record.PrimaryContactNumber,
         primaryContactEmail: record.PrimaryEmailAddress,

@@ -7,7 +7,7 @@ import { userService } from './features/users/user.service';
 
 import 'semantic-ui-css/semantic.min.css';
 
-import './index.css';
+import './styles.css';
 import { App } from './App';
 
 // attempt silent token refresh before startup
