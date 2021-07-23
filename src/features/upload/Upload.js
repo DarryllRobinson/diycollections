@@ -356,7 +356,7 @@ class Upload extends Component {
         days150: record.days150,
         days180: record.days180,
         days180Over: record.days180Over,
-        customerId: record.AccountNumber,
+        f_customerRefNo: record.AccountNumber,
         lastPTPDate: lastPTPDate,
         paymentDueDate: paymentDueDate,
         debitOrderDate: debitOrderDate,
@@ -400,7 +400,7 @@ class Upload extends Component {
 
       let caseUpdate = {
         caseNumber: record.CaseNumber,
-        accountId: record.AccountNumber,
+        f_accountNumber: record.AccountNumber,
         createdAt: createdAt,
         createdBy: record.CreatedBy,
         currentAssignment: record.CurrentAssignment,
@@ -437,7 +437,7 @@ class Upload extends Component {
         : null;
 
       let outcome = {
-        caseId: record.CaseNumber,
+        f_caseNumber: record.CaseNumber,
         createdAt: createdAt,
         createdBy: record.CreatedBy,
         outcomeStatus: record.Status,
@@ -464,7 +464,7 @@ class Upload extends Component {
 
     records.forEach((record) => {
       let contact = {
-        accountNumber: record.AccountNumber,
+        f_accountNumber: record.AccountNumber,
         primaryContactName: record.PrimaryContactName,
         primaryContactNumber: record.PrimaryContactNumber,
         primaryContactEmail: record.PrimaryEmailAddress,

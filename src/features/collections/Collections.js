@@ -56,6 +56,7 @@ export const Collections = (props) => {
     );
   } else {
     content = collections.map((collections) => {
+      //console.log('got some collections: ', collections.customerName);
       if (collections.currentStatus === recordStatus) {
         const hlink = `/collection/${collections.caseNumber}`;
         return (
