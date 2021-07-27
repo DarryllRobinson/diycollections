@@ -1,56 +1,54 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import { Card, Container, Divider, Form, Input } from 'semantic-ui-react';
 import moment from 'moment';
 
-import { fetchCollection, selectCollectionById } from './collectionsSlice';
-import { Outcomes } from '../outcomes/Outcomes';
+import { collectionService } from './collection.service';
+import { caseService } from '../cases/case.service';
 import { Contacts } from '../contacts/Contacts';
+import { Outcomes } from '../outcomes/Outcomes';
+import { userService } from '../users/user.service';
 import { CollectionForm } from './CollectionForm';
 
-import MysqlLayer from '../../services/MysqlLayer';
-
 export const Collection = (props) => {
+  //console.log('Collection props', props);
   // Scroll to top
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  //console.log('props', props);
-
-  //const [prevStatus, setPrevStatus] = React.useState('Open');
-  const mysqlLayer = new MysqlLayer();
 
   const { id } = props.match.params;
-  const { role, user } = props;
-  //console.log('Collection id: ', id);
-  const dispatch = useDispatch();
-  const collection = useSelector((state) => selectCollectionById(state, id));
+  const user = userService.userValue;
+  const [collection, setCollection] = useState(null);
+  const [collectionStatus, setCollectionStatus] = useState('idle');
 
-  const collectionStatus = useSelector((state) => state.collections.status);
-  const error = useSelector((state) => state.collections.error);
-  console.log('collection status: ', collectionStatus);
-  console.log('collection: ', collection);
+  const loadRecord = async () => {
+    setCollection(await collectionService.getCollection(id));
+    setCollectionStatus('succeeded');
+  };
+
+  const lockRecord = async () => {
+    // lock the record so no other agent accidentally opens it
+    const dateTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+    const update = {
+      currentStatus: 'Locked',
+      lockedDateTime: dateTime,
+    };
+    await caseService.updateCase(id, update);
+  };
 
   useEffect(() => {
     if (collectionStatus === 'idle') {
-      dispatch(fetchCollection(id));
+      loadRecord();
+      lockRecord();
     }
-  }, [dispatch, collectionStatus, id]);
+  }, [collectionStatus]);
 
-  // Handlers
   let content;
 
-  //console.log('outcomeNotesBundle: ', outcomeNotesBundle);
-
-  if (collectionStatus === 'loading') {
-    content = <Form loading></Form>;
-  } else if (collectionStatus === 'failed') {
-    content = <Form>{error}</Form>;
-  } else if (collectionStatus === 'succeeded') {
-    // What does our state look like?
-    //  const fieldList = state.fields.ids;
-    //  console.log('fieldList: ', fieldList);
-    //  console.log('emailUsed: ', state.fields.entities['emailUsed']);
+  if (!collection) {
+    return <Container>No Collection</Container>;
+  } else {
+    console.log('Collection loaded: ', collection);
 
     // Preparing variables for rendering
     const regIdNumberRender = () => {
@@ -74,6 +72,17 @@ export const Collection = (props) => {
             readOnly
             width="4"
             defaultValue={collection.regIdNumber}
+          />
+        );
+      } else {
+        return (
+          <Form.Input
+            fluid
+            label="ID Number"
+            id="form-input-control-regIdNumber"
+            readOnly
+            width="4"
+            defaultValue="No entity found"
           />
         );
       }
@@ -123,7 +132,8 @@ export const Collection = (props) => {
     ];*/
 
     const currencyFormatter = (currency) => {
-      if (currency !== 0) {
+      //console.log('Currency: ', currency);
+      if (currency !== 0 && currency) {
         return (
           'R ' + currency.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
         );
@@ -131,14 +141,6 @@ export const Collection = (props) => {
         return 'R 0.00';
       }
     };
-
-    // lock the record so no other agent accidentally opens it
-    const dateTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-    const update = {
-      currentStatus: 'Locked',
-      lockedDateTime: dateTime,
-    };
-    mysqlLayer.Put(`/cases/case/${id}`, update);
 
     content = (
       <Container>
@@ -184,7 +186,7 @@ export const Collection = (props) => {
                   defaultValue={collection.customerName}
                 />
               </Form.Group>
-              <Form.Group>
+              <Form.Group widths="equal">
                 {regIdNumberRender()}
                 {cipcIdvStatus()}
               </Form.Group>
@@ -406,7 +408,7 @@ export const Collection = (props) => {
               </Form.Group>
               <Form.Group widths="equal"></Form.Group>
             </Form>
-            <Contacts id={collection.accountNumber} user={user} />
+            <Contacts id={collection.accountNumber} user={user.email} />
           </Card.Content>
         </Card>
         {/* --------------------------------------------- Outcome History section ------------------------------------------------------- */}
@@ -427,8 +429,6 @@ export const Collection = (props) => {
           id={id}
           kamNotes={collection.kamNotes}
           outcomeNotes={''}
-          role={role}
-          user={user}
         />
       </Container>
     );

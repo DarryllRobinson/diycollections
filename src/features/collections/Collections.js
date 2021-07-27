@@ -27,18 +27,18 @@ export const Collections = (props) => {
       ? props.location.state.caseStatus
       : 'Open';
 
-  const loadRecords = async () => {
+  const loadRecords = async (caseStatus) => {
     setCollections(await collectionService.getAll());
+    setRecordStatus(caseStatus);
     setCollectionStatus('succeeded');
     console.log('collections: ', collections);
   };
 
-  // Scroll to top
   useEffect(() => {
     if (collectionStatus === 'idle') {
       setRecordStatus(caseStatus);
       // populate collections
-      loadRecords();
+      loadRecords(caseStatus);
     }
   }, [caseStatus, collectionStatus, loadRecords]);
 

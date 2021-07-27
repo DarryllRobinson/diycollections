@@ -16,7 +16,7 @@ export const Nav = () => {
 
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
-    history.push(`${name}`);
+    history.push(`/${name}`);
   };
 
   const logButton = user ? (

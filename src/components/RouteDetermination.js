@@ -5,6 +5,7 @@ import { PrivateRoute } from './PrivateRoute';
 import { Dashboard } from '../features/dashboard/Dashboard';
 
 import { Collections } from '../features/collections/Collections';
+import { Collection } from '../features/collections/Collection';
 
 import Upload from '../features/upload/Upload';
 import Reports from '../features/reports/Reports';
@@ -21,6 +22,7 @@ export const RouteDetermination = () => {
         component={Upload}
       />
       <PrivateRoute path="/collections" exact component={Collections} />
+      <PrivateRoute path="/collection/:id" exact component={Collection} />
       <PrivateRoute path="/reports" exact component={Reports} />
     </Container>
   );
