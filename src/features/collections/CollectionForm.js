@@ -123,6 +123,7 @@ export const CollectionForm = (props) => {
 
   const handlePTPDate = (event, { name, value }) => {
     const ptpDate = value;
+    //console.log('ptpDate value', value);
     const followup = moment(value)
       .subtract(1, 'days')
       .set({ hour: 8, minute: 0 })
@@ -206,13 +207,15 @@ export const CollectionForm = (props) => {
     });
   };
 
-  const cancelUpdate = async () => {
+  const cancelUpdate = async (e) => {
+    e.preventDefault();
+    clearErrorMessages();
     const newStatus = currentStatus === 'Locked' ? 'Open' : currentStatus;
-    console.log('newStatus', newStatus);
+    //console.log('newStatus', newStatus);
     const update = { currentStatus: newStatus, lockedDateTime: null };
 
     const response = await caseService.updateCase(id, update);
-    console.log('response', response);
+    //console.log('response', response);
     history.push({
       pathname: '/collections',
       state: { caseStatus: caseStatus },
@@ -230,6 +233,30 @@ export const CollectionForm = (props) => {
     clearErrorMessages();
     if (checkFields()) updateDatabase('Open');
   };
+
+  /*const handleTest = async (e) => {
+    e.preventDefault();
+
+    console.log(
+      'New PTPDate in state: ',
+      state.fields.entities['ptpDate'].value
+    );
+
+    let accountUpdate = {
+      //accountStatus: this.state.accountStatus,
+      lastPTPDate: state.fields.entities['ptpDate'].value,
+      lastPTPAmount: state.fields.entities['ptpAmount'].value,
+      updatedBy: user.email,
+      //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
+    };
+
+    console.log('accountUpdate: ', accountUpdate);
+    const response = await accountService.updateAccount(
+      accountNumber,
+      accountUpdate
+    );
+    console.log('accountUpdate response: ', response);
+  };*/
 
   const checkFields = () => {
     let cont = true;
@@ -592,6 +619,7 @@ export const CollectionForm = (props) => {
         currentStatus: process,
         caseNotes: newCaseNote,
         kamNotes: newKamNote,
+        resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -603,6 +631,7 @@ export const CollectionForm = (props) => {
       caseUpdate = {
         currentStatus: process,
         kamNotes: newKamNote,
+        resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -614,6 +643,7 @@ export const CollectionForm = (props) => {
       caseUpdate = {
         currentStatus: process,
         caseNotes: newCaseNote,
+        resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -624,6 +654,7 @@ export const CollectionForm = (props) => {
     ) {
       caseUpdate = {
         currentStatus: process,
+        resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -638,6 +669,7 @@ export const CollectionForm = (props) => {
         caseNotes: newCaseNote,
         kamNotes: newKamNote,
         nextVisitDateTime: state.fields.entities['nextVisitDateTime'].value,
+        resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -651,6 +683,7 @@ export const CollectionForm = (props) => {
         currentStatus: process,
         kamNotes: newKamNote,
         nextVisitDateTime: state.fields.entities['nextVisitDateTime'].value,
+        resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -664,6 +697,7 @@ export const CollectionForm = (props) => {
         currentStatus: process,
         caseNotes: newCaseNote,
         nextVisitDateTime: state.fields.entities['nextVisitDateTime'].value,
+        resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -676,6 +710,7 @@ export const CollectionForm = (props) => {
         currentAssignment: currentAssignment,
         currentStatus: process,
         nextVisitDateTime: state.fields.entities['nextVisitDateTime'].value,
+        resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -810,7 +845,7 @@ export const CollectionForm = (props) => {
     if (outcomeStatus.status === 'Ok') {
       history.push({
         pathname: '/collections',
-        state: { caseStatus: caseStatus },
+        state: { caseStatus: outcomeStatus.outcomeStatus },
       });
     } else {
       console.log(outcomeStatus);
@@ -1014,6 +1049,7 @@ export const CollectionForm = (props) => {
               <Button.Or />
               <Button content="Close" onClick={handleClose} />
             </Button.Group>
+            {/*<Button content="Test" onClick={handleTest} />*/}
           </Container>
         </Form>
       </Card>

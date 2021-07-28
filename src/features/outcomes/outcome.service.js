@@ -25,6 +25,6 @@ function getOutcome(id) {
   return fetchWrapper.get(`/outcomes/${id}`);
 }
 
-function updateOutcome(id) {
-  return fetchWrapper.put(`/outcomes/${id}`);
+function updateOutcome(id, params) {
+  return fetchWrapper.put(`/outcomes/${id}`, params);
 }

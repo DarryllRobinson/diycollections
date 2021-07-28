@@ -14,6 +14,6 @@ function getAccount(id) {
   return fetchWrapper.get(`/accounts/${id}`);
 }
 
-function updateAccount(id) {
-  return fetchWrapper.put(`/accounts/${id}`);
+function updateAccount(id, params) {
+  return fetchWrapper.put(`/accounts/${id}`, params);
 }

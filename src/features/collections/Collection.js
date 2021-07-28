@@ -88,6 +88,26 @@ export const Collection = (props) => {
       }
     };
 
+    // Checking last payment, PTP and nextVisitDateTime dates
+    // Set to empty string if null
+    collection.lastPaymentDate
+      ? (collection.lastPaymentDate = moment(collection.lastPaymentDate).format(
+          'YYYY-MM-DD'
+        ))
+      : (collection.lastPaymentDate = '');
+
+    collection.lastPTPDate
+      ? (collection.lastPTPDate = moment(collection.lastPTPDate).format(
+          'YYYY-MM-DD'
+        ))
+      : (collection.lastPTPDate = '');
+
+    collection.nextVisitDateTime
+      ? (collection.nextVisitDateTime = moment(
+          collection.nextVisitDateTime
+        ).format('YYYY-MM-DD HH:mm'))
+      : (collection.nextVisitDateTime = '');
+
     /*const cipcStatusOptions = [
       { key: 'i', text: 'In Business', value: 'In Business' },
       { key: 'f', text: 'Final Deregistration', value: 'Final Deregistration' },
@@ -201,21 +221,23 @@ export const Collection = (props) => {
                   label="Debtor Age"
                   id="form-input-control-debtorAge"
                   readOnly
-                  defaultValue={collection.debtorAge}
+                  defaultValue={collection.debtorAge || ''}
                 />
                 <Form.Input
                   fluid
                   label="Credit Limit"
                   id="form-input-control-creditLimit"
                   readOnly
-                  defaultValue={currencyFormatter(collection.creditLimit)}
+                  defaultValue={currencyFormatter(collection.creditLimit) || ''}
                 />
                 <Form.Input
                   fluid
                   label="Total Balance"
                   id="form-input-control-totalBalance"
                   readOnly
-                  defaultValue={currencyFormatter(collection.totalBalance)}
+                  defaultValue={
+                    currencyFormatter(collection.totalBalance) || ''
+                  }
                 />
               </Form.Group>
               <Form.Group widths="equal">
@@ -224,14 +246,16 @@ export const Collection = (props) => {
                   label="Amount Due"
                   id="form-input-control-amountDue"
                   readOnly
-                  defaultValue={currencyFormatter(collection.amountDue)}
+                  defaultValue={currencyFormatter(collection.amountDue) || ''}
                 />
                 <Form.Input
                   fluid
                   label="Current Balance"
                   id="form-input-control-currentBalance"
                   readOnly
-                  defaultValue={currencyFormatter(collection.currentBalance)}
+                  defaultValue={
+                    currencyFormatter(collection.currentBalance) || ''
+                  }
                 />
                 <Form.Input
                   fluid
@@ -239,7 +263,7 @@ export const Collection = (props) => {
                   label="Account Status"
                   name="accountStatus"
                   readOnly
-                  value={collection.accountStatus}
+                  value={collection.accountStatus || ''}
                 />
               </Form.Group>
 
@@ -253,21 +277,21 @@ export const Collection = (props) => {
                   label="30 Days"
                   id="form-input-control-days30"
                   readOnly
-                  defaultValue={currencyFormatter(collection.days30)}
+                  defaultValue={currencyFormatter(collection.days30) || ''}
                 />
                 <Form.Input
                   fluid
                   label="60 Days"
                   id="form-input-control-days60"
                   readOnly
-                  defaultValue={currencyFormatter(collection.days60)}
+                  defaultValue={currencyFormatter(collection.days60) || ''}
                 />
                 <Form.Input
                   fluid
                   label="90 Days"
                   id="form-input-control-days90"
                   readOnly
-                  defaultValue={currencyFormatter(collection.days90)}
+                  defaultValue={currencyFormatter(collection.days90) || ''}
                 />
               </Form.Group>
               <Form.Group widths="equal">
@@ -276,28 +300,28 @@ export const Collection = (props) => {
                   label="120 Days"
                   id="form-input-control-days120"
                   readOnly
-                  defaultValue={currencyFormatter(collection.days120)}
+                  defaultValue={currencyFormatter(collection.days120) || ''}
                 />
                 <Form.Input
                   fluid
                   label="150 Days"
                   id="form-input-control-days150"
                   readOnly
-                  defaultValue={currencyFormatter(collection.days150)}
+                  defaultValue={currencyFormatter(collection.days150) || ''}
                 />
                 <Form.Input
                   fluid
                   label="180 Days"
                   id="form-input-control-days180"
                   readOnly
-                  defaultValue={currencyFormatter(collection.days180)}
+                  defaultValue={currencyFormatter(collection.days180) || ''}
                 />
                 <Form.Input
                   fluid
                   label="+180 Days"
                   id="form-input-control-days180Over"
                   readOnly
-                  defaultValue={currencyFormatter(collection.days180Over)}
+                  defaultValue={currencyFormatter(collection.days180Over) || ''}
                 />
               </Form.Group>
 
@@ -327,9 +351,7 @@ export const Collection = (props) => {
                   label="Last Payment Date"
                   id="form-input-control-lastPaymentDate"
                   readOnly
-                  defaultValue={moment(collection.lastPaymentDate).format(
-                    'YYYY-MM-DD'
-                  )}
+                  defaultValue={collection.lastPaymentDate}
                 />
                 <Form.Input
                   fluid
@@ -345,7 +367,7 @@ export const Collection = (props) => {
                   label="Last PTP Date"
                   id="form-input-control-ptpDate"
                   readOnly
-                  defaultValue={moment(collection.ptpDate).format('YYYY-MM-DD')}
+                  defaultValue={collection.lastPTPDate}
                 />
                 <Form.Input
                   fluid
@@ -366,9 +388,7 @@ export const Collection = (props) => {
                   label="Next Visit Date and Time"
                   id="form-input-control-nextVisitDateTime"
                   readOnly
-                  defaultValue={moment(collection.nextVisitDateTime).format(
-                    'YYYY-MM-DD HH:mm'
-                  )}
+                  defaultValue={collection.nextVisitDateTime}
                 />
                 <Form.Input
                   fluid

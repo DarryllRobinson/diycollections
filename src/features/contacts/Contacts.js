@@ -6,10 +6,10 @@ import { contactService } from './contact.service';
 export const Contacts = (props) => {
   //console.log('Contacts props: ', props);
   const { id, user } = props;
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
   const [contacts, setContacts] = useState(null);
   const [contactStatus, setContactStatus] = useState('idle');
-  const [state, setState] = React.useState(contacts);
+  const [state, setState] = useState(contacts);
 
   useEffect(() => {
     async function fetchContact() {

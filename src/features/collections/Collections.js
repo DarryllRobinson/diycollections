@@ -31,7 +31,7 @@ export const Collections = (props) => {
     setCollections(await collectionService.getAll());
     setRecordStatus(caseStatus);
     setCollectionStatus('succeeded');
-    console.log('collections: ', collections);
+    //console.log('collections: ', collections);
   };
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export const Collections = (props) => {
     );
   } else {
     content = collections.map((collections) => {
-      //console.log('got some collections: ', collections.customerName);
+      //console.log('got some collections: ', collections.updatedAt);
       if (collections.currentStatus === recordStatus) {
         const hlink = `/collection/${collections.caseNumber}`;
         return (
@@ -85,7 +85,7 @@ export const Collections = (props) => {
             <Table.Cell>{collections.currentAssignment}</Table.Cell>
             <Table.Cell>{collections.updatedBy}</Table.Cell>
             <Table.Cell>
-              {moment(collections.updatedDate).format('YYYY-MM-DD HH:mm')}
+              {moment(collections.updatedAt).format('YYYY-MM-DD HH:mm')}
             </Table.Cell>
           </Table.Row>
         );
@@ -96,7 +96,7 @@ export const Collections = (props) => {
   }
 
   const renderHeader = () => {
-    console.log('recordStatus: ', recordStatus);
+    //console.log('recordStatus: ', recordStatus);
     switch (recordStatus) {
       case 'Closed':
         return (
