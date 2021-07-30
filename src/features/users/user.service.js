@@ -17,6 +17,8 @@ export const userService = {
   getById,
   create,
   update,
+  deactivateUser,
+  reactivateUser,
   delete: _delete,
   user: userSubject.asObservable(),
   get userValue() {
@@ -40,7 +42,7 @@ function logout() {
   fetchWrapper.post(`/users/revoke-token`, {});
   stopRefreshTokenTimer();
   userSubject.next(null);
-  history.push('/user/login');
+  history.push('/login');
 }
 
 function refreshToken() {
@@ -98,6 +100,14 @@ function update(id, params) {
     }
     return user;
   });
+}
+
+function deactivateUser(id) {
+  return fetchWrapper.put(`/users/deactivate/${id}`);
+}
+
+function reactivateUser(id) {
+  return fetchWrapper.put(`/users/reactivate/${id}`);
 }
 
 // prefixed with underscore because 'delete' is a reserved word in javascript

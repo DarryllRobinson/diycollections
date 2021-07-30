@@ -27,20 +27,20 @@ function onAlert(id = defaultId) {
 }
 
 // convenience methods
-function success(message, options) {
-  alert({ ...options, type: AlertType.Success, message });
+function success(header, message, options) {
+  alert({ ...options, type: AlertType.Success, header, message });
 }
 
-function error(message, options) {
-  alert({ ...options, type: AlertType.Error, message });
+function error(header, message, options) {
+  alert({ ...options, type: AlertType.Error, header, message });
 }
 
-function info(message, options) {
-  alert({ ...options, type: AlertType.Info, message });
+function info(header, message, options) {
+  alert({ ...options, type: AlertType.Info, header, message });
 }
 
-function warn(message, options) {
-  alert({ ...options, type: AlertType.Warning, message });
+function warn(header, message, options) {
+  alert({ ...options, type: AlertType.Warning, header, message });
 }
 
 // core alert method

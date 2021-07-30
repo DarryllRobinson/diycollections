@@ -94,7 +94,7 @@ export const Nav = () => {
         </Menu.Item>
       )}
 
-      {user.role === Role.Admin && (
+      {user.role === Role.God && (
         <Dropdown item text="Client Admin">
           <Dropdown.Menu>
             <Dropdown.Item

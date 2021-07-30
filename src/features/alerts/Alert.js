@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { Container, Message } from 'semantic-ui-react';
 
 import { alertService, AlertType } from './alert.service';
 import { history } from '../../helpers';
@@ -81,10 +82,10 @@ function Alert({ id, fade }) {
     const classes = ['alert', 'alert-dismissable'];
 
     const alertTypeClass = {
-      [AlertType.Success]: 'alert alert-success',
-      [AlertType.Error]: 'alert alert-danger',
-      [AlertType.Info]: 'alert alert-info',
-      [AlertType.Warning]: 'alert alert-warning',
+      [AlertType.Success]: 'success',
+      [AlertType.Error]: 'error',
+      [AlertType.Info]: 'info',
+      [AlertType.Warning]: 'warning',
     };
 
     classes.push(alertTypeClass[alert.type]);
@@ -99,18 +100,16 @@ function Alert({ id, fade }) {
   if (!alerts.length) return null;
 
   return (
-    <div className="container">
-      <div className="m-3">
-        {alerts.map((alert, index) => (
-          <div key={index} className={cssClasses(alert)}>
-            <a className="close" onClick={() => removeAlert(alert)}>
-              &times;
-            </a>
-            <span dangerouslySetInnerHTML={{ __html: alert.message }}></span>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Container style={{ marginTop: '80px' }}>
+      {alerts.map((alert, index) => (
+        <Message
+          key={index}
+          className={cssClasses(alert)}
+          header={alert.header}
+          content={alert.message}
+        />
+      ))}
+    </Container>
   );
 }
 

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Form, Grid, Header, Icon, Segment } from 'semantic-ui-react';
 
+import { alertService } from '../alerts/alert.service';
 import { userService } from './user.service';
 
 const LoginForm = ({ history, location }) => {
+  //console.log('location: ', location.state.from);
   // Email methods
   const [email, setEmail] = useState('');
   const handleEmail = (e) => {
@@ -19,6 +21,7 @@ const LoginForm = ({ history, location }) => {
   // Form methods
   const handleSubmit = (e) => {
     e.preventDefault();
+    alertService.clear();
 
     userService
       .login(email, password)
@@ -26,7 +29,9 @@ const LoginForm = ({ history, location }) => {
         const { from } = location.state || { from: { pathname: '/dashboard' } };
         history.push(from);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        alertService.error(error);
+      });
   };
 
   return (
