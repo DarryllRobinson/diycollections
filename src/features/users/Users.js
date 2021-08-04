@@ -24,14 +24,14 @@ export const Users = (props) => {
     if (userStatus === 'idle') {
       loadUsers();
     }
-  }, []);
+  }, [userStatus]);
 
   let userContent;
 
   if (userStatus === 'loading') {
     userContent = <Container className="loader">Loading...</Container>;
   } else if (userStatus === 'succeeded') {
-    console.log('users: ', users);
+    //console.log('users: ', users);
     userContent = (
       <Container>
         <Header>User Admininistration</Header>

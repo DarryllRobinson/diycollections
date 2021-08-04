@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Container, Dimmer, Form, Loader } from 'semantic-ui-react';
 
 import { alertService } from '../alerts/alert.service';
@@ -19,13 +19,13 @@ export const AddUserForm = (props) => {
         'role',
       ],
       entities: {
-        firstName: { error: null, value: 'Thor' },
-        lastName: { error: null, value: 'Odinson' },
-        email: { error: null, value: 'darryll@stillproud.com' },
-        phone: { error: null, value: '0123456789' },
-        password: { error: null, value: 'newpassss' },
-        confirmPassword: { error: null, value: 'newpassss' },
-        role: { error: null, value: 'Agent' },
+        firstName: { error: null, value: '' },
+        lastName: { error: null, value: '' },
+        email: { error: null, value: '' },
+        phone: { error: null, value: '' },
+        password: { error: null, value: '' },
+        confirmPassword: { error: null, value: '' },
+        role: { error: null, value: '' },
       },
     },
   });

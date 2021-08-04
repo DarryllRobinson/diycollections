@@ -3,13 +3,10 @@ import XLSX from 'xlsx';
 import { make_cols } from './MakeColumns';
 import { SheetJSFT } from './types';
 
-import { Container, Grid, Input } from 'semantic-ui-react';
+import { Button, Container, Grid, Message, Progress } from 'semantic-ui-react';
 import moment from 'moment';
 
 import { uploadService } from './upload.service';
-//import { ProgressBar } from '../../utils/ProgressBar';
-//import MysqlLayer from '../../services/MysqlLayer';
-//import ErrorReporting from '../../services/ErrorReporting';
 import image from '../../assets/img/green-tick.jpeg';
 
 //const workspaces = ['customers', 'accounts', 'contacts', 'cases', 'outcomes'];
@@ -21,6 +18,7 @@ class Upload extends Component {
       file: {},
       data: [],
       cols: [],
+      prgress: 0,
       workspaces: {
         ids: ['customers', 'accounts', 'contacts', 'cases', 'outcomes'],
         entities: {
@@ -65,10 +63,9 @@ class Upload extends Component {
 
     this.handleFile = this.handleFile.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
-    //this.mysqlLayer = new MysqlLayer();
-    //this.errorReporting = new ErrorReporting();
   }
+
+  fileInputRef = React.createRef();
 
   handleChange(e) {
     const files = e.target.files;
@@ -252,7 +249,7 @@ class Upload extends Component {
           progress: Math.round(((i + 1) / chunkedData.length) * 100),
         })
       );
-      console.log('response: ', response);
+      //console.log('response: ', response);
       if (response.errno !== undefined) {
         let error = [];
         error = this.state.customerErrors;
@@ -500,7 +497,7 @@ class Upload extends Component {
   }
 
   async postToDb(records, workspace) {
-    const newRecord = workspace.slice(0, -1);
+    //const newRecord = workspace.slice(0, -1);
     return uploadService.bulkCreate(workspace, records);
   }
 
@@ -511,29 +508,26 @@ class Upload extends Component {
       <Grid key={idx}>
         <Grid.Row>
           <Grid.Column width={8}>
-            <Input
+            <Message>Import new {workspace}</Message>
+            <Button
+              content="Choose File"
+              labelPosition="left"
+              icon="file"
+              onClick={() => this.fileInputRef.current.click()}
+            />
+            <input
               accept={SheetJSFT}
-              action="Upload file"
+              hidden
               id="file"
-              label={`Import new ${workspace}`}
               onChange={this.handleChange}
+              ref={this.fileInputRef}
               type="file"
             />
-            <br />
-            {workspaces.entities[workspace].progress === 0 && (
-              <Input
-                type="submit"
-                name={workspace}
-                value="Upload file"
-                onClick={this.handleFile}
-              />
-            )}
+            <Button onClick={this.handleFile} name={workspace} type="submit">
+              Upload
+            </Button>
             {workspaces.entities[workspace].loading && (
-              <>
-                <br />
-                <br />
-                {/*<ProgressBar file={workspace} percent={progress} />*/}
-              </>
+              <Progress color="teal" file={workspace} percent={progress} />
             )}
             {workspaces.entities[workspace].progress === 100 && (
               <img src={image} alt="Green tick" width="55" height="45" />
