@@ -6,6 +6,7 @@ import { SheetJSFT } from './types';
 import { Button, Container, Grid, Message, Progress } from 'semantic-ui-react';
 import moment from 'moment';
 
+import { alertService } from '../alerts/alert.service';
 import { uploadService } from './upload.service';
 import image from '../../assets/img/green-tick.jpeg';
 
@@ -250,6 +251,10 @@ class Upload extends Component {
         })
       );
       //console.log('response: ', response);
+      alertService.success(
+        'Success',
+        `${response} rows were successfully uploaded to ${workspace}`
+      );
       if (response.errno !== undefined) {
         let error = [];
         error = this.state.customerErrors;

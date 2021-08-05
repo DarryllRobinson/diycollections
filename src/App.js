@@ -10,6 +10,9 @@ import { Nav } from './features/nav/Nav';
 import { Alert } from './features/alerts/Alert';
 import Login from './features/users/Login';
 import { Register } from './features/users/Register';
+import { ForgotPassword } from './features/users/ForgotPassword';
+import { ResetPassword } from './features/users/ResetPassword';
+import { VerifyEmail } from './features/users/VerifyEmail';
 
 function App() {
   const { pathname } = useLocation();
@@ -29,6 +32,9 @@ function App() {
         <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} />
         <Route path="/register" exact component={Register} />
+        <Route path="/users/verify-email" exact component={VerifyEmail} />
+        <Route path="/users/forgot-password" exact component={ForgotPassword} />
+        <Route path="/users/reset-password" exact component={ResetPassword} />
         <PrivateRoute component={RouteDetermination} />
         <Redirect from="*" to="/" />
       </Switch>

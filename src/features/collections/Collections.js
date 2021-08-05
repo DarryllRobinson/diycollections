@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { collectionService } from './collection.service';
+import { alertService } from '../alerts/alert.service';
 
 export const Collections = (props) => {
   //console.log('Collections props', props);
@@ -28,6 +29,20 @@ export const Collections = (props) => {
       : 'Open';
 
   const loadRecords = async (caseStatus) => {
+    const records = await collectionService.getAll();
+    /*console.log('records:', records);
+    const message = records[0].message;
+    console.log('message:', message);
+    if (records[0].status === 'error') {
+      alertService.error('Error', message);
+    }*/
+    setCollections(records);
+    setRecordStatus(caseStatus);
+    setCollectionStatus('succeeded');
+    //console.log('collections: ', collections);
+  };
+
+  const workingloadRecords = async (caseStatus) => {
     setCollections(await collectionService.getAll());
     setRecordStatus(caseStatus);
     setCollectionStatus('succeeded');
