@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Form, Grid, Header, Icon, Segment } from 'semantic-ui-react';
 
 import { alertService } from '../alerts/alert.service';
@@ -42,7 +43,7 @@ const LoginForm = ({ history, location }) => {
           Log-in to your account
         </Header>
         <Form size="large" onSubmit={handleSubmit}>
-          <Segment stacked>
+          <Segment>
             <Form.Input
               fluid
               icon="user"
@@ -60,9 +61,17 @@ const LoginForm = ({ history, location }) => {
               onChange={(e) => handlePassword(e)}
             />
 
-            <Button color="teal" fluid size="large">
-              Login
-            </Button>
+            <Button.Group>
+              <Button color="teal" content="Login" size="medium" />
+              <Button.Or />
+              <Button
+                as={Link}
+                to="/users/forgot-password"
+                color="teal"
+                content="Forgot Password"
+                size="medium"
+              />
+            </Button.Group>
           </Segment>
         </Form>
       </Grid.Column>

@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import {
   Button,
   Container,
+  Dimmer,
   Form,
   Grid,
   Header,
+  Loader,
   Segment,
 } from 'semantic-ui-react';
 
@@ -13,8 +15,9 @@ import { alertService } from '../alerts/alert.service';
 import { userService } from './user.service';
 
 function ForgotPassword() {
-  const [email, setEmail] = useState(null);
+  const [email, setEmail] = useState('');
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setError(null);
@@ -27,15 +30,23 @@ function ForgotPassword() {
     if (!email) {
       setError('Please enter a valid email address');
     } else {
+      setLoading(true);
       userService
         .forgotPassword(email)
-        .then(() =>
-          alertService.success(
-            'Success',
-            'Please check your email for password reset instructions'
-          )
-        )
-        .catch((error) => alertService.error('Error', error));
+        .then((response) => {
+          console.log('response: ', response);
+          setLoading(false);
+          if (response.status === 'ok') {
+            setEmail('');
+            alertService.success('Success', response.message);
+          } else if (response.status === 'failed') {
+            alertService.warn('Warning', response.message);
+          }
+        })
+        .catch((error) => {
+          setLoading(false);
+          alertService.error('Error', error);
+        });
     }
   };
 
@@ -45,6 +56,11 @@ function ForgotPassword() {
         <Header as="h2" textAlign="center">
           Forgot Password
         </Header>
+        {loading && (
+          <Dimmer active inverted>
+            <Loader />
+          </Dimmer>
+        )}
         <Form size="large" onSubmit={onSubmit}>
           <Segment>
             <Form.Input
@@ -54,7 +70,8 @@ function ForgotPassword() {
               iconPosition="left"
               placeholder="Email address"
               type="email"
-              onClick={handleChange}
+              onChange={handleChange}
+              value={email}
             />
             <br />
             <Container fluid textAlign="center">
