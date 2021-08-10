@@ -5,6 +5,7 @@ import { alertService } from '../alerts/alert.service';
 import { userService } from './user.service';
 
 import tick from '../../assets/img/green-tick.jpeg';
+import cross from '../../assets/img/red-cross.png';
 
 export const EditUsersForm = (props) => {
   const { loadUsers } = props;
@@ -77,9 +78,9 @@ export const EditUsersForm = (props) => {
 
   const renderIsVerified = (isVerified) => {
     return isVerified ? (
-      'False'
-    ) : (
       <img src={tick} alt="Green tick" width="55" height="45" />
+    ) : (
+      <img src={cross} alt="Red cross" width="40" height="30" />
     );
   };
 
@@ -91,7 +92,7 @@ export const EditUsersForm = (props) => {
         <Table.Cell key={idx + 3}>{user.lastName}</Table.Cell>
         <Table.Cell key={idx + 4}>{user.role}</Table.Cell>
         <Table.Cell key={idx + 5} textAlign="center">
-          {renderIsVerified()}
+          {renderIsVerified(user.isVerified)}
         </Table.Cell>
 
         {renderButton(user, idx + 6)}

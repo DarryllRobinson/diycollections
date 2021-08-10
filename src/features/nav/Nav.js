@@ -124,26 +124,24 @@ export const Nav = () => {
       )}
 
       <Menu.Menu position="right">
-        {user.role === Role.Super && (
-          <Menu.Item>
-            <Dropdown
-              className="icon"
-              icon="user"
-              labeled
-              onClick={() => handleProfileClick(true)}
-              open={open}
-              text={user.firstName}
-            >
-              <Dropdown.Menu>
-                <Profile
-                  handleProfileClick={handleProfileClick}
-                  open={open}
-                  setOpen={setOpen}
-                />
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu.Item>
-        )}
+        <Menu.Item>
+          <Dropdown
+            className="icon"
+            icon="user"
+            labeled
+            onClick={() => handleProfileClick(true)}
+            open={open}
+            text={user.firstName}
+          >
+            <Dropdown.Menu>
+              <Profile
+                handleProfileClick={handleProfileClick}
+                open={open}
+                setOpen={setOpen}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
         {logButton}
       </Menu.Menu>
     </Menu>
