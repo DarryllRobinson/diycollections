@@ -20,15 +20,17 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     fields: {
-      ids: ['firstName', 'lastName', 'email', 'phone'],
+      ids: ['firstName', 'lastName', 'phone', 'password', 'confirmPassword'],
       entities: {
         firstName: { error: null, value: user.firstName },
         lastName: { error: null, value: user.lastName },
-        email: { error: null, value: user.email },
         phone: { error: null, value: user.phone },
+        password: { error: null, isChanged: false, value: '' },
+        confirmPassword: { error: null, value: '' },
       },
     },
   });
+  const [passwordChanged, setPasswordChanged] = useState(false);
 
   // Handlers
   const handleChange = (evt) => {
@@ -48,6 +50,16 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
     }));
   };
 
+  const onPasswordChanged = (evt) => {
+    setPasswordChanged(true);
+    const name = evt.target.name;
+    const value = evt.target.value;
+    const password = state.fields.entities['password'];
+    password.isChanged = true;
+    password.value = value;
+    setState({ ...state, password });
+  };
+
   const handleCancel = (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -58,12 +70,13 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
   const clearState = () => {
     setState({
       fields: {
-        ids: ['firstName', 'lastName', 'email', 'phone'],
+        ids: ['firstName', 'lastName', 'phone', 'password', 'confirmPassword'],
         entities: {
           firstName: { error: null, value: user.firstName },
           lastName: { error: null, value: user.lastName },
-          email: { error: null, value: user.email },
           phone: { error: null, value: user.phone },
+          password: { error: null, value: '' },
+          confirmPassword: { error: null, value: '' },
         },
       },
     });
@@ -107,13 +120,6 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
       cont = false;
     }
 
-    const filter = /^[\w._-]+[+]?[\w._-]+@[\w.-]+\.[a-zA-Z]{2,20}$/;
-
-    if (!filter.test(state.fields.entities['email'].value)) {
-      setErrorMsg('Please provide a valid email address', 'email');
-      cont = false;
-    }
-
     const numberFilter = /^[0-9]+$/;
 
     if (!numberFilter.test(state.fields.entities['phone'].value)) {
@@ -125,11 +131,35 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
       cont = false;
     }
 
+    // Only check password if it's been changed
+    if (passwordChanged) {
+      if (state.fields.entities['password'].value.length < 8) {
+        setErrorMsg(
+          'Please provide a password of at least 8 characters',
+          'password'
+        );
+        cont = false;
+      }
+
+      if (
+        state.fields.entities['confirmPassword'].value !==
+        state.fields.entities['password'].value
+      ) {
+        setErrorMsg('Passwords do not match', 'confirmPassword');
+        cont = false;
+      }
+
+      if (!state.fields.entities['confirmPassword'].value) {
+        setErrorMsg('Please confirm your password', 'confirmPassword');
+        cont = false;
+      }
+    }
+
     return cont;
   };
 
   const setErrorMsg = (msg, name) => {
-    //console.log('msg', msg);
+    //console.log('msg, name', msg, name);
     setState((prevState) => ({
       fields: {
         ...prevState.fields,
@@ -147,23 +177,37 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
   const updateDatabase = async () => {
     setLoading(true);
 
-    const userUpdate = {
-      firstName: state.fields.entities['firstName'].value,
-      lastName: state.fields.entities['lastName'].value,
-      email: state.fields.entities['email'].value,
-      phone: state.fields.entities['phone'].value,
-      f_clientId: 1,
-      active: true,
-    };
+    let userUpdate;
+
+    if (passwordChanged) {
+      userUpdate = {
+        firstName: state.fields.entities['firstName'].value,
+        lastName: state.fields.entities['lastName'].value,
+        phone: state.fields.entities['phone'].value,
+        password: state.fields.entities['password'].value,
+        confirmPassword: state.fields.entities['confirmPassword'].value,
+        f_clientId: 1,
+        active: true,
+      };
+    } else {
+      userUpdate = {
+        firstName: state.fields.entities['firstName'].value,
+        lastName: state.fields.entities['lastName'].value,
+        phone: state.fields.entities['phone'].value,
+        f_clientId: 1,
+        active: true,
+      };
+    }
 
     userService
       .update(user.id, userUpdate)
       .then((updatedUser) => {
-        console.log('Profile user updated to: ', updatedUser);
+        //console.log('Profile user updated to: ', updatedUser);
         setLoading(false);
         alertService.success('Success', 'User updated successfully', {
           keepAfterRouteChange: true,
         });
+        handleProfileClick(false);
         setUser(updatedUser);
         getForm();
       })
@@ -178,10 +222,12 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
       <Card>
         <Card.Content>
           <Card.Header>Profile</Card.Header>
+          <Card.Meta>{user.email}</Card.Meta>
           <Card.Description>
             <Form>
               <Form.Input
                 error={state.fields.entities['firstName'].error}
+                fluid
                 id="form-input-control-firstName"
                 name="firstName"
                 label="First Name"
@@ -192,6 +238,7 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
               />
               <Form.Input
                 error={state.fields.entities['lastName'].error}
+                fluid
                 id="form-input-control-lastName"
                 name="lastName"
                 label="Surname"
@@ -201,18 +248,8 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 value={state.fields.entities['lastName'].value}
               />
               <Form.Input
-                disabled
-                error={state.fields.entities['email'].error}
-                id="form-input-control-email"
-                name="email"
-                label="Email"
-                onChange={handleChange}
-                required
-                type="email"
-                value={state.fields.entities['email'].value}
-              />
-              <Form.Input
                 error={state.fields.entities['phone'].error}
+                fluid
                 id="form-input-control-phone"
                 name="phone"
                 label="Phone"
@@ -220,6 +257,30 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 required
                 type="text"
                 value={state.fields.entities['phone'].value}
+              />
+              <Form.Input
+                error={state.fields.entities['password'].error}
+                fluid
+                id="form-input-control-password"
+                name="password"
+                label="Password"
+                onChange={onPasswordChanged}
+                placeholder="********"
+                required
+                type="password"
+                value={state.fields.entities['password'].value}
+              />
+              <Form.Input
+                error={state.fields.entities['confirmPassword'].error}
+                fluid
+                id="form-input-control-confirmPassword"
+                name="confirmPassword"
+                label="Confirm Password"
+                onChange={handleChange}
+                placeholder="********"
+                required
+                type="password"
+                value={state.fields.entities['confirmPassword'].value}
               />
               <Container textAlign="center">
                 <Button.Group size="medium">
