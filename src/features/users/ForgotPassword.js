@@ -34,7 +34,7 @@ function ForgotPassword() {
       userService
         .forgotPassword(email)
         .then((response) => {
-          console.log('response: ', response);
+          //console.log('response: ', response);
           setLoading(false);
           if (response.status === 'ok') {
             setEmail('');

@@ -11,16 +11,17 @@ function Register({ history }) {
     lastName: 'Robinson',
     email: 'darryllrobinson@icloud.com',
     phone: '0123456789',
-    password: 'newpass',
-    confirmPassword: 'newpass',
-    acceptTerms: true,
+    password: 'newpassss',
+    confirmPassword: 'newpassss',
+    active: true,
+    role: 'Admin',
   };
 
   function onSubmit() {
     userService
       .register(initialValues)
       .then(() => {
-        history.push('login');
+        history.push('/login');
       })
       .catch((error) => {
         console.log(error);

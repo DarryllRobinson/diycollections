@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Container, Divider, Form, Input } from 'semantic-ui-react';
+import {
+  Card,
+  Container,
+  Dimmer,
+  Divider,
+  Form,
+  Input,
+  Loader,
+} from 'semantic-ui-react';
 import moment from 'moment';
 
 import { collectionService } from './collection.service';
@@ -46,9 +54,15 @@ export const Collection = (props) => {
   let content;
 
   if (!collection) {
-    return <Container>No Collection</Container>;
+    return (
+      <Container>
+        <Dimmer active>
+          <Loader>Loading...</Loader>
+        </Dimmer>
+      </Container>
+    );
   } else {
-    console.log('Collection loaded: ', collection);
+    //console.log('Collection loaded: ', collection);
 
     // Preparing variables for rendering
     const regIdNumberRender = () => {

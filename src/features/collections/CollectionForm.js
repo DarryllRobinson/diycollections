@@ -234,30 +234,6 @@ export const CollectionForm = (props) => {
     if (checkFields()) updateDatabase('Open');
   };
 
-  /*const handleTest = async (e) => {
-    e.preventDefault();
-
-    console.log(
-      'New PTPDate in state: ',
-      state.fields.entities['ptpDate'].value
-    );
-
-    let accountUpdate = {
-      //accountStatus: this.state.accountStatus,
-      lastPTPDate: state.fields.entities['ptpDate'].value,
-      lastPTPAmount: state.fields.entities['ptpAmount'].value,
-      updatedBy: user.email,
-      //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
-    };
-
-    console.log('accountUpdate: ', accountUpdate);
-    const response = await accountService.updateAccount(
-      accountNumber,
-      accountUpdate
-    );
-    console.log('accountUpdate response: ', response);
-  };*/
-
   const checkFields = () => {
     let cont = true;
     // Check captured values for compliance
@@ -834,13 +810,9 @@ export const CollectionForm = (props) => {
       };
     }
 
-    console.log('Sending updates');
-    console.log('Case update: ', caseUpdate);
-
     await accountService.updateAccount(accountNumber, accountUpdate);
     await caseService.updateCase(id, caseUpdate);
     const outcomeStatus = await outcomeService.createOutcome(outcomeInsert);
-    console.log('outcomeStatus: ', outcomeStatus);
 
     if (outcomeStatus.status === 'Ok') {
       history.push({

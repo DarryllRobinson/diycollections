@@ -19,7 +19,7 @@ export const RouteDetermination = () => {
       <PrivateRoute path="/dashboard" exact component={Dashboard} />
       <PrivateRoute
         path="/upload"
-        roles={[Role.Admin]}
+        roles={[Role.Admin, Role.Super]}
         exact
         component={Upload}
       />
@@ -30,7 +30,7 @@ export const RouteDetermination = () => {
       <PrivateRoute
         path="/users"
         exact
-        roles={[Role.Admin]}
+        roles={[Role.Admin, Role.Super]}
         component={Users}
       />
     </Container>

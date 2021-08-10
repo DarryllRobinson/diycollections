@@ -31,7 +31,7 @@ const LoginForm = ({ history, location }) => {
         history.push(from);
       })
       .catch((error) => {
-        alertService.error(error);
+        alertService.error('Error', error);
       });
   };
 

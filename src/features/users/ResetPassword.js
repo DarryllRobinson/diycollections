@@ -4,11 +4,9 @@ import queryString from 'query-string';
 import {
   Button,
   Container,
-  Dimmer,
   Form,
   Grid,
   Header,
-  Loader,
   Segment,
 } from 'semantic-ui-react';
 
@@ -28,7 +26,6 @@ function ResetPassword({ history }) {
   const [passwordError, setPasswordError] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const { token } = queryString.parse(window.location.search);
@@ -86,12 +83,10 @@ function ResetPassword({ history }) {
   };
 
   const onSubmit = (e) => {
-    console.log('1');
     e.preventDefault();
     clearErrorMessages();
 
     if (checkFields()) {
-      setLoading(true);
       alertService.clear();
       //console.log('sending with: ', password, confirmPassword, token);
       userService
@@ -110,17 +105,11 @@ function ResetPassword({ history }) {
           alertService.error('Error', error);
         });
     }
-    setLoading(false);
   };
 
   function getForm() {
     return (
       <Container>
-        {/*loading && (
-            <Dimmer active inverted>
-              <Loader />
-            </Dimmer>
-          )*/}
         <Form size="large">
           <Segment>
             <Form.Input

@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Dropdown, Menu } from 'semantic-ui-react';
+import { Dropdown, Icon, Menu } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 import { Role, history } from '../../helpers';
 import { userService } from '../users';
+import { Profile } from '../users/Profile';
 
 export const Nav = () => {
   const [activeItem, setActiveItem] = useState(null);
   const [user, setUser] = useState({});
+  // Controls the Profile dropdown menu component so it stays open when clicked
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const subscription = userService.user.subscribe((x) => setUser(x));
@@ -17,6 +20,11 @@ export const Nav = () => {
   const handleItemClick = (e, { name }) => {
     setActiveItem(name);
     history.push(`/${name}`);
+  };
+
+  // handler for dropdown menu open state
+  const handleProfileClick = (update) => {
+    setOpen(update);
   };
 
   const logButton = user ? (
@@ -84,7 +92,7 @@ export const Nav = () => {
         Upload
       </Menu.Item>
 
-      {user.role === Role.Admin && (
+      {[Role.Admin, Role.Super].includes(user.role) && (
         <Menu.Item
           name="users"
           active={activeItem === 'users'}
@@ -94,7 +102,7 @@ export const Nav = () => {
         </Menu.Item>
       )}
 
-      {user.role === Role.God && (
+      {user.role === Role.Super && (
         <Dropdown item text="Client Admin">
           <Dropdown.Menu>
             <Dropdown.Item
@@ -115,7 +123,29 @@ export const Nav = () => {
         </Dropdown>
       )}
 
-      <Menu.Menu position="right">{logButton}</Menu.Menu>
+      <Menu.Menu position="right">
+        {user.role === Role.Super && (
+          <Menu.Item>
+            <Dropdown
+              className="icon"
+              icon="user"
+              labeled
+              onClick={() => handleProfileClick(true)}
+              open={open}
+              text={user.firstName}
+            >
+              <Dropdown.Menu>
+                <Profile
+                  handleProfileClick={handleProfileClick}
+                  open={open}
+                  setOpen={setOpen}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Item>
+        )}
+        {logButton}
+      </Menu.Menu>
     </Menu>
   );
 };

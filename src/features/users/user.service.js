@@ -13,6 +13,7 @@ export const userService = {
   forgotPassword,
   validateResetToken,
   resetPassword,
+  setNewPassword,
   getAll,
   getById,
   create,
@@ -30,6 +31,10 @@ function login(email, password) {
   return fetchWrapper
     .post(`/users/authenticate`, { email, password })
     .then((user) => {
+      console.log(user);
+      if (user.status === 'Error') {
+        return user;
+      }
       // publish user to subscribers and start timer to refresh token
       userSubject.next(user);
       startRefreshTokenTimer();
@@ -72,6 +77,14 @@ function validateResetToken(token) {
 
 function resetPassword({ token, password, confirmPassword }) {
   return fetchWrapper.post(`/users/reset-password`, {
+    token,
+    password,
+    confirmPassword,
+  });
+}
+
+function setNewPassword({ token, password, confirmPassword }) {
+  return fetchWrapper.post(`/users/set-password`, {
     token,
     password,
     confirmPassword,

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Redirect, Route, Switch, useLocation } from 'react-router-dom';
 import { Container } from 'semantic-ui-react';
 
-import { userService } from './features/users';
 import { PrivateRoute, RouteDetermination } from './components';
-import { Role } from './helpers';
+//import { Role } from './helpers';
 import Home from './components/Home';
 import { Nav } from './features/nav/Nav';
 import { Alert } from './features/alerts/Alert';
@@ -16,12 +15,6 @@ import { VerifyEmail } from './features/users/VerifyEmail';
 
 function App() {
   const { pathname } = useLocation();
-  const [user, setUser] = useState({});
-
-  useEffect(() => {
-    const subscription = userService.user.subscribe((x) => setUser(x));
-    return subscription.unsubscribe;
-  }, []);
 
   return (
     <Container fluid>

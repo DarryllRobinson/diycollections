@@ -9,21 +9,31 @@ export const AddUserForm = (props) => {
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     fields: {
-      ids: ['firstName', 'lastName', 'email', 'phone', 'role'],
+      ids: [
+        'firstName',
+        'lastName',
+        'email',
+        'phone',
+        'password',
+        'confirmPassword',
+        'role',
+      ],
       entities: {
         firstName: { error: null, value: '' },
         lastName: { error: null, value: '' },
         email: { error: null, value: '' },
         phone: { error: null, value: '' },
+        password: { error: null, value: '' },
+        confirmPassword: { error: null, value: '' },
         role: { error: null, value: '' },
       },
     },
   });
 
   const roles = [
-    { key: 1, text: 'Admin', value: 'Admin' },
-    { key: 2, text: 'Agent', value: 'Agent' },
-    { key: 3, text: 'KAM', value: 'Kam' },
+    { key: 1, text: 'Admin', value: 'admin' },
+    { key: 2, text: 'Agent', value: 'agent' },
+    { key: 3, text: 'KAM', value: 'kam' },
   ];
 
   // Handlers
@@ -69,12 +79,22 @@ export const AddUserForm = (props) => {
   const clearState = () => {
     setState({
       fields: {
-        ids: ['firstName', 'lastName', 'email', 'phone', 'role'],
+        ids: [
+          'firstName',
+          'lastName',
+          'email',
+          'phone',
+          'password',
+          'confirmPassword',
+          'role',
+        ],
         entities: {
           firstName: { error: null, value: '' },
           lastName: { error: null, value: '' },
           email: { error: null, value: '' },
           phone: { error: null, value: '' },
+          password: { error: null, value: '' },
+          confirmPassword: { error: null, value: '' },
           role: { error: null, value: '' },
         },
       },
@@ -126,6 +146,27 @@ export const AddUserForm = (props) => {
       cont = false;
     }
 
+    if (state.fields.entities['password'].value.length < 8) {
+      setErrorMsg(
+        'Please provide a password of at least 8 characters',
+        'password'
+      );
+      cont = false;
+    }
+
+    if (
+      state.fields.entities['confirmPassword'].value !==
+      state.fields.entities['password'].value
+    ) {
+      setErrorMsg('Passwords do not match', 'confirmPassword');
+      cont = false;
+    }
+
+    if (state.fields.entities['confirmPassword'].value.length === 0) {
+      setErrorMsg('Please confirm your password', 'confirmPassword');
+      cont = false;
+    }
+
     const numberFilter = /^[0-9]+$/;
 
     if (!numberFilter.test(state.fields.entities['phone'].value)) {
@@ -169,6 +210,8 @@ export const AddUserForm = (props) => {
       firstName: state.fields.entities['firstName'].value,
       lastName: state.fields.entities['lastName'].value,
       email: state.fields.entities['email'].value,
+      password: state.fields.entities['password'].value,
+      confirmPassword: state.fields.entities['confirmPassword'].value,
       phone: state.fields.entities['phone'].value,
       role: state.fields.entities['role'].value,
       f_clientId: 1,
@@ -176,7 +219,7 @@ export const AddUserForm = (props) => {
       //createdDate: createdDate,
     };
 
-    console.log('user: ', user);
+    //console.log('user: ', user);
 
     userService
       .register(user)
@@ -247,6 +290,26 @@ export const AddUserForm = (props) => {
 
         <Form.Group widths="equal">
           <Form.Input
+            error={state.fields.entities['password'].error}
+            id="form-input-control-password"
+            name="password"
+            label="Password"
+            onChange={handleChange}
+            required
+            type="password"
+            value={state.fields.entities['password'].value}
+          />
+          <Form.Input
+            error={state.fields.entities['confirmPassword'].error}
+            id="form-input-control-confirmPassword"
+            name="confirmPassword"
+            label="Confirm Password"
+            onChange={handleChange}
+            required
+            type="password"
+            value={state.fields.entities['confirmPassword'].value}
+          />
+          <Form.Input
             error={state.fields.entities['phone'].error}
             id="form-input-control-phone"
             name="phone"
@@ -268,7 +331,7 @@ export const AddUserForm = (props) => {
           />
         </Form.Group>
         <Button.Group size="large">
-          <Button color="teal" content="Submit" onClick={handleSubmit} />
+          <Button content="Submit" onClick={handleSubmit} />
           <Button.Or />
           <Button content="Cancel" onClick={handleCancel} />
         </Button.Group>
