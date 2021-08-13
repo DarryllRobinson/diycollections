@@ -12,7 +12,7 @@ import Upload from '../features/upload/Upload';
 import Reports from '../features/reports/Reports';
 import { Role } from '../helpers';
 
-import { SearchComponent } from '../features/search/Search';
+import SearchComponent from '../features/search/Search';
 
 import { Users } from '../features/users/Users';
 
