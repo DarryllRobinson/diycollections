@@ -85,6 +85,7 @@ export const EditUsersForm = (props) => {
   };
 
   const content = users.map((user, idx) => {
+    console.log('role: ', user.role);
     return (
       <Table.Row key={idx}>
         <Table.Cell key={idx + 1}>{user.email}</Table.Cell>

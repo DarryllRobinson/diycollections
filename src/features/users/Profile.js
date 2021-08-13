@@ -221,8 +221,9 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
     return (
       <Card>
         <Card.Content>
-          <Card.Header>Profile</Card.Header>
-          <Card.Meta>{user.email}</Card.Meta>
+          <Card.Header>{user.email}</Card.Header>
+          <Card.Meta>{user.role}</Card.Meta>
+          <br />
           <Card.Description>
             <Form>
               <Form.Input
@@ -232,7 +233,6 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 name="firstName"
                 label="First Name"
                 onChange={handleChange}
-                required
                 type="text"
                 value={state.fields.entities['firstName'].value}
               />
@@ -243,7 +243,6 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 name="lastName"
                 label="Surname"
                 onChange={handleChange}
-                required
                 type="text"
                 value={state.fields.entities['lastName'].value}
               />
@@ -254,7 +253,6 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 name="phone"
                 label="Phone"
                 onChange={handleChange}
-                required
                 type="text"
                 value={state.fields.entities['phone'].value}
               />
@@ -266,7 +264,6 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 label="Password"
                 onChange={onPasswordChanged}
                 placeholder="********"
-                required
                 type="password"
                 value={state.fields.entities['password'].value}
               />
@@ -278,7 +275,6 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 label="Confirm Password"
                 onChange={handleChange}
                 placeholder="********"
-                required
                 type="password"
                 value={state.fields.entities['confirmPassword'].value}
               />
