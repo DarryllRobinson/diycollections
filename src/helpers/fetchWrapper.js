@@ -59,7 +59,7 @@ function authHeader(url) {
   const user = userService.userValue;
   const isLoggedIn = user && user.jwtToken;
   if (isLoggedIn) {
-    console.log('jwtToken: ', user.jwtToken);
+    //console.log('jwtToken: ', user.jwtToken);
     return { Authorization: `Bearer ${user.jwtToken}` };
   } else {
     return {};
