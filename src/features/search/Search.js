@@ -1,17 +1,16 @@
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import faker from 'faker';
 import React, { Component } from 'react';
 import { Search, Grid, Header, Segment, Label } from 'semantic-ui-react';
+
+import { collectionService } from '../collections/collection.service';
+import { userService } from '../users/user.service';
 
 const categoryLayoutRenderer = ({ categoryContent, resultsContent }) => (
   <div>
     <h3 className="name">{categoryContent}</h3>
     <div style={{ background: 'red' }} className="results">
-      <div className="test"></div>
       {resultsContent}
-      {console.log(resultsContent)}
-      <div className="end-test"></div>
     </div>
   </div>
 );
@@ -29,54 +28,136 @@ categoryRenderer.propTypes = {
   name: PropTypes.string,
 };
 
-const resultRenderer = ({ title }) => (
-  <Label className="resultRenderer" content={title} />
+const resultRenderer = ({ customername }) => (
+  <Label className="resultRenderer" content={customername} />
 );
 
 resultRenderer.propTypes = {
   title: PropTypes.string,
-  description: PropTypes.string,
+  customername: PropTypes.string,
 };
 
-const initialState = { isLoading: false, results: [], value: '' };
-
-const getResults = () =>
-  _.times(5, () => ({
-    title: faker.company.companyName(),
-    description: faker.company.catchPhrase(),
-    image: faker.internet.avatar(),
-    price: faker.finance.amount(0, 100, 2, '$'),
-  }));
-
-const source = _.range(0, 3).reduce((memo) => {
-  const name = faker.hacker.noun();
-
-  // eslint-disable-next-line no-param-reassign
-  memo[name] = {
-    name,
-    results: getResults(),
-  };
-
-  return memo;
-}, {});
+const initialState = {
+  isLoading: false,
+  value: '',
+  results: [],
+  source: null,
+  records: null,
+};
 
 export default class SearchExampleCategory extends Component {
   state = initialState;
 
+  async componentDidMount() {
+    this.loadRecords();
+  }
+
+  async loadRecords() {
+    this.setState({
+      records: await collectionService.getAll(),
+    });
+    this.setState({
+      source: {
+        global: { name: 'global', results: this.getGlobalResults() },
+        agent: { name: 'agent', results: this.getAgentResults() },
+      },
+    });
+  }
+
+  getGlobalResults() {
+    const { records } = this.state;
+    if (records) return records.map((x) => this.recordsFields(x));
+  }
+
+  getAgentResults() {
+    const { records } = this.state;
+    const user = userService.userValue;
+    let agentRecords = [];
+
+    if (records) {
+      //console.log('records: ', records);
+      records.forEach((record) => {
+        if (record.currentAssignment === user.email) agentRecords.push(record);
+      });
+      return agentRecords.map((x) => this.recordsFields(x));
+    }
+  }
+
+  recordsFields(record) {
+    const {
+      customerRefNo,
+      customerName,
+      regIdNumber,
+      amountDue,
+      accountNumber,
+      creditLimit,
+      currentBalance,
+      debtorAge,
+      totalBalance,
+      caseNotes,
+      caseNumber,
+      currentAssignment,
+      currentStatus,
+      nextVisitDateTime,
+      resolution,
+      updatedAt,
+      updatedBy,
+    } = record;
+
+    return {
+      title: customerRefNo,
+      customername: customerName,
+      regidnumber: regIdNumber,
+      amountdue: amountDue,
+      accountnumber: accountNumber,
+      creditlimit: creditLimit,
+      currentbalance: currentBalance,
+      debtorage: debtorAge,
+      totalbalance: totalBalance,
+      casenotes: caseNotes,
+      casenumber: caseNumber,
+      currentassignment: currentAssignment,
+      currentstatus: currentStatus,
+      nextvisitdatetime: nextVisitDateTime,
+      resolution,
+      updatedat: updatedAt,
+      updatedby: updatedBy,
+    };
+  }
+
   handleResultSelect = (e, { result }) =>
-    this.setState({ value: result.title });
+    this.setState({ value: result.customername });
 
   handleSearchChange = (e, { value }) => {
+    //const searchTerms = ['customerRefNo', 'customerName', 'regIdNumber'];
+
     this.setState({ isLoading: true, value });
 
-    setTimeout(() => {
-      if (this.state.value.length < 1) return this.setState(initialState);
+    setTimeout(async () => {
+      if (this.state.value.length < 1) {
+        this.setState({
+          isLoading: false,
+          value: '',
+          results: [],
+          source: null,
+        });
+        this.loadRecords();
+      }
 
+      //console.log('value: ', this.state.value);
+      let searchTerms = [];
+      this.state.records.map((record) => {
+        searchTerms.push({
+          title: record.customerRefNo,
+          customername: record.customerName,
+        });
+      });
+      //console.log('searchTerms: ', searchTerms);
       const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
-      const isMatch = (result) => re.test(result.title);
+      const isMatch = (result) => re.test(result.customername);
 
       const filteredResults = _.reduce(
-        source,
+        this.state.source,
         (memo, data, name) => {
           const results = _.filter(data.results, isMatch);
           if (results.length) memo[name] = { name, results }; // eslint-disable-line no-param-reassign
@@ -86,6 +167,7 @@ export default class SearchExampleCategory extends Component {
         },
         {}
       );
+      //console.log('filteredResults: ', filteredResults);
 
       this.setState({
         isLoading: false,
@@ -116,13 +198,13 @@ export default class SearchExampleCategory extends Component {
         </Grid.Column>
         <Grid.Column width={8}>
           <Segment>
-            <Header>State Search</Header>
+            <Header>State mySearch</Header>
             <pre style={{ overflowX: 'auto' }}>
               {JSON.stringify(this.state, null, 2)}
             </pre>
             <Header>Options</Header>
             <pre style={{ overflowX: 'auto' }}>
-              {JSON.stringify(source, null, 2)}
+              {JSON.stringify(this.state.source, null, 2)}
             </pre>
           </Segment>
         </Grid.Column>

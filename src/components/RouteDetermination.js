@@ -13,7 +13,7 @@ import Reports from '../features/reports/Reports';
 import { Role } from '../helpers';
 
 import SearchComponent from '../features/search/Search';
-import MySearchComponent from '../features/search/mySearch';
+//import MySearchComponent from '../features/search/mySearch';
 
 import { Users } from '../features/users/Users';
 
@@ -45,12 +45,12 @@ export const RouteDetermination = () => {
           roles={[Role.Super]}
           component={SearchComponent}
         />
-        <PrivateRoute
+        {/*<PrivateRoute
           path="/mysearch"
           exact
           roles={[Role.Super]}
           component={MySearchComponent}
-        />
+        />*/}
         {/* Redirect all unauthorised */}
         <PrivateRoute exact path="/not-found" component={NotFound} />
         <Redirect to="/not-found" />

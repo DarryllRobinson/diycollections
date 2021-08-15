@@ -52,7 +52,7 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
 
   const onPasswordChanged = (evt) => {
     setPasswordChanged(true);
-    const name = evt.target.name;
+    //const name = evt.target.name;
     const value = evt.target.value;
     const password = state.fields.entities['password'];
     password.isChanged = true;
@@ -257,24 +257,26 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 value={state.fields.entities['phone'].value}
               />
               <Form.Input
+                autoComplete="new-password"
                 error={state.fields.entities['password'].error}
                 fluid
                 id="form-input-control-password"
                 name="password"
                 label="Password"
                 onChange={onPasswordChanged}
-                placeholder="********"
+                placeholder="new-password"
                 type="password"
                 value={state.fields.entities['password'].value}
               />
               <Form.Input
+                autoComplete="new-password"
                 error={state.fields.entities['confirmPassword'].error}
                 fluid
                 id="form-input-control-confirmPassword"
                 name="confirmPassword"
                 label="Confirm Password"
                 onChange={handleChange}
-                placeholder="********"
+                placeholder="new-password"
                 type="password"
                 value={state.fields.entities['confirmPassword'].value}
               />

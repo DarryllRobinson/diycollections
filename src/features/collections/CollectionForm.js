@@ -207,14 +207,15 @@ export const CollectionForm = (props) => {
     });
   };
 
-  const cancelUpdate = async (e) => {
+  const cancelUpdate = (e) => {
     e.preventDefault();
     clearErrorMessages();
     const newStatus = currentStatus === 'Locked' ? 'Open' : currentStatus;
     //console.log('newStatus', newStatus);
     const update = { currentStatus: newStatus, lockedDateTime: null };
 
-    const response = await caseService.updateCase(id, update);
+    //const response = await caseService.updateCase(id, update);
+    caseService.updateCase(id, update);
     //console.log('response', response);
     history.push({
       pathname: '/collections',
