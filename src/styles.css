@@ -89,8 +89,13 @@
 
 /* Collections Workspace */
 .ui.container.collections {
-  margin: 60px 100px !important;
+  margin: 60px !important;
   min-width: 1220px !important;
+  max-width: 1800px !important;
+}
+
+.ui.header.collections {
+  padding: 15px !important;
 }
 
 .ui.table.collections {

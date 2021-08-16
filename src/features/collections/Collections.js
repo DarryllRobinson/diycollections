@@ -5,6 +5,7 @@ import {
   Dimmer,
   Header,
   Loader,
+  Segment,
   Table,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
@@ -109,40 +110,46 @@ export const Collections = (props) => {
     switch (recordStatus) {
       case 'Closed':
         return (
-          <Header as="h2" dividing style={{ padding: '15px' }}>
-            Collections: {recordStatus}{' '}
-            <Button onClick={() => loadRecords('Open')}>Load Open</Button>
-            <Button onClick={() => loadRecords('Pended')}>Load Pended</Button>
-          </Header>
+          <>
+            <Header className="collections" as="h2" floated="left">
+              Collections: {recordStatus}{' '}
+              <Button onClick={() => loadRecords('Open')}>Load Open</Button>
+            </Header>
+            <Header className="collections" floated="right">
+              <SearchComponent records={collections} />
+            </Header>
+          </>
         );
       case 'Open':
         return (
-          <Header as="h2" dividing style={{ padding: '15px' }}>
-            Collections: {recordStatus}{' '}
-            <Button onClick={() => loadRecords('Closed')}>Load Closed</Button>
-            <Button onClick={() => loadRecords('Pended')}>Load Pended</Button>
-            {collections && <SearchComponent records={collections} />}
-          </Header>
-        );
-      case 'Pended':
-        return (
-          <Header as="h2" dividing style={{ padding: '15px' }}>
-            Collections: {recordStatus}{' '}
-            <Button onClick={() => loadRecords('Closed')}>Load Closed</Button>
-            <Button onClick={() => loadRecords('Open')}>Load Open</Button>
-          </Header>
+          <>
+            <Header className="collections" as="h2" floated="left">
+              Collections: {recordStatus}{' '}
+              <Button onClick={() => loadRecords('Closed')}>Load Closed</Button>
+            </Header>
+            <Header className="collections" floated="right">
+              <SearchComponent records={collections} />
+            </Header>
+          </>
         );
       default:
         return (
-          <Header as="h2" dividing style={{ padding: '15px' }}>
-            Collections: {recordStatus} Status not found
-          </Header>
+          <>
+            <Header className="collections" as="h2" floated="left">
+              Collections: {recordStatus} Status not found{' '}
+              <Button onClick={() => loadRecords('Closed')}>Load Closed</Button>
+              <Button onClick={() => loadRecords('Open')}>Load Open</Button>
+            </Header>
+            <Header className="collections" floated="right">
+              <SearchComponent records={collections} />
+            </Header>
+          </>
         );
     }
   };
 
   return (
-    <Container className="collections">
+    <Container className="collections" fluid>
       {renderHeader()}
 
       <Table

@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import _ from 'lodash';
 import React, { Component } from 'react';
 import { Search, Grid, Label } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 import { collectionService } from '../collections/collection.service';
 import { userService } from '../users/user.service';
@@ -9,9 +10,7 @@ import { userService } from '../users/user.service';
 const categoryLayoutRenderer = ({ categoryContent, resultsContent }) => (
   <div>
     <h3 className="name">{categoryContent}</h3>
-    <div style={{ background: 'red' }} className="results">
-      {resultsContent}
-    </div>
+    <div className="results">{resultsContent}</div>
   </div>
 );
 
@@ -28,8 +27,13 @@ categoryRenderer.propTypes = {
   name: PropTypes.string,
 };
 
-const resultRenderer = ({ customername }) => (
-  <Label className="resultRenderer" content={customername} />
+const resultRenderer = ({ customername, casenumber }) => (
+  <Label
+    as={Link}
+    to={`/collection/${casenumber}`}
+    className="resultRenderer"
+    content={customername}
+  />
 );
 
 resultRenderer.propTypes = {
