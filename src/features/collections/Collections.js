@@ -12,6 +12,7 @@ import moment from 'moment';
 
 import { collectionService } from './collection.service';
 //import { alertService } from '../alerts/alert.service';
+import SearchComponent from '../search/Search';
 
 export const Collections = (props) => {
   //console.log('Collections props', props);
@@ -120,6 +121,7 @@ export const Collections = (props) => {
             Collections: {recordStatus}{' '}
             <Button onClick={() => loadRecords('Closed')}>Load Closed</Button>
             <Button onClick={() => loadRecords('Pended')}>Load Pended</Button>
+            {collections && <SearchComponent records={collections} />}
           </Header>
         );
       case 'Pended':

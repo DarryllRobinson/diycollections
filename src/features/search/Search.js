@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import React, { Component } from 'react';
-import { Search, Grid, Header, Segment, Label } from 'semantic-ui-react';
+import { Search, Grid, Label } from 'semantic-ui-react';
 
 import { collectionService } from '../collections/collection.service';
 import { userService } from '../users/user.service';
@@ -45,17 +45,35 @@ const initialState = {
   records: null,
 };
 
-export default class SearchExampleCategory extends Component {
+export default class SearchComponent extends Component {
   state = initialState;
 
   async componentDidMount() {
-    this.loadRecords();
+    //console.log('SearchComponent props: ', this.props);
+    if (this.props.records) {
+      //console.log('Got records from props: ', this.props.records);
+      // Once records have been set in state, call the next function
+      this.setState({ records: this.props.records }, () => {
+        this.setSource();
+      });
+    } else {
+      //console.log('I need to load records: ', this.props);
+      this.loadRecords();
+    }
   }
 
   async loadRecords() {
-    this.setState({
-      records: await collectionService.getAll(),
-    });
+    this.setState(
+      {
+        records: await collectionService.getAll(),
+      },
+      () => {
+        this.setSource();
+      }
+    );
+  }
+
+  setSource() {
     this.setState({
       source: {
         global: { name: 'global', results: this.getGlobalResults() },
@@ -66,6 +84,7 @@ export default class SearchExampleCategory extends Component {
 
   getGlobalResults() {
     const { records } = this.state;
+    //console.log('getGlobalResults: ', records);
     if (records) return records.map((x) => this.recordsFields(x));
   }
 
@@ -142,11 +161,12 @@ export default class SearchExampleCategory extends Component {
           source: null,
         });
         this.loadRecords();
+        this.setSource();
       }
 
       //console.log('value: ', this.state.value);
       let searchTerms = [];
-      this.state.records.map((record) => {
+      this.state.records.forEach((record) => {
         searchTerms.push({
           title: record.customerRefNo,
           customername: record.customerName,
@@ -195,18 +215,6 @@ export default class SearchExampleCategory extends Component {
             results={results}
             value={value}
           />
-        </Grid.Column>
-        <Grid.Column width={8}>
-          <Segment>
-            <Header>State mySearch</Header>
-            <pre style={{ overflowX: 'auto' }}>
-              {JSON.stringify(this.state, null, 2)}
-            </pre>
-            <Header>Options</Header>
-            <pre style={{ overflowX: 'auto' }}>
-              {JSON.stringify(this.state.source, null, 2)}
-            </pre>
-          </Segment>
         </Grid.Column>
       </Grid>
     );
