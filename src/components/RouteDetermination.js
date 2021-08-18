@@ -12,6 +12,8 @@ import Upload from '../features/upload/Upload';
 import Reports from '../features/reports/Reports';
 import { Role } from '../helpers';
 
+import { ReleaseNotes } from '../features/release/ReleaseNotes';
+
 import { Users } from '../features/users/Users';
 
 import { NotFound } from './NotFound';
@@ -30,6 +32,12 @@ export const RouteDetermination = () => {
         <PrivateRoute path="/collections" exact component={Collections} />
         <PrivateRoute path="/collection/:id" exact component={Collection} />
         <PrivateRoute path="/reports" exact component={Reports} />
+        <PrivateRoute
+          path="/release"
+          exact
+          roles={[Role.Admin, Role.Super]}
+          component={ReleaseNotes}
+        />
         <PrivateRoute
           path="/users"
           exact

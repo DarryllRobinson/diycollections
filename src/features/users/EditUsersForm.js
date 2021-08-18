@@ -96,7 +96,7 @@ export const EditUsersForm = (props) => {
 
   const content = users.map((user, idx) => {
     //console.log('role: ', user.role);
-    if (user.role !== 'Sudper') {
+    if (user.role !== 'Super') {
       return (
         <Table.Row key={idx}>
           <Table.Cell key={idx + 1}>{user.email}</Table.Cell>
@@ -110,7 +110,7 @@ export const EditUsersForm = (props) => {
           {renderButton(user, idx + 6)}
         </Table.Row>
       );
-    }
+    } else return null;
   });
 
   return (

@@ -130,6 +130,15 @@ export const Nav = () => {
       )}
 
       <Menu.Menu position="right">
+        {[Role.Admin, Role.Super].includes(user.role) && (
+          <Menu.Item
+            name="release"
+            active={activeItem === 'release'}
+            onClick={handleItemClick}
+          >
+            Release Notes & Bugs
+          </Menu.Item>
+        )}
         {user.role === Role.Super && (
           <Menu.Item>
             <Dropdown

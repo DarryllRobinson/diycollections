@@ -155,9 +155,9 @@ export const Collections = (props) => {
         className="collections"
         celled
         compact
+        fixed
         selectable
         size="small"
-        sortable
         unstackable
       >
         <Table.Header className="collections">

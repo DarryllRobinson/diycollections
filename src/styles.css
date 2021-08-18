@@ -89,8 +89,6 @@
 
 /* Collections Workspace */
 .ui.container.collections {
-  margin: 60px !important;
-  min-width: 80% !important;
   max-width: 95% !important;
 }
 
@@ -99,9 +97,7 @@
 }
 
 .ui.table.collections {
-  background-color: red;
   min-width: 80% !important;
-  max-width: 95% !important;
 }
 
 /* Header */
@@ -112,14 +108,14 @@
 
 /* THEAD */
 .ui.table.collections thead {
-  min-width: 80% !important;
-  max-width: 95% !important;
 }
 
 /* Body */
 .ui.table.collections tbody {
-  min-width: 80% !important;
-  max-width: 95% !important;
+}
+
+/* Row */
+.ui.table.collections tr {
 }
 
 /* User Admin */
