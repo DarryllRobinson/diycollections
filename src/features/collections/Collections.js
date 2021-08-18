@@ -5,7 +5,6 @@ import {
   Dimmer,
   Header,
   Loader,
-  Segment,
   Table,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
@@ -155,12 +154,13 @@ export const Collections = (props) => {
       <Table
         className="collections"
         celled
-        selectable
-        unstackable
         compact
+        selectable
         size="small"
+        sortable
+        unstackable
       >
-        <Table.Header>
+        <Table.Header className="collections">
           <Table.Row>
             <Table.HeaderCell>Case Number</Table.HeaderCell>
             <Table.HeaderCell>Account Number</Table.HeaderCell>
@@ -178,7 +178,7 @@ export const Collections = (props) => {
             <Table.HeaderCell>Updated Date</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        <Table.Body>{content}</Table.Body>
+        <Table.Body className="collections">{content}</Table.Body>
       </Table>
     </Container>
   );

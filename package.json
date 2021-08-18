@@ -7,7 +7,6 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "faker": "^5.5.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
@@ -27,6 +26,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "build:sit": "REACT_APP_STAGE=sit npm run build",
+    "build:uat": "REACT_APP_STAGE=uat npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

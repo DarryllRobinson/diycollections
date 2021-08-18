@@ -13,24 +13,30 @@ import { userService } from './user.service';
 
 export const Profile = ({ handleProfileClick, open, setOpen }) => {
   const [user, setUser] = useState(userService.userValue);
-  useEffect(() => {
-    setUser(userService.userValue);
-  }, []);
 
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     fields: {
       ids: ['firstName', 'lastName', 'phone', 'password', 'confirmPassword'],
       entities: {
-        firstName: { error: null, value: user.firstName },
-        lastName: { error: null, value: user.lastName },
-        phone: { error: null, value: user.phone },
+        firstName: { error: null, value: '' },
+        lastName: { error: null, value: '' },
+        phone: { error: null, value: '' },
         password: { error: null, isChanged: false, value: '' },
         confirmPassword: { error: null, value: '' },
       },
     },
   });
   const [passwordChanged, setPasswordChanged] = useState(false);
+
+  useEffect(() => {
+    const userState = state.fields.entities;
+    //console.log('before userState: ', userState);
+    userState['firstName'].value = user.firstName;
+    userState['lastName'].value = user.lastName;
+    userState['phone'].value = user.phone;
+    //console.log('after userState: ', userState);
+  }, []);
 
   // Handlers
   const handleChange = (evt) => {
@@ -218,80 +224,81 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
   };
 
   const getForm = () => {
-    return (
-      <Card>
-        <Card.Content>
-          <Card.Header>{user.email}</Card.Header>
-          <Card.Meta>{user.role}</Card.Meta>
-          <br />
-          <Card.Description>
-            <Form>
-              <Form.Input
-                error={state.fields.entities['firstName'].error}
-                fluid
-                id="form-input-control-firstName"
-                name="firstName"
-                label="First Name"
-                onChange={handleChange}
-                type="text"
-                value={state.fields.entities['firstName'].value}
-              />
-              <Form.Input
-                error={state.fields.entities['lastName'].error}
-                fluid
-                id="form-input-control-lastName"
-                name="lastName"
-                label="Surname"
-                onChange={handleChange}
-                type="text"
-                value={state.fields.entities['lastName'].value}
-              />
-              <Form.Input
-                error={state.fields.entities['phone'].error}
-                fluid
-                id="form-input-control-phone"
-                name="phone"
-                label="Phone"
-                onChange={handleChange}
-                type="text"
-                value={state.fields.entities['phone'].value}
-              />
-              <Form.Input
-                autoComplete="new-password"
-                error={state.fields.entities['password'].error}
-                fluid
-                id="form-input-control-password"
-                name="password"
-                label="Password"
-                onChange={onPasswordChanged}
-                placeholder="new-password"
-                type="password"
-                value={state.fields.entities['password'].value}
-              />
-              <Form.Input
-                autoComplete="new-password"
-                error={state.fields.entities['confirmPassword'].error}
-                fluid
-                id="form-input-control-confirmPassword"
-                name="confirmPassword"
-                label="Confirm Password"
-                onChange={handleChange}
-                placeholder="new-password"
-                type="password"
-                value={state.fields.entities['confirmPassword'].value}
-              />
-              <Container textAlign="center">
-                <Button.Group size="medium">
-                  <Button primary content="Update" onClick={handleSubmit} />
-                  <Button.Or />
-                  <Button content="Close" onClick={handleCancel} />
-                </Button.Group>
-              </Container>
-            </Form>
-          </Card.Description>
-        </Card.Content>
-      </Card>
-    );
+    if (user)
+      return (
+        <Card>
+          <Card.Content>
+            <Card.Header>{user.email}</Card.Header>
+            <Card.Meta>{user.role}</Card.Meta>
+            <br />
+            <Card.Description>
+              <Form>
+                <Form.Input
+                  error={state.fields.entities['firstName'].error}
+                  fluid
+                  id="form-input-control-firstName"
+                  name="firstName"
+                  label="First Name"
+                  onChange={handleChange}
+                  type="text"
+                  value={state.fields.entities['firstName'].value}
+                />
+                <Form.Input
+                  error={state.fields.entities['lastName'].error}
+                  fluid
+                  id="form-input-control-lastName"
+                  name="lastName"
+                  label="Surname"
+                  onChange={handleChange}
+                  type="text"
+                  value={state.fields.entities['lastName'].value}
+                />
+                <Form.Input
+                  error={state.fields.entities['phone'].error}
+                  fluid
+                  id="form-input-control-phone"
+                  name="phone"
+                  label="Phone"
+                  onChange={handleChange}
+                  type="text"
+                  value={state.fields.entities['phone'].value}
+                />
+                <Form.Input
+                  autoComplete="new-password"
+                  error={state.fields.entities['password'].error}
+                  fluid
+                  id="form-input-control-password"
+                  name="password"
+                  label="Password"
+                  onChange={onPasswordChanged}
+                  placeholder="new-password"
+                  type="password"
+                  value={state.fields.entities['password'].value}
+                />
+                <Form.Input
+                  autoComplete="new-password"
+                  error={state.fields.entities['confirmPassword'].error}
+                  fluid
+                  id="form-input-control-confirmPassword"
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  onChange={handleChange}
+                  placeholder="new-password"
+                  type="password"
+                  value={state.fields.entities['confirmPassword'].value}
+                />
+                <Container textAlign="center">
+                  <Button.Group size="medium">
+                    <Button primary content="Update" onClick={handleSubmit} />
+                    <Button.Or />
+                    <Button content="Close" onClick={handleCancel} />
+                  </Button.Group>
+                </Container>
+              </Form>
+            </Card.Description>
+          </Card.Content>
+        </Card>
+      );
   };
 
   return (

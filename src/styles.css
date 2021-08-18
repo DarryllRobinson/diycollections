@@ -90,8 +90,8 @@
 /* Collections Workspace */
 .ui.container.collections {
   margin: 60px !important;
-  min-width: 1220px !important;
-  max-width: 1800px !important;
+  min-width: 80% !important;
+  max-width: 95% !important;
 }
 
 .ui.header.collections {
@@ -99,13 +99,27 @@
 }
 
 .ui.table.collections {
-  min-width: 1200px !important;
+  background-color: red;
+  min-width: 80% !important;
+  max-width: 95% !important;
 }
 
 /* Header */
 .ui.table.collections th {
   background-color: var(--HEADER);
   color: var(--FONT_COLOUR);
+}
+
+/* THEAD */
+.ui.table.collections thead {
+  min-width: 80% !important;
+  max-width: 95% !important;
+}
+
+/* Body */
+.ui.table.collections tbody {
+  min-width: 80% !important;
+  max-width: 95% !important;
 }
 
 /* User Admin */

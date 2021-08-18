@@ -14,12 +14,13 @@ export const userService = {
   validateResetToken,
   resetPassword,
   setNewPassword,
+  deactivateUser,
+  reactivateUser,
+  resendInvitation,
   getAll,
   getById,
   create,
   update,
-  deactivateUser,
-  reactivateUser,
   delete: _delete,
   user: userSubject.asObservable(),
   get userValue() {
@@ -91,6 +92,18 @@ function setNewPassword({ token, password, confirmPassword }) {
   });
 }
 
+function deactivateUser(id) {
+  return fetchWrapper.put(`/users/deactivate/${id}`);
+}
+
+function reactivateUser(id) {
+  return fetchWrapper.put(`/users/reactivate/${id}`);
+}
+
+function resendInvitation(id) {
+  return fetchWrapper.post(`/users/resend-invitation/${id}`);
+}
+
 function getAll() {
   return fetchWrapper.get('/users');
 }
@@ -113,14 +126,6 @@ function update(id, params) {
     }
     return user;
   });
-}
-
-function deactivateUser(id) {
-  return fetchWrapper.put(`/users/deactivate/${id}`);
-}
-
-function reactivateUser(id) {
-  return fetchWrapper.put(`/users/reactivate/${id}`);
 }
 
 // prefixed with underscore because 'delete' is a reserved word in javascript

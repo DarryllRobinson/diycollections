@@ -22,9 +22,15 @@ export const Nav = () => {
     history.push(`/${name}`);
   };
 
-  // handler for dropdown menu open state
+  // handlers for dropdown menu open state
   const handleProfileClick = (update) => {
+    console.log('handleProfileClick');
     setOpen(update);
+  };
+
+  const clickOutside = () => {
+    console.log('click outside');
+    setOpen(false);
   };
 
   const logButton = user ? (
@@ -124,24 +130,29 @@ export const Nav = () => {
       )}
 
       <Menu.Menu position="right">
-        <Menu.Item>
-          <Dropdown
-            className="icon"
-            icon="user"
-            labeled
-            onClick={() => handleProfileClick(true)}
-            open={open}
-            text={user.firstName}
-          >
-            <Dropdown.Menu>
-              <Profile
-                handleProfileClick={handleProfileClick}
-                open={open}
-                setOpen={setOpen}
-              />
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Item>
+        {user.role === Role.Super && (
+          <Menu.Item>
+            <Dropdown
+              className="icon"
+              icon="user"
+              labeled
+              onClick={() => handleProfileClick(true)}
+              open={open}
+              text={user.firstName}
+            >
+              <Dropdown.Menu>
+                <Dropdown.Item>
+                  <Profile
+                    handleProfileClick={handleProfileClick}
+                    clickOutside={clickOutside}
+                    open={open}
+                    setOpen={setOpen}
+                  />
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Menu.Item>
+        )}
         {logButton}
       </Menu.Menu>
     </Menu>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Container, Table } from 'semantic-ui-react';
+import { Button, Container, Icon, Table } from 'semantic-ui-react';
 
 import { alertService } from '../alerts/alert.service';
 import { userService } from './user.service';
@@ -34,29 +34,31 @@ export const EditUsersForm = (props) => {
     });
   };
 
+  const resendInvitation = async (userId) => {
+    userService.resendInvitation(userId).then((response) => {
+      if (response.status === 'success') {
+        alertService.success('Success', 'Invitation was successfully sent');
+        loadUsers();
+      } else {
+        alertService.error('Error', 'Invitation was unsuccessfully sent');
+      }
+    });
+  };
+
   const renderButton = (user, idx) => {
+    // Never allow logged in user to deactivate themselves
+    // If verified, return Deactivate button
+    // If not verified, return Resend button
     const userId = user.id;
 
     if (user.email === loggedInUser.email) {
-      if (user.active === true) {
-        return (
-          <Table.Cell key={idx} textAlign="center">
-            <Button negative disabled>
-              Deactivate
-            </Button>
-          </Table.Cell>
-        );
-      } else if (user.active === false) {
-        return (
-          <Table.Cell key={idx} textAlign="center">
-            <Button positive disabled>
-              Reactivate
-            </Button>
-          </Table.Cell>
-        );
-      }
+      return (
+        <Table.Cell key={idx} textAlign="center">
+          <Icon name="dont" />
+        </Table.Cell>
+      );
     } else {
-      if (user.active === true) {
+      if (user.isVerified && user.active === true) {
         return (
           <Table.Cell key={idx} textAlign="center">
             <Button negative onClick={() => deactivateUser(userId)}>
@@ -64,11 +66,19 @@ export const EditUsersForm = (props) => {
             </Button>
           </Table.Cell>
         );
-      } else if (user.active === false) {
+      } else if (user.isVerified && user.active === false) {
         return (
           <Table.Cell key={idx} textAlign="center">
             <Button positive onClick={() => reactivateUser(userId)}>
               Reactivate
+            </Button>
+          </Table.Cell>
+        );
+      } else if (!user.isVerified) {
+        return (
+          <Table.Cell key={idx} textAlign="center">
+            <Button primary onClick={() => resendInvitation(userId)}>
+              Resend invitation
             </Button>
           </Table.Cell>
         );
@@ -85,20 +95,22 @@ export const EditUsersForm = (props) => {
   };
 
   const content = users.map((user, idx) => {
-    console.log('role: ', user.role);
-    return (
-      <Table.Row key={idx}>
-        <Table.Cell key={idx + 1}>{user.email}</Table.Cell>
-        <Table.Cell key={idx + 2}>{user.firstName}</Table.Cell>
-        <Table.Cell key={idx + 3}>{user.lastName}</Table.Cell>
-        <Table.Cell key={idx + 4}>{user.role}</Table.Cell>
-        <Table.Cell key={idx + 5} textAlign="center">
-          {renderIsVerified(user.isVerified)}
-        </Table.Cell>
+    //console.log('role: ', user.role);
+    if (user.role !== 'Sudper') {
+      return (
+        <Table.Row key={idx}>
+          <Table.Cell key={idx + 1}>{user.email}</Table.Cell>
+          <Table.Cell key={idx + 2}>{user.firstName}</Table.Cell>
+          <Table.Cell key={idx + 3}>{user.lastName}</Table.Cell>
+          <Table.Cell key={idx + 4}>{user.role}</Table.Cell>
+          <Table.Cell key={idx + 5} textAlign="center">
+            {renderIsVerified(user.isVerified)}
+          </Table.Cell>
 
-        {renderButton(user, idx + 6)}
-      </Table.Row>
-    );
+          {renderButton(user, idx + 6)}
+        </Table.Row>
+      );
+    }
   });
 
   return (

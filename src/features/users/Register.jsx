@@ -9,12 +9,12 @@ function Register({ history }) {
     title: 'Mr',
     firstName: 'Darryll',
     lastName: 'Robinson',
-    email: 'darryllrobinson@icloud.com',
+    email: 'darryll@thesystem.co.za',
     phone: '0123456789',
     password: 'newpassss',
     confirmPassword: 'newpassss',
     active: true,
-    role: 'Admin',
+    role: 'Super',
   };
 
   function onSubmit() {
