@@ -24,7 +24,7 @@
     "xlsx": "^0.17.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_STAGE=development react-scripts start",
     "build": "react-scripts build",
     "build:sit": "REACT_APP_STAGE=sit npm run build",
     "build:uat": "REACT_APP_STAGE=uat npm run build",

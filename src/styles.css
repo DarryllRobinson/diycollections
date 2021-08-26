@@ -119,6 +119,10 @@
 }
 
 /* User Admin */
+.ui.container.user {
+  margin-bottom: 1em;
+}
+
 .ui.table.userAdmin th {
   background-color: var(--HEADER);
   color: var(--FONT_COLOUR);

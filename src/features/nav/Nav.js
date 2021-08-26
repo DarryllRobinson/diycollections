@@ -82,6 +82,16 @@ export const Nav = () => {
         Collections
       </Menu.Item>
 
+      {[Role.Super].includes(user.role) && (
+        <Menu.Item
+          name="customers"
+          active={activeItem === 'customers'}
+          onClick={handleItemClick}
+        >
+          Customers
+        </Menu.Item>
+      )}
+
       <Menu.Item
         name="reports"
         active={activeItem === 'reports'}
@@ -139,29 +149,27 @@ export const Nav = () => {
             Release Notes & Bugs
           </Menu.Item>
         )}
-        {user.role === Role.Super && (
-          <Menu.Item>
-            <Dropdown
-              className="icon"
-              icon="user"
-              labeled
-              onClick={() => handleProfileClick(true)}
-              open={open}
-              text={user.firstName}
-            >
-              <Dropdown.Menu>
-                <Dropdown.Item>
-                  <Profile
-                    handleProfileClick={handleProfileClick}
-                    clickOutside={clickOutside}
-                    open={open}
-                    setOpen={setOpen}
-                  />
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Menu.Item>
-        )}
+        <Menu.Item>
+          <Dropdown
+            className="icon"
+            icon="user"
+            labeled
+            onClick={() => handleProfileClick(true)}
+            open={open}
+            text={user.firstName}
+          >
+            <Dropdown.Menu>
+              <Dropdown.Item>
+                <Profile
+                  handleProfileClick={handleProfileClick}
+                  clickOutside={clickOutside}
+                  open={open}
+                  setOpen={setOpen}
+                />
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Item>
         {logButton}
       </Menu.Menu>
     </Menu>

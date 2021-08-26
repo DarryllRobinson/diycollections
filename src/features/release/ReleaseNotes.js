@@ -58,7 +58,7 @@ export const ReleaseNotes = () => {
                   <Table.Cell>2021/08/17</Table.Cell>
                   <Table.Cell>2021/08/18</Table.Cell>
                 </Table.Row>
-                <Table.Row negative>
+                <Table.Row positive>
                   <Table.Cell>
                     <Header>Collections workspace table format</Header>
                     <Icon name="bug" color="red" />
@@ -66,7 +66,7 @@ export const ReleaseNotes = () => {
                     not automatically resize to fit the screen width
                   </Table.Cell>
                   <Table.Cell>2021/08/17</Table.Cell>
-                  <Table.Cell></Table.Cell>
+                  <Table.Cell>2021/08/18</Table.Cell>
                 </Table.Row>
               </Table.Body>
             </Table>

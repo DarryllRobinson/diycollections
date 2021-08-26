@@ -8,6 +8,8 @@ import { Dashboard } from '../features/dashboard/Dashboard';
 import { Collections } from '../features/collections/Collections';
 import { Collection } from '../features/collections/Collection';
 
+import { CustomerManagement } from '../features/customers/CustomerManagement';
+
 import Upload from '../features/upload/Upload';
 import Reports from '../features/reports/Reports';
 import { Role } from '../helpers';
@@ -43,6 +45,12 @@ export const RouteDetermination = () => {
           exact
           roles={[Role.Admin, Role.Super]}
           component={Users}
+        />
+        <PrivateRoute
+          path="/customers"
+          exact
+          roles={[Role.Super]}
+          component={CustomerManagement}
         />
 
         {/* Redirect all unauthorised */}

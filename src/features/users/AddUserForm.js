@@ -61,7 +61,7 @@ export const AddUserForm = (props) => {
     }));
   };
 
-  const handleCancel = (e) => {
+  const handleClear = (e) => {
     e.preventDefault();
     clearState();
   };
@@ -205,7 +205,7 @@ export const AddUserForm = (props) => {
   };
 
   return (
-    <Container>
+    <Container className="user">
       {loading && (
         <Dimmer active inverted>
           <Loader />
@@ -270,7 +270,7 @@ export const AddUserForm = (props) => {
         <Button.Group size="large">
           <Button color="teal" content="Submit" onClick={handleSubmit} />
           <Button.Or />
-          <Button content="Cancel" onClick={handleCancel} />
+          <Button content="Clear" onClick={handleClear} />
         </Button.Group>
       </Form>
     </Container>
