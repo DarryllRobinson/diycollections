@@ -3,6 +3,7 @@ import { userService } from '../features/users';
 
 export const fetchWrapper = {
   get,
+  getDocument,
   post,
   put,
   delete: _delete,
@@ -15,6 +16,21 @@ function get(url) {
   };
   return fetch(`${AppSettings.serverEndpoint}${url}`, requestOptions).then(
     handleResponse
+  );
+}
+
+function getDocument(url) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json, application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
+      ...authHeader(url),
+    },
+  };
+
+  return fetch(`${AppSettings.serverEndpoint}${url}`, requestOptions).then(
+    handleResponseForDocuments
   );
 }
 
@@ -80,6 +96,26 @@ function handleResponse(response) {
       return Promise.reject(error);
     }
 
+    return data;
+  });
+}
+
+function handleResponseForDocuments(response) {
+  //console.log('handleResponseForDocuments response: ', response);
+  //return response;
+  return response.text().then((text) => {
+    const data = text; // && JSON.parse(text);
+
+    if (!response.ok) {
+      if ([401, 403].includes(response.status) && userService.userValue) {
+        // auto logout if 401 Unauthorized or 403 Forbidden response returned from api
+        userService.logout();
+      }
+
+      const error = (data && data.message) || response.statusText;
+      return Promise.reject(error);
+    }
+    //console.log('data: ', data);
     return data;
   });
 }
