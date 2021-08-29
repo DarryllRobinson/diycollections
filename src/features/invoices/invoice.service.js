@@ -1,12 +1,17 @@
 import { fetchWrapper } from '../../helpers';
 
 export const invoiceService = {
-  getDocById,
+  getDocByLoc,
+  verifyInvoice,
 };
 
-async function getDocById(id) {
-  //console.log('fetching invoice: ', id);
-  return await fetchWrapper.getDocument(`/invoices/document/${id}`);
+function getDocByLoc(location) {
+  console.log('getDocByLoc: ', location);
+  return fetchWrapper.getDocument(`/invoices/document`, location);
   //console.log('invoice: ', invoice);
   //return invoice;
+}
+
+function verifyInvoice(token) {
+  return fetchWrapper.post(`/invoices/verify-invoice`, { token });
 }

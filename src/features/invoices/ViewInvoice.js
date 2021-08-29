@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Dimmer, Loader } from 'semantic-ui-react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
+import queryString from 'query-string';
 
 import { invoiceService } from './invoice.service';
 
-export const Invoices = () => {
-  const [invoices, setInvoices] = useState(null);
+export const ViewInvoice = ({ history }) => {
+  /*const [token, setToken] = useState(
+    '22d778db637f80166bc4da6b3dcba85e565149093d2b60639d138858e55da3536d41646576e9b702'
+  );*/
+  const [token, setToken] = useState(null);
+
+  const [invoice, setInvoice] = useState(null);
   const [invoiceStatus, setInvoiceStatus] = useState('idle');
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -15,18 +21,28 @@ export const Invoices = () => {
   }
 
   useEffect(() => {
-    async function fetchInvoices() {
+    const { token } = queryString.parse(window.location.search);
+    setToken(token);
+
+    // remove token from url to prevent http referer leakage
+    history.replace(window.location.pathname);
+
+    function fetchInvoice() {
       setInvoiceStatus('loading');
-      setInvoices(await invoiceService.getDocById(1));
+      invoiceService.verifyInvoice(token).then(async (location) => {
+        console.log('getting invoice');
+        setInvoice(await invoiceService.getDocByLoc(location));
+        console.log('got invoice');
+      });
       setInvoiceStatus('succeeded');
     }
 
-    fetchInvoices();
-  }, []);
+    fetchInvoice();
+  }, [history, token]);
 
   let content;
 
-  if (!invoices) {
+  if (!invoice) {
     content = (
       <Dimmer active inverted>
         <Loader inverted content="Loading" />
@@ -34,11 +50,11 @@ export const Invoices = () => {
     );
   } else if (invoiceStatus === 'error') {
     content = <div>error</div>;
-  } else if (invoiceStatus === 'succeeded' && invoices) {
+  } else if (invoiceStatus === 'succeeded' && invoice) {
     //console.log('invoices: ', invoices);
     content = (
       <div>
-        <Document file={invoices} onLoadSuccess={onDocumentLoadSuccess}>
+        <Document file={invoice} onLoadSuccess={onDocumentLoadSuccess}>
           <Page pageNumber={pageNumber} />
         </Document>
         <p>

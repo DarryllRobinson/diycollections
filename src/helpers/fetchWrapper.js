@@ -19,7 +19,7 @@ function get(url) {
   );
 }
 
-function getDocument(url) {
+function getDocument(url, location) {
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -27,6 +27,8 @@ function getDocument(url) {
       'Content-Type': 'application/json',
       ...authHeader(url),
     },
+    credentials: 'include',
+    body: JSON.stringify(location),
   };
 
   return fetch(`${AppSettings.serverEndpoint}${url}`, requestOptions).then(
