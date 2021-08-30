@@ -12,6 +12,7 @@ import { Register } from './features/users/Register';
 import { ForgotPassword } from './features/users/ForgotPassword';
 import { ResetPassword } from './features/users/ResetPassword';
 import { VerifyEmail } from './features/users/VerifyEmail';
+import { ViewInvoice } from './features/invoices/ViewInvoice';
 
 function App() {
   const { pathname } = useLocation();
@@ -28,6 +29,7 @@ function App() {
         <Route path="/users/verify-email" exact component={VerifyEmail} />
         <Route path="/users/forgot-password" exact component={ForgotPassword} />
         <Route path="/users/reset-password" exact component={ResetPassword} />
+        <Route path="/invoices/view-invoice" exact component={ViewInvoice} />
         <PrivateRoute component={RouteDetermination} />
         <Redirect from="*" to="/" />
       </Switch>

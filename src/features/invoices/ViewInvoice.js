@@ -21,8 +21,11 @@ export const ViewInvoice = ({ history }) => {
   }
 
   useEffect(() => {
-    const { token } = queryString.parse(window.location.search);
-    setToken(token);
+    //const { token } = queryString.parse(window.location.search);
+    //setToken(token);
+    setToken(
+      '112759fc12e39bd1cc00aa699d4bfb563714abe833cf3a92a949682a4cb6d7163877f57538d8eee8'
+    );
 
     // remove token from url to prevent http referer leakage
     history.replace(window.location.pathname);
@@ -31,7 +34,7 @@ export const ViewInvoice = ({ history }) => {
       setInvoiceStatus('loading');
       invoiceService.verifyInvoice(token).then(async (location) => {
         console.log('getting invoice');
-        setInvoice(await invoiceService.getDocByLoc(location));
+        setInvoice(await invoiceService.getDocByLocUnauth(location));
         console.log('got invoice');
       });
       setInvoiceStatus('succeeded');

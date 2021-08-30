@@ -8,7 +8,7 @@ import { Profile } from '../users/Profile';
 
 export const Nav = () => {
   const [activeItem, setActiveItem] = useState(null);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   // Controls the Profile dropdown menu component so it stays open when clicked
   const [open, setOpen] = useState(false);
 
@@ -51,127 +51,142 @@ export const Nav = () => {
     </Menu.Item>
   );
 
-  if (
-    !user ||
-    history.location.pathname === '/' ||
-    history.location.pathname === '/login'
-  )
-    return null;
+  const menuToDisplay = () => {
+    // if not in the actual workspace
+    // display nothing - need to improve this really
+    if (
+      history.location.pathname === '/' ||
+      history.location.pathname === '/login'
+    ) {
+      return null;
+    }
 
-  return (
-    <Menu stackable fixed="top" inverted>
-      <Link to="/">
-        <Menu.Item>
-          <img src="https://react.semantic-ui.com/logo.png" alt="menu logo" />
-        </Menu.Item>
-      </Link>
+    // no user logged in - display different menu options
+    else if (!user) {
+      console.log('no user logged in');
+      return <div>No user logged in</div>;
+    } else {
+      return (
+        <Menu stackable fixed="top" inverted>
+          <Link to="/">
+            <Menu.Item>
+              <img
+                src="https://react.semantic-ui.com/logo.png"
+                alt="menu logo"
+              />
+            </Menu.Item>
+          </Link>
 
-      <Menu.Item
-        name="dashboard"
-        active={activeItem === 'dashboard'}
-        onClick={handleItemClick}
-      >
-        Dashboard
-      </Menu.Item>
-
-      <Menu.Item
-        name="collections"
-        active={activeItem === 'collections'}
-        onClick={handleItemClick}
-      >
-        Collections
-      </Menu.Item>
-
-      {[Role.Super].includes(user.role) && (
-        <Menu.Item
-          name="customers"
-          active={activeItem === 'customers'}
-          onClick={handleItemClick}
-        >
-          Customers
-        </Menu.Item>
-      )}
-
-      <Menu.Item
-        name="reports"
-        active={activeItem === 'reports'}
-        onClick={handleItemClick}
-      >
-        Reports
-      </Menu.Item>
-
-      <Menu.Item
-        name="upload"
-        active={activeItem === 'upload'}
-        onClick={handleItemClick}
-      >
-        Upload
-      </Menu.Item>
-
-      {[Role.Admin, Role.Super].includes(user.role) && (
-        <Menu.Item
-          name="users"
-          active={activeItem === 'users'}
-          onClick={handleItemClick}
-        >
-          User Admin
-        </Menu.Item>
-      )}
-
-      {user.role === Role.Super && (
-        <Dropdown item text="Client Admin">
-          <Dropdown.Menu>
-            <Dropdown.Item
-              name="addclient"
-              active={activeItem === 'clients'}
-              onClick={handleItemClick}
-            >
-              Add Client
-            </Dropdown.Item>
-            <Dropdown.Item
-              name="editclient"
-              active={activeItem === 'clients'}
-              onClick={handleItemClick}
-            >
-              Edit Client
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-      )}
-
-      <Menu.Menu position="right">
-        {[Role.Admin, Role.Super].includes(user.role) && (
           <Menu.Item
-            name="release"
-            active={activeItem === 'release'}
+            name="dashboard"
+            active={activeItem === 'dashboard'}
             onClick={handleItemClick}
           >
-            Release Notes & Bugs
+            Dashboard
           </Menu.Item>
-        )}
-        <Menu.Item>
-          <Dropdown
-            className="icon"
-            icon="user"
-            labeled
-            onClick={() => handleProfileClick(true)}
-            open={open}
-            text={user.firstName}
+
+          <Menu.Item
+            name="collections"
+            active={activeItem === 'collections'}
+            onClick={handleItemClick}
           >
-            <Dropdown.Menu>
-              <Dropdown.Item>
-                <Profile
-                  handleProfileClick={handleProfileClick}
-                  clickOutside={clickOutside}
-                  open={open}
-                  setOpen={setOpen}
-                />
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Item>
-        {logButton}
-      </Menu.Menu>
-    </Menu>
-  );
+            Collections
+          </Menu.Item>
+
+          {[Role.Super].includes(user.role) && (
+            <Menu.Item
+              name="customers"
+              active={activeItem === 'customers'}
+              onClick={handleItemClick}
+            >
+              Customers
+            </Menu.Item>
+          )}
+
+          <Menu.Item
+            name="reports"
+            active={activeItem === 'reports'}
+            onClick={handleItemClick}
+          >
+            Reports
+          </Menu.Item>
+
+          <Menu.Item
+            name="upload"
+            active={activeItem === 'upload'}
+            onClick={handleItemClick}
+          >
+            Upload
+          </Menu.Item>
+
+          {[Role.Admin, Role.Super].includes(user.role) && (
+            <Menu.Item
+              name="users"
+              active={activeItem === 'users'}
+              onClick={handleItemClick}
+            >
+              User Admin
+            </Menu.Item>
+          )}
+
+          {user.role === Role.Super && (
+            <Dropdown item text="Client Admin">
+              <Dropdown.Menu>
+                <Dropdown.Item
+                  name="addclient"
+                  active={activeItem === 'clients'}
+                  onClick={handleItemClick}
+                >
+                  Add Client
+                </Dropdown.Item>
+                <Dropdown.Item
+                  name="editclient"
+                  active={activeItem === 'clients'}
+                  onClick={handleItemClick}
+                >
+                  Edit Client
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
+
+          <Menu.Menu position="right">
+            {[Role.Admin, Role.Super].includes(user.role) && (
+              <Menu.Item
+                name="release"
+                active={activeItem === 'release'}
+                onClick={handleItemClick}
+              >
+                Release Notes & Bugs
+              </Menu.Item>
+            )}
+            <Menu.Item>
+              <Dropdown
+                className="icon"
+                icon="user"
+                labeled
+                onClick={() => handleProfileClick(true)}
+                open={open}
+                text={user.firstName}
+              >
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Profile
+                      handleProfileClick={handleProfileClick}
+                      clickOutside={clickOutside}
+                      open={open}
+                      setOpen={setOpen}
+                    />
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Item>
+            {logButton}
+          </Menu.Menu>
+        </Menu>
+      );
+    }
+  };
+
+  return menuToDisplay();
 };
