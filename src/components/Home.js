@@ -12,12 +12,10 @@ import {
   Icon,
   Image,
   List,
-  Menu,
   Segment,
   Sidebar,
   Visibility,
 } from 'semantic-ui-react';
-import { Link } from 'react-router-dom';
 
 import collections_demo from '../assets/img/collections_demo.png';
 
