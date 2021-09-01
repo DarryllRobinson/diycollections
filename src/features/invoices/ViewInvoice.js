@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Dimmer, Loader } from 'semantic-ui-react';
+import { Container, Dimmer, Loader, Message } from 'semantic-ui-react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import queryString from 'query-string';
 
@@ -22,36 +22,55 @@ export const ViewInvoice = ({ history }) => {
 
   useEffect(() => {
     const { token } = queryString.parse(window.location.search);
-    setToken(token);
-    //setToken('112759fc12e39bd1cc00aa699d4bfb563714abe833cf3a92a949682a4cb6d7163877f57538d8eee8');
+    console.log('token', token);
 
-    // remove token from url to prevent http referer leakage
-    history.replace(window.location.pathname);
+    if (token) {
+      setToken(token);
+      //setToken('112759fc12e39bd1cc00aa699d4bfb563714abe833cf3a92a949682a4cb6d7163877f57538d8eee8');
 
-    function fetchInvoice() {
-      setInvoiceStatus('loading');
-      invoiceService.verifyInvoice(token).then(async (location) => {
-        //console.log('getting invoice');
-        setInvoice(await invoiceService.getDocByLocUnauth(location));
-        //console.log('got invoice');
-      });
-      setInvoiceStatus('succeeded');
+      // remove token from url to prevent http referer leakage
+      history.replace(window.location.pathname);
+
+      function fetchInvoice() {
+        setInvoiceStatus('loading');
+        invoiceService.verifyInvoice(token).then(async (location) => {
+          //console.log('getting invoice');
+          setInvoice(await invoiceService.getDocByLocUnauth(location));
+          //const inv = await invoiceService.getDocByLoc(location);
+          //setInvoice(inv);
+          //console.log('got invoice: ', inv);
+        });
+        setInvoiceStatus('succeeded');
+      }
+
+      fetchInvoice();
+    } else {
+      setInvoiceStatus('error');
     }
-
-    fetchInvoice();
   }, [history, token]);
 
   let content;
 
-  if (!invoice) {
+  if (invoiceStatus === 'loading') {
     content = (
       <Dimmer active inverted>
         <Loader inverted content="Loading" />
       </Dimmer>
     );
   } else if (invoiceStatus === 'error') {
-    content = <div>error</div>;
-  } else if (invoiceStatus === 'succeeded' && invoice) {
+    content = (
+      <Message>
+        <p>
+          There was a problem retrieving your invoice. Please try again by
+          clicking on the link in the email.
+        </p>
+        <p>
+          Alternatively, you can contact us by clicking
+          <a href={`mailto:robot@thesystem.co.za`}> here</a>.
+        </p>
+      </Message>
+    );
+  } else if (invoiceStatus === 'succeeded') {
     //console.log('invoices: ', invoices);
     content = (
       <div>
