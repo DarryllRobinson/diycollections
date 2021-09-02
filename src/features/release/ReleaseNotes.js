@@ -18,6 +18,25 @@ export const ReleaseNotes = () => {
               <Table.Body>
                 <Table.Row>
                   <Table.Cell>
+                    <Header>Responsive menus</Header>
+                    <Icon name="code" color="blue" />
+                    Menus are now responsive to the screen size. Their exact
+                    content will be determined in time.
+                  </Table.Cell>
+                  <Table.Cell>2021/09/01</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
+                    <Header>Invoice sent via email</Header>
+                    <Icon name="code" color="blue" />
+                    Invoices sent via email with embedded token. The date and
+                    time the link is clicked are saved and will be displayed in
+                    the Customer section (WIP)
+                  </Table.Cell>
+                  <Table.Cell>2021/09/01</Table.Cell>
+                </Table.Row>
+                <Table.Row>
+                  <Table.Cell>
                     <Header>Resend email link to join</Header>
                     <Icon name="code" color="blue" />
                     Able to resend the invitation to join via email from the

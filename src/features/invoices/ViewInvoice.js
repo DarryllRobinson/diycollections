@@ -65,8 +65,8 @@ export const ViewInvoice = ({ history }) => {
           clicking on the link in the email.
         </p>
         <p>
-          Alternatively, you can contact us by clicking
-          <a href={`mailto:robot@thesystem.co.za`}> here</a>.
+          Alternatively, you can contact us by clicking {` `}
+          <a href={`mailto:robot@thesystem.co.za`}>here</a>.
         </p>
       </Message>
     );

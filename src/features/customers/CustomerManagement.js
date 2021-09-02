@@ -1,47 +1,138 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Dimmer, Form, Loader } from 'semantic-ui-react';
+import React, { useEffect, useReducer, useState } from 'react';
+import { Link } from 'react-router-dom';
+import {
+  Button,
+  Checkbox,
+  Container,
+  Dimmer,
+  Icon,
+  Loader,
+  Message,
+  Table,
+} from 'semantic-ui-react';
+import moment from 'moment';
 
 import { customerService } from './customer.service';
 
 export const CustomerManagement = () => {
-  const [customers, setCustomers] = useState(null);
-  const [customerStatus, setCustomerStatus] = useState('idle');
+  const [invoices, setInvoices] = useState(null);
+  const [invoicesStatus, setInvoicesStatus] = useState('idle');
 
   useEffect(() => {
-    async function fetchCustomers() {
+    /*async function fetchCustomers() {
       setCustomerStatus('loading');
       setCustomers(await customerService.getAll());
       setCustomerStatus('succeeded');
+    }*/
+
+    async function fetchInvoices() {
+      setInvoicesStatus('loading');
+      setInvoices(await customerService.getAllInvoices());
+      setInvoicesStatus('succeeded');
     }
 
-    fetchCustomers();
+    //fetchCustomers();
+    fetchInvoices();
   }, []);
+
+  // Currency converter function
+  const currencyFormatter = (currency) => {
+    //console.log('Currency: ', currency);
+    if (currency !== 0 && currency) {
+      return (
+        'R ' + currency.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ')
+      );
+    } else {
+      return 'R 0.00';
+    }
+  };
 
   let content;
 
-  if (!customers) {
+  if (invoicesStatus === 'loading') {
     content = (
-      <Dimmer active inverted>
-        <Loader inverted content="Loading" />
-      </Dimmer>
+      <Table.Row>
+        <Table.Cell>
+          <Dimmer active inverted>
+            <Loader inverted content="Loading" />
+          </Dimmer>
+        </Table.Cell>
+      </Table.Row>
     );
-  } else if (customerStatus === 'error') {
-    content = <div>error</div>;
-  } else if (customerStatus === 'succeeded' && customers) {
-    console.log('customers: ', customers);
-    content = customers.map((customer) => {
-      return (
-        <Form.Input
-          key={customer.customerRefNo}
-          defaultValue={customer.customerName}
-        />
-      );
-    });
+  } else if (invoicesStatus === 'error') {
+    content = <Message>error</Message>;
+  } else if (invoicesStatus === 'succeeded') {
+    console.log('invoices: ', invoices);
+    content = invoices.map(
+      ({ customerRefNo, customerName, hasViewed, viewed, totalBalance }) => {
+        let yay;
+        if (hasViewed) yay = true;
+        //if (invoice.customerRefNo === 'AEO101')
+        //console.log('invoice.hasViewed: ', invoice.hasViewed);
+        //console.log('content: ', content);
+        return (
+          <Table.Row key={customerRefNo} positive={yay}>
+            <Table.Cell collapsing>
+              <Button animated as={Link} to={`/customers/${customerRefNo}`}>
+                <Button.Content visible>
+                  <Icon name="cogs" />
+                </Button.Content>
+                <Button.Content hidden>Edit</Button.Content>
+              </Button>
+            </Table.Cell>
+            <Table.Cell>{customerRefNo}</Table.Cell>
+            <Table.Cell>{customerName}</Table.Cell>
+            {hasViewed && (
+              <Table.Cell>
+                {moment(viewed).format('YYYY-MM-DD HH:mm:ss')}
+              </Table.Cell>
+            )}
+            {!hasViewed && <Table.Cell></Table.Cell>}
+            <Table.Cell textAlign="right">
+              {currencyFormatter(totalBalance)}
+            </Table.Cell>
+          </Table.Row>
+        );
+      }
+    );
   }
 
   return (
     <Container>
-      <Form>{content}</Form>
+      <Table compact celled definition sortable striped>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell />
+            <Table.HeaderCell>Customer Reference</Table.HeaderCell>
+            <Table.HeaderCell>Customer</Table.HeaderCell>
+            <Table.HeaderCell>Most Recent Invoice Viewed</Table.HeaderCell>
+            <Table.HeaderCell>Total Outstanding</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+
+        <Table.Body>{content}</Table.Body>
+
+        <Table.Footer fullWidth>
+          <Table.Row>
+            <Table.HeaderCell />
+            <Table.HeaderCell colSpan="4">
+              <Button
+                floated="right"
+                icon
+                labelPosition="left"
+                primary
+                size="small"
+              >
+                <Icon name="user" /> Add User
+              </Button>
+              <Button size="small">Approve</Button>
+              <Button disabled size="small">
+                Approve All
+              </Button>
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
+      </Table>
     </Container>
   );
 };

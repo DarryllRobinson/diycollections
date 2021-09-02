@@ -2,6 +2,7 @@ import { fetchWrapper } from '../../helpers';
 
 export const customerService = {
   getAll,
+  getAllInvoices,
   getById,
   create,
   update,
@@ -10,6 +11,10 @@ export const customerService = {
 
 function getAll() {
   return fetchWrapper.get('/customers');
+}
+
+function getAllInvoices() {
+  return fetchWrapper.get('/customers/invoices');
 }
 
 function getById(id) {

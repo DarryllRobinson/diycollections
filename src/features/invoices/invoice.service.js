@@ -1,10 +1,15 @@
 import { fetchWrapper } from '../../helpers';
 
 export const invoiceService = {
+  getAll,
   getDocByLoc,
   getDocByLocUnauth,
   verifyInvoice,
 };
+
+function getAll() {
+  return fetchWrapper.get('/invoices');
+}
 
 function getDocByLoc(location) {
   //console.log('getDocByLoc: ', location);
