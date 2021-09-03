@@ -1,8 +1,7 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Button,
-  Checkbox,
   Container,
   Dimmer,
   Icon,
@@ -62,7 +61,7 @@ export const CustomerManagement = () => {
   } else if (invoicesStatus === 'error') {
     content = <Message>error</Message>;
   } else if (invoicesStatus === 'succeeded') {
-    console.log('invoices: ', invoices);
+    //console.log('invoices: ', invoices);
     content = invoices.map(
       ({ customerRefNo, customerName, hasViewed, viewed, totalBalance }) => {
         let yay;
