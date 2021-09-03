@@ -116,13 +116,15 @@ export const CustomerManagement = () => {
             <Table.HeaderCell />
             <Table.HeaderCell colSpan="4">
               <Button
+                as={Link}
+                to="/customers/create"
                 floated="right"
                 icon
                 labelPosition="left"
                 primary
                 size="small"
               >
-                <Icon name="user" /> Add User
+                <Icon name="user" /> Add Customer
               </Button>
               <Button size="small">Approve</Button>
               <Button disabled size="small">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Dimmer, Form, Loader, Message } from 'semantic-ui-react';
 
 import { accountService } from '../accounts/account.service';
-import { alertService } from '../alerts/alert.service';
+//import { alertService } from '../alerts/alert.service';
 import { customerService } from './customer.service';
 
 export const CustomerEditor = ({ match }) => {
@@ -44,11 +44,11 @@ export const CustomerEditor = ({ match }) => {
       days30,
       days60,
       days90,
-      days120,
+      /*days120,
       days150,
       days180,
       days180Over,
-      totalBalance,
+      totalBalance,*/
     } = account;
     console.log('account: ', account);
     console.log('customer: ', customer);

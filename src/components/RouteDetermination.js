@@ -10,6 +10,7 @@ import { Collection } from '../features/collections/Collection';
 
 import { CustomerManagement } from '../features/customers/CustomerManagement';
 import { CustomerEditor } from '../features/customers/CustomerEditor';
+import CustomerCreator from '../features/customers/CustomerCreator';
 
 import Upload from '../features/upload/Upload';
 import Reports from '../features/reports/Reports';
@@ -52,6 +53,12 @@ export const RouteDetermination = () => {
           exact
           roles={[Role.Super]}
           component={CustomerManagement}
+        />
+        <PrivateRoute
+          path="/customers/create"
+          exact
+          roles={[Role.Super]}
+          component={CustomerCreator}
         />
         <PrivateRoute
           path="/customers/:id"
