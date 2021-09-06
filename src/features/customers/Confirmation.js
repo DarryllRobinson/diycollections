@@ -27,8 +27,27 @@ class Confirmation extends Component {
         address4,
         address5,
         f_clientId,
-        directDebitDate,
+        accountNumber,
+        accountName,
+        openDate,
+        debtorAge,
         paymentTermDays,
+        creditLimit,
+        totalBalance,
+        amountDue,
+        currentBalance,
+        days30,
+        days60,
+        days90,
+        days120,
+        days150,
+        days180,
+        days180Over,
+        paymentMethod,
+        paymentDueDate,
+        debitOrderDate,
+        accountNotes,
+        accountStatus,
         primaryContactName,
         primaryContactNumber,
       },
@@ -115,7 +134,7 @@ class Confirmation extends Component {
 
             <List.Item>
               <List.Icon name="calendar" size="large" />
-              <List.Content>Direct Debit Date: {directDebitDate}</List.Content>
+              <List.Content>Direct Debit Date: {debitOrderDate}</List.Content>
             </List.Item>
 
             <List.Item>
