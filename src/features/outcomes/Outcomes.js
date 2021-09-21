@@ -17,7 +17,7 @@ export const Outcomes = (props) => {
     }
 
     fetchOutcomes();
-  }, [outcomeStatus]);
+  }, [id, outcomeStatus]);
 
   let outcomesBundle;
 

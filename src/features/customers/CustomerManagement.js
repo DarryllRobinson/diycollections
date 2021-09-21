@@ -18,11 +18,7 @@ export const CustomerManagement = () => {
   const [invoicesStatus, setInvoicesStatus] = useState('idle');
 
   useEffect(() => {
-    /*async function fetchCustomers() {
-      setCustomerStatus('loading');
-      setCustomers(await customerService.getAll());
-      setCustomerStatus('succeeded');
-    }*/
+    window.scrollTo(0, 0);
 
     async function fetchInvoices() {
       setInvoicesStatus('loading');

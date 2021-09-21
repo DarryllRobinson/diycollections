@@ -21,6 +21,23 @@ function Alert({ id, fade }) {
   useEffect(() => {
     // subscribe to new alert notifications
     const subscription = alertService.onAlert(id).subscribe((alert) => {
+      function removeAlert(alert) {
+        if (fade) {
+          // fade out alert
+          const alertWithFade = { ...alert, fade: true };
+          setAlerts((alerts) =>
+            alerts.map((x) => (x === alert ? alertWithFade : x))
+          );
+
+          // remove alert after faded out
+          setTimeout(() => {
+            setAlerts((alerts) => alerts.filter((x) => x !== alertWithFade));
+          }, 250);
+        } else {
+          // remove alert
+          setAlerts((alerts) => alerts.filter((x) => x !== alert));
+        }
+      }
       // clear alerts when an empty alert is received
       if (!alert.message) {
         setAlerts((alerts) => {
@@ -56,25 +73,7 @@ function Alert({ id, fade }) {
       subscription.unsubscribe();
       historyUnlisten();
     };
-  }, []);
-
-  function removeAlert(alert) {
-    if (fade) {
-      // fade out alert
-      const alertWithFade = { ...alert, fade: true };
-      setAlerts((alerts) =>
-        alerts.map((x) => (x === alert ? alertWithFade : x))
-      );
-
-      // remove alert after faded out
-      setTimeout(() => {
-        setAlerts((alerts) => alerts.filter((x) => x !== alertWithFade));
-      }, 250);
-    } else {
-      // remove alert
-      setAlerts((alerts) => alerts.filter((x) => x !== alert));
-    }
-  }
+  }, [fade, id]);
 
   function cssClasses(alert) {
     if (!alert) return;

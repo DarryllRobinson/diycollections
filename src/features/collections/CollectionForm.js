@@ -561,9 +561,9 @@ export const CollectionForm = (props) => {
   });
 
   const updateDatabase = async (process) => {
-    let newCaseNote;
-    let newKamNote;
-    let newOutcomeNote;
+    let newCaseNote = null;
+    let newKamNote = null;
+    let newOutcomeNote = null;
 
     if (state.fields.entities['newKamNotes'].value !== '') {
       newKamNote =
@@ -590,47 +590,48 @@ export const CollectionForm = (props) => {
     const closedBy = user.email;
 
     let caseUpdate;
+    console.log('newKamNote: ', newKamNote);
     // Working out which role for notes and what action has been submitted
-    if (process === 'Closed' && newKamNote !== '' && newCaseNote !== '') {
+    if (process === 'Closed' && newKamNote && newCaseNote) {
+      console.log('1 ');
       caseUpdate = {
+        currentAssignment: null,
         currentStatus: process,
         caseNotes: newCaseNote,
         kamNotes: newKamNote,
+        nextVisitDateTime: null,
         resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
-    } else if (
-      process === 'Closed' &&
-      newKamNote !== '' &&
-      newCaseNote === ''
-    ) {
+    } else if (process === 'Closed' && newKamNote && !newCaseNote) {
+      console.log('2');
       caseUpdate = {
+        currentAssignment: null,
         currentStatus: process,
         kamNotes: newKamNote,
+        nextVisitDateTime: null,
         resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
-    } else if (
-      process === 'Closed' &&
-      newKamNote === '' &&
-      newCaseNote !== ''
-    ) {
+    } else if (process === 'Closed' && !newKamNote && newCaseNote) {
+      console.log('3');
       caseUpdate = {
+        currentAssignment: null,
         currentStatus: process,
         caseNotes: newCaseNote,
+        nextVisitDateTime: null,
         resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
-    } else if (
-      process === 'Closed' &&
-      newKamNote === '' &&
-      newCaseNote === ''
-    ) {
+    } else if (process === 'Closed' && !newKamNote && !newCaseNote) {
+      console.log('4');
       caseUpdate = {
+        currentAssignment: null,
         currentStatus: process,
+        nextVisitDateTime: null,
         resolution: state.fields.entities['resolution'].value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
@@ -811,7 +812,10 @@ export const CollectionForm = (props) => {
       };
     }
 
+    //console.log('account about to be updated');
     await accountService.updateAccount(accountNumber, accountUpdate);
+    //console.log('account updated');
+    console.log('case update: ', caseUpdate);
     await caseService.updateCase(id, caseUpdate);
     const outcomeStatus = await outcomeService.createOutcome(outcomeInsert);
 

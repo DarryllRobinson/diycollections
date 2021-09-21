@@ -11,6 +11,7 @@ class Reports extends React.Component {
     this.state = {
       reports: {
         ids: ['aging', 'agentPTP', 'datePTP'],
+        //ids: ['aging'],
         entities: {
           aging: {
             data: null,

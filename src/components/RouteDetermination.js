@@ -12,6 +12,10 @@ import { CustomerManagement } from '../features/customers/CustomerManagement';
 import { CustomerEditor } from '../features/customers/CustomerEditor';
 import CustomerCreator from '../features/customers/CustomerCreator';
 
+import { ClientManagement } from '../features/clients/ClientManagement';
+import { ClientCreator } from '../features/clients/ClientCreator';
+import { ClientEditor } from '../features/clients/ClientEditor';
+
 import Upload from '../features/upload/Upload';
 import Reports from '../features/reports/Reports';
 import { Role } from '../helpers';
@@ -65,6 +69,25 @@ export const RouteDetermination = () => {
           exact
           roles={[Role.Super]}
           component={CustomerEditor}
+        />
+
+        <PrivateRoute
+          path="/clients"
+          exact
+          roles={[Role.Super]}
+          component={ClientManagement}
+        />
+        <PrivateRoute
+          path="/clients/create"
+          exact
+          roles={[Role.Super]}
+          component={ClientCreator}
+        />
+        <PrivateRoute
+          path="/clients/:id"
+          exact
+          roles={[Role.Super]}
+          component={ClientEditor}
         />
 
         {/* Redirect all unauthorised */}

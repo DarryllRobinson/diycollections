@@ -42,7 +42,7 @@ function ResetPassword({ history }) {
       .catch(() => {
         setTokenStatus(TokenStatus.Invalid);
       });
-  }, []);
+  }, [history, TokenStatus.Invalid, TokenStatus.Valid]);
 
   const handlePassword = (e) => {
     const value = e.target.value;
@@ -143,6 +143,7 @@ function ResetPassword({ history }) {
         } catch (e) {
           console.log('onSubmit e: ', e);
         }
+        break;
       case TokenStatus.Invalid:
         return (
           <Segment>

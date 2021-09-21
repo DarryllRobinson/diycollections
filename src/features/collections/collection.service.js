@@ -7,8 +7,14 @@ export const collectionService = {
 
 function getAll() {
   return fetchWrapper.get('/collections');
+  //const coll = await fetchWrapper.get('/collections');
+  //console.log(coll);
+  //return coll;
 }
 
-function getCollection(id) {
+async function getCollection(id) {
+  /*const coll = await fetchWrapper.get(`/collections/${id}`);
+  console.log(coll);
+  return coll;*/
   return fetchWrapper.get(`/collections/${id}`);
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   Button,
   Container,
@@ -29,7 +29,7 @@ export const Collections = (props) => {
       ? props.location.state.caseStatus
       : 'Open';
 
-  const loadRecords = async (caseStatus) => {
+  const loadRecords = useCallback(async (caseStatus) => {
     const records = await collectionService.getAll();
     /*console.log('records:', records);
     const message = records[0].message;
@@ -40,8 +40,7 @@ export const Collections = (props) => {
     setCollections(records);
     setRecordStatus(caseStatus);
     setCollectionStatus('succeeded');
-    //console.log('collections: ', collections);
-  };
+  }, []);
 
   useEffect(() => {
     if (collectionStatus === 'idle') {
@@ -65,7 +64,7 @@ export const Collections = (props) => {
     );
   } else {
     content = collections.map((collections) => {
-      //console.log('got some collections: ', collections.updatedAt);
+      //console.log('got some collections: ', collections.customerName);
       if (collections.currentStatus === recordStatus) {
         const hlink = `/collection/${collections.caseNumber}`;
         return (
@@ -89,7 +88,11 @@ export const Collections = (props) => {
             </Table.Cell>
             <Table.Cell>{collections.resolution}</Table.Cell>
             <Table.Cell>
-              {moment(collections.nextVisitDateTime).format('YYYY-MM-DD HH:mm')}
+              {collections.nextVisitDateTime
+                ? moment(collections.nextVisitDateTime).format(
+                    'YYYY-MM-DD HH:mm'
+                  )
+                : ''}
             </Table.Cell>
             <Table.Cell>{collections.currentAssignment}</Table.Cell>
             <Table.Cell>{collections.updatedBy}</Table.Cell>

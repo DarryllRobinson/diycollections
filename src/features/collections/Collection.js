@@ -29,39 +29,42 @@ export const Collection = (props) => {
   const [collection, setCollection] = useState(null);
   const [collectionStatus, setCollectionStatus] = useState('idle');
 
-  const loadRecord = async () => {
-    setCollection(await collectionService.getCollection(id));
-    setCollectionStatus('succeeded');
-  };
-
-  const lockRecord = async () => {
-    // lock the record so no other agent accidentally opens it
-    const dateTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
-    const update = {
-      currentStatus: 'Locked',
-      lockedDateTime: dateTime,
-    };
-    await caseService.updateCase(id, update);
-  };
-
   useEffect(() => {
+    const lockRecord = async () => {
+      // lock the record so no other agent accidentally opens it
+      const dateTime = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
+      const update = {
+        currentStatus: 'Locked',
+        lockedDateTime: dateTime,
+      };
+      await caseService.updateCase(id, update);
+    };
+
+    const loadRecord = async () => {
+      setCollectionStatus('loading');
+      setCollection(await collectionService.getCollection(id));
+      setCollectionStatus('succeeded');
+    };
+
     if (collectionStatus === 'idle') {
       loadRecord();
       lockRecord();
     }
-  }, [collectionStatus]);
+  }, [collectionStatus, id]);
 
   let content;
 
-  if (!collection) {
-    return (
+  if (collectionStatus === 'loading') {
+    content = (
       <Container>
         <Dimmer active>
           <Loader>Loading...</Loader>
         </Dimmer>
       </Container>
     );
-  } else {
+  } else if (collectionStatus === 'error') {
+    content = <Container>error</Container>;
+  } else if (collectionStatus === 'succeeded') {
     //console.log('Collection loaded: ', collection);
 
     // Preparing variables for rendering
@@ -399,8 +402,8 @@ export const Collection = (props) => {
               <Form.Group widths="equal">
                 <Form.Input
                   fluid
+                  //id="form-input-control-nextVisitDateTime"
                   label="Next Visit Date and Time"
-                  id="form-input-control-nextVisitDateTime"
                   readOnly
                   defaultValue={collection.nextVisitDateTime}
                 />
@@ -447,11 +450,9 @@ export const Collection = (props) => {
         </Card>
         {/* --------------------------------------------- Outcome History section ------------------------------------------------------- */}
         <br />
-
         <Card raised centered fluid>
           <Outcomes id={id} />
         </Card>
-
         {/* --------------------------------------------- New activity section ------------------------------------------------------- */}
         <br />
         <CollectionForm

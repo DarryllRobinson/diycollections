@@ -15,6 +15,6 @@ function getCase(id) {
 }
 
 function updateCase(id, params) {
-  //console.log('updateCase id: ' + id);
+  //console.log('updateCase id: ', id, params);
   return fetchWrapper.put(`/cases/${id}`, params);
 }

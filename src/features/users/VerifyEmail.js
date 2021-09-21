@@ -39,7 +39,7 @@ function VerifyEmail({ history }) {
       .catch(() => {
         setEmailStatus(EmailStatus.Failed);
       });
-  }, []);
+  }, [EmailStatus.Failed, EmailStatus.Setting, history]);
 
   const handlePassword = (e) => {
     const value = e.target.value;
