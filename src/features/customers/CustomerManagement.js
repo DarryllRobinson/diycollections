@@ -59,14 +59,12 @@ export const CustomerManagement = () => {
   } else if (invoicesStatus === 'succeeded') {
     //console.log('invoices: ', invoices);
     content = invoices.map(
-      ({ customerRefNo, customerName, hasViewed, viewed, totalBalance }) => {
-        let yay;
-        if (hasViewed) yay = true;
+      ({ customerRefNo, customerName, viewed, totalBalance }) => {
         //if (invoice.customerRefNo === 'AEO101')
         //console.log('invoice.hasViewed: ', invoice.hasViewed);
         //console.log('content: ', content);
         return (
-          <Table.Row key={customerRefNo} positive={yay}>
+          <Table.Row key={customerRefNo} positive={!!viewed}>
             <Table.Cell collapsing>
               <Button animated as={Link} to={`/customers/${customerRefNo}`}>
                 <Button.Content visible>
@@ -77,12 +75,12 @@ export const CustomerManagement = () => {
             </Table.Cell>
             <Table.Cell>{customerRefNo}</Table.Cell>
             <Table.Cell>{customerName}</Table.Cell>
-            {hasViewed && (
+            {!!viewed && (
               <Table.Cell>
                 {moment(viewed).format('YYYY-MM-DD HH:mm:ss')}
               </Table.Cell>
             )}
-            {!hasViewed && <Table.Cell></Table.Cell>}
+            {!viewed && <Table.Cell></Table.Cell>}
             <Table.Cell textAlign="right">
               {currencyFormatter(totalBalance)}
             </Table.Cell>

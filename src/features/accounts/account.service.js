@@ -3,6 +3,7 @@ import { fetchWrapper } from '../../helpers';
 export const accountService = {
   getAll,
   getAccount,
+  createAccount,
   updateAccount,
 };
 
@@ -12,6 +13,10 @@ function getAll() {
 
 function getAccount(id) {
   return fetchWrapper.get(`/accounts/${id}`);
+}
+
+function createAccount(params) {
+  return fetchWrapper.post(`/accounts`, params);
 }
 
 function updateAccount(id, params) {

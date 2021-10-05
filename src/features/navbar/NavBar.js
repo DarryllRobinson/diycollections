@@ -422,6 +422,14 @@ export const NavBar = () => {
             </Link>
 
             <Menu.Item
+              name="pay"
+              active={activeItem === 'pay'}
+              onClick={handleItemClick}
+            >
+              Pay Now
+            </Menu.Item>
+
+            <Menu.Item
               name="ptp"
               active={activeItem === 'ptp'}
               onClick={handleItemClick}

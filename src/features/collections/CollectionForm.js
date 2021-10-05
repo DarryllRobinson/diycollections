@@ -593,7 +593,7 @@ export const CollectionForm = (props) => {
     console.log('newKamNote: ', newKamNote);
     // Working out which role for notes and what action has been submitted
     if (process === 'Closed' && newKamNote && newCaseNote) {
-      console.log('1 ');
+      //console.log('1 ');
       caseUpdate = {
         currentAssignment: null,
         currentStatus: process,
@@ -605,7 +605,7 @@ export const CollectionForm = (props) => {
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
     } else if (process === 'Closed' && newKamNote && !newCaseNote) {
-      console.log('2');
+      //console.log('2');
       caseUpdate = {
         currentAssignment: null,
         currentStatus: process,
@@ -616,7 +616,7 @@ export const CollectionForm = (props) => {
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
     } else if (process === 'Closed' && !newKamNote && newCaseNote) {
-      console.log('3');
+      //console.log('3');
       caseUpdate = {
         currentAssignment: null,
         currentStatus: process,
@@ -627,7 +627,7 @@ export const CollectionForm = (props) => {
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
     } else if (process === 'Closed' && !newKamNote && !newCaseNote) {
-      console.log('4');
+      //console.log('4');
       caseUpdate = {
         currentAssignment: null,
         currentStatus: process,

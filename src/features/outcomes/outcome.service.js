@@ -17,7 +17,7 @@ function getOutcomesByCaseNumber(caseNumber) {
 }
 
 function createOutcome(params) {
-  console.log('createOutcome', params);
+  //console.log('createOutcome', params);
   return fetchWrapper.post('/outcomes', params);
 }
 

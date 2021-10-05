@@ -1,14 +1,15 @@
 import { fetchWrapper } from '../../helpers';
 
 export const invoiceService = {
-  getAll,
+  getAllByCustomer,
   getDocByLoc,
   getDocByLocUnauth,
   verifyInvoice,
 };
 
-function getAll() {
-  return fetchWrapper.get('/invoices');
+function getAllByCustomer(customerRefNo) {
+  //console.log('getAllByCustomer customerRefNo: ', customerRefNo);
+  return fetchWrapper.get(`/invoices/${customerRefNo}`);
 }
 
 function getDocByLoc(location) {
@@ -19,7 +20,7 @@ function getDocByLoc(location) {
 }
 
 function getDocByLocUnauth(location) {
-  console.log('getDocByLocUnauth: ', location);
+  //console.log('getDocByLocUnauth: ', location);
   return fetchWrapper.getDocument(`/invoices/u-document`, location);
   //console.log('invoice: ', invoice);
   //return invoice;

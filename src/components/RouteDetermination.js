@@ -8,9 +8,10 @@ import { Dashboard } from '../features/dashboard/Dashboard';
 import { Collections } from '../features/collections/Collections';
 import { Collection } from '../features/collections/Collection';
 
-import { CustomerManagement } from '../features/customers/CustomerManagement';
-import { CustomerEditor } from '../features/customers/CustomerEditor';
-import CustomerCreator from '../features/customers/CustomerCreator';
+import { Customers } from '../features/customers';
+
+import { Customer } from '../features/customer';
+import { Invoices } from '../features/invoices/Invoices';
 
 import { ClientManagement } from '../features/clients/ClientManagement';
 import { ClientCreator } from '../features/clients/ClientCreator';
@@ -54,21 +55,21 @@ export const RouteDetermination = () => {
         />
         <PrivateRoute
           path="/customers"
+          roles={[Role.Super]}
+          component={Customers}
+        />
+
+        <PrivateRoute
+          path="/customer"
           exact
           roles={[Role.Super]}
-          component={CustomerManagement}
+          component={Customer}
         />
         <PrivateRoute
-          path="/customers/create"
+          path="/customer/invoices"
           exact
           roles={[Role.Super]}
-          component={CustomerCreator}
-        />
-        <PrivateRoute
-          path="/customers/:id"
-          exact
-          roles={[Role.Super]}
-          component={CustomerEditor}
+          component={Invoices}
         />
 
         <PrivateRoute

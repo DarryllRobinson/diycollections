@@ -5,11 +5,12 @@ import queryString from 'query-string';
 
 import { invoiceService } from './invoice.service';
 
-export const ViewInvoice = ({ history }) => {
+export const InvoiceViewer = (props) => {
+  //console.log('InvoiceViewer props:', props);
   /*const [token, setToken] = useState(
     '22d778db637f80166bc4da6b3dcba85e565149093d2b60639d138858e55da3536d41646576e9b702'
   );*/
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(props.token);
 
   const [invoice, setInvoice] = useState(null);
   const [invoiceStatus, setInvoiceStatus] = useState('idle');
@@ -25,7 +26,7 @@ export const ViewInvoice = ({ history }) => {
   */
 
   useEffect(() => {
-    const { token } = queryString.parse(window.location.search);
+    //const { token } = queryString.parse(window.location.search);
     //console.log('token', token);
 
     if (token) {
@@ -52,7 +53,7 @@ export const ViewInvoice = ({ history }) => {
     } else {
       setInvoiceStatus('error');
     }
-  }, [history]);
+  }, []);
 
   let content;
 
@@ -89,5 +90,5 @@ export const ViewInvoice = ({ history }) => {
     );
   }
 
-  return <Container className="RouteDetermination">{content}</Container>;
+  return <Container>{content}</Container>;
 };
