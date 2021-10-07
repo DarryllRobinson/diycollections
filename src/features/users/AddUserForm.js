@@ -24,6 +24,7 @@ export const AddUserForm = (props) => {
     { key: 1, text: 'Admin', value: 'Admin' },
     { key: 2, text: 'Agent', value: 'Agent' },
     { key: 3, text: 'KAM', value: 'Kam' },
+    { key: 4, text: 'Customer', value: 'Customer' },
   ];
 
   // Handlers

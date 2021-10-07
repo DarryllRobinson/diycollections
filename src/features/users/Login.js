@@ -26,8 +26,13 @@ const LoginForm = ({ history, location }) => {
 
     userService
       .login(email, password)
-      .then(() => {
-        const { from } = location.state || { from: { pathname: '/dashboard' } };
+      .then((user) => {
+        //console.log('user.role: ', user.role);
+
+        // determine which workspace to push into
+        //console.log('user.role === Customer', user.role === 'Customer');
+        const workspace = user.role !== 'Customer' ? '/dashboard' : '/customer';
+        const { from } = location.state || { from: { pathname: workspace } };
         history.push(from);
       })
       .catch((error) => {

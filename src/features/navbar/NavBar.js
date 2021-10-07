@@ -214,7 +214,7 @@ export const NavBar = () => {
 
   // Containers for different menu states according to display size
   function desktopNavbarLogin() {
-    console.log('login page');
+    //console.log('login page');
     return (
       <Segment
         inverted
@@ -295,7 +295,7 @@ export const NavBar = () => {
   }
 
   function desktopNavbar() {
-    console.log('desktopNavbar user: ', user);
+    //console.log('desktopNavbar user: ', user);
     return (
       <>
         <Menu stackable fixed="top" inverted>
@@ -566,6 +566,179 @@ export const NavBar = () => {
     );
   }
 
+  function desktopCustomerNavbar() {
+    //console.log('desktopCustomerNavbar user: ', user);
+    return (
+      <>
+        <Menu stackable fixed="top" inverted>
+          <Link to="/">
+            <Menu.Item>
+              <img
+                src="https://react.semantic-ui.com/logo.png"
+                alt="menu logo"
+              />
+            </Menu.Item>
+          </Link>
+
+          <Menu.Item
+            name="customer"
+            active={activeItem === 'customer'}
+            onClick={handleItemClick}
+          >
+            Dashboard
+          </Menu.Item>
+
+          <Menu.Item
+            name="customer/edit"
+            active={activeItem === 'customer/edit'}
+            onClick={handleItemClick}
+          >
+            Edit
+          </Menu.Item>
+
+          <Menu.Item
+            name="customer/invoices"
+            active={activeItem === 'customer/invoices'}
+            onClick={handleItemClick}
+          >
+            Invoices
+          </Menu.Item>
+
+          <Menu.Item
+            name="customer/theme"
+            active={activeItem === 'customer/theme'}
+            onClick={handleItemClick}
+          >
+            Theme
+          </Menu.Item>
+
+          <Menu.Menu position="right">
+            <Menu.Item>
+              <Dropdown
+                className="icon"
+                icon="user"
+                labeled
+                onClick={() => handleProfileClick(true)}
+                open={open}
+                text={user.firstName}
+              >
+                <Dropdown.Menu>
+                  <Dropdown.Item>
+                    <Profile
+                      handleProfileClick={handleProfileClick}
+                      //clickOutside={clickOutside}
+                      open={open}
+                      setOpen={setOpen}
+                    />
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Menu.Item>
+            {logButton}
+          </Menu.Menu>
+        </Menu>
+      </>
+    );
+  }
+
+  function mobileCustomerNavbar() {
+    //console.log('mobileNCustomeravbar user: ', user);
+    return (
+      <>
+        {user && (
+          <Container as={Sidebar.Pushable} at="mobile">
+            <Sidebar.Pushable>
+              <Sidebar
+                as={Menu}
+                animation="overlay"
+                inverted
+                onHide={handleSidebarHide}
+                vertical
+                visible={sidebarOpened}
+              >
+                <Menu.Item
+                  name="customer"
+                  active={activeItem === 'customer'}
+                  onClick={handleItemClick}
+                >
+                  Dashboard
+                </Menu.Item>
+
+                <Menu.Item
+                  name="customer/edit"
+                  active={activeItem === 'customer/edit'}
+                  onClick={handleItemClick}
+                >
+                  Edit
+                </Menu.Item>
+
+                <Menu.Item
+                  name="customer/invoices"
+                  active={activeItem === 'customer/invoices'}
+                  onClick={handleItemClick}
+                >
+                  Invoices
+                </Menu.Item>
+
+                <Menu.Item
+                  name="customer/theme"
+                  active={activeItem === 'customer/theme'}
+                  onClick={handleItemClick}
+                >
+                  Theme
+                </Menu.Item>
+
+                <Menu.Item>
+                  <Dropdown
+                    className="icon"
+                    icon="user"
+                    labeled
+                    onClick={() => handleProfileClick(true)}
+                    open={open}
+                    text={user.firstName}
+                  >
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        <Profile
+                          handleProfileClick={handleProfileClick}
+                          open={open}
+                          setOpen={setOpen}
+                        />
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </Menu.Item>
+                {logButton}
+              </Sidebar>
+
+              <Sidebar.Pusher dimmed={sidebarOpened}>
+                <Segment
+                  inverted
+                  textAlign="center"
+                  style={{ minHeight: 50, padding: '1em 0em' }}
+                  vertical
+                >
+                  <Container>
+                    <Menu inverted pointing secondary size="large">
+                      <Menu.Item onClick={handleToggle}>
+                        <Icon name="sidebar" />
+                      </Menu.Item>
+                      <Menu.Item position="right">
+                        <Button as={Link} to="/customer" inverted>
+                          Stuff to come here
+                        </Button>
+                      </Menu.Item>
+                    </Menu>
+                  </Container>
+                </Segment>
+              </Sidebar.Pusher>
+            </Sidebar.Pushable>
+          </Container>
+        )}
+      </>
+    );
+  }
+
   function desktopDefault() {
     return (
       <Menu stackable fixed="top" inverted>
@@ -651,7 +824,7 @@ export const NavBar = () => {
     // Order of priority
     // 1) Is it the Home page?
     if (history.location.pathname === '/') {
-      console.log('Home page');
+      //console.log('Home page');
       return (
         <div>
           <Media greaterThan="mobile">{desktopNavbarHome()}</Media>
@@ -662,7 +835,7 @@ export const NavBar = () => {
 
     // 2) Is it the Login page?
     if (history.location.pathname === '/login') {
-      console.log('history.location.pathname === /login');
+      //console.log('history.location.pathname === /login');
       return (
         <div>
           <Media greaterThan="mobile">{desktopNavbarLogin()}</Media>
@@ -672,8 +845,18 @@ export const NavBar = () => {
     }
 
     // 3) Is user logged in?
-    // 3a) If yes, then display workspace navbar
+    // 3a) If yes, then determine role and subsequent navbar
     if (user) {
+      if (user.role === 'Customer') {
+        return (
+          <div>
+            <Media greaterThan="mobile">{desktopCustomerNavbar()}</Media>
+            <Media at="mobile">{mobileCustomerNavbar()}</Media>
+          </div>
+        );
+      }
+
+      // return general workspace navbar
       return (
         <div>
           <Media greaterThan="mobile">{desktopNavbar()}</Media>
@@ -682,7 +865,7 @@ export const NavBar = () => {
       );
     }
 
-    // 3b) If no, then determine role and subsequent navbar
+    // 3b) If no, then return the default
 
     console.log('default return');
     return (
@@ -696,7 +879,6 @@ export const NavBar = () => {
   return (
     <MediaContextProvider>
       <style>{mediaStyles}</style>
-      {console.log('user: ', user)}
       {menuToDisplay()}
     </MediaContextProvider>
   );
