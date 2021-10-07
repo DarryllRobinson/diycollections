@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const cardContent = [
   {
-    href: '/customer/edit',
+    href: '/customer/AIM101',
     header: 'Edit',
     icon: 'edit',
   },
@@ -43,7 +43,7 @@ const cardBuild = () => {
   });
 };
 
-export const Customer = () => {
+export const CustomerManagement = () => {
   return (
     <Container className="RouteDetermination">
       <Header

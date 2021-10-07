@@ -33,39 +33,34 @@ export const NavBar = () => {
       widescreen: 1920,
     },
   });
-
   const mediaStyles = AppMedia.createMediaStyle();
   const { Media, MediaContextProvider } = AppMedia;
 
   useEffect(() => {
-    /*console.log('setting user');
     setUser(userService.userValue);
-    console.log('set user: ', user);*/
-    const subscription = userService.user.subscribe((x) => setUser(x));
-    return subscription.unsubscribe;
+    //setUser('Darryll');
   }, []);
 
   // Handlers
   // Handler for navbar option click
-  function handleItemClick(e, { name }) {
+  const handleItemClick = (e, { name }) => {
     setActiveItem(name);
     history.push(`/${name}`);
-  }
+  };
 
   // handlers for dropdown menu open state
-  function handleProfileClick(update) {
+  const handleProfileClick = (update) => {
     console.log('handleProfileClick');
     setOpen(update);
-  }
+  };
 
   // Handler for hiding the sidebar
-  function handleSidebarHide() {
+  const handleSidebarHide = () => {
     setSidebarOpened(false);
-  }
-
-  function handleToggle() {
+  };
+  const handleToggle = () => {
     setSidebarOpened(true);
-  }
+  };
 
   const logButton = user ? (
     <Menu.Item
@@ -86,8 +81,7 @@ export const NavBar = () => {
   );
 
   // Containers for different menu states according to display size
-  function desktopNavbarHome() {
-    // if user is logged in, then the Login button becomes a link to the Dashboard
+  const desktopNavbarHome = () => {
     return (
       <Segment
         inverted
@@ -142,10 +136,9 @@ export const NavBar = () => {
         </Menu>
       </Segment>
     );
-  }
+  };
 
-  function mobileNavbarHome() {
-    // if user is logged in, then the Login button becomes a link to the Dashboard
+  const mobileNavbarHome = () => {
     return (
       <Container
         as={Sidebar.Pushable}
@@ -210,11 +203,10 @@ export const NavBar = () => {
         </Sidebar.Pushable>
       </Container>
     );
-  }
+  };
 
   // Containers for different menu states according to display size
-  function desktopNavbarLogin() {
-    console.log('login page');
+  const desktopNavbarLogin = () => {
     return (
       <Segment
         inverted
@@ -230,7 +222,7 @@ export const NavBar = () => {
           size="large"
         >
           <Container>
-            <Menu.Item as={Link} to="/" active>
+            <Menu.Item as="a" active>
               Home
             </Menu.Item>
             <Menu.Item as="a">Company</Menu.Item>
@@ -249,9 +241,9 @@ export const NavBar = () => {
         </Menu>
       </Segment>
     );
-  }
+  };
 
-  function mobileNavbarLogin() {
+  const mobileNavbarLogin = () => {
     return (
       <Container as={Sidebar.Pushable} at="mobile">
         <Sidebar.Pushable>
@@ -292,134 +284,173 @@ export const NavBar = () => {
         </Sidebar.Pushable>
       </Container>
     );
-  }
+  };
 
-  function desktopNavbar() {
+  const desktopNavbar = () => {
     console.log('desktopNavbar user: ', user);
     return (
       <>
-        <Menu stackable fixed="top" inverted>
-          <Link to="/">
-            <Menu.Item>
-              <img
-                src="https://react.semantic-ui.com/logo.png"
-                alt="menu logo"
-              />
-            </Menu.Item>
-          </Link>
+        {user && (
+          <Menu stackable fixed="top" inverted>
+            <Link to="/">
+              <Menu.Item>
+                <img
+                  src="https://react.semantic-ui.com/logo.png"
+                  alt="menu logo"
+                />
+              </Menu.Item>
+            </Link>
 
-          <Menu.Item
-            name="dashboard"
-            active={activeItem === 'dashboard'}
-            onClick={handleItemClick}
-          >
-            Dashboard
-          </Menu.Item>
-
-          <Menu.Item
-            name="collections"
-            active={activeItem === 'collections'}
-            onClick={handleItemClick}
-          >
-            Collections
-          </Menu.Item>
-
-          {[Role.Super].includes(user.role) && (
             <Menu.Item
-              name="customers"
-              active={activeItem === 'customers'}
+              name="dashboard"
+              active={activeItem === 'dashboard'}
               onClick={handleItemClick}
             >
-              Customers
+              Dashboard
             </Menu.Item>
-          )}
 
-          <Menu.Item
-            name="reports"
-            active={activeItem === 'reports'}
-            onClick={handleItemClick}
-          >
-            Reports
-          </Menu.Item>
-
-          <Menu.Item
-            name="upload"
-            active={activeItem === 'upload'}
-            onClick={handleItemClick}
-          >
-            Upload
-          </Menu.Item>
-
-          {[Role.Admin, Role.Super].includes(user.role) && (
             <Menu.Item
-              name="users"
-              active={activeItem === 'users'}
+              name="collections"
+              active={activeItem === 'collections'}
               onClick={handleItemClick}
             >
-              User Admin
+              Collections
             </Menu.Item>
-          )}
 
-          {user.role === Role.Super && (
-            <Dropdown item text="Client Admin">
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  name="addclient"
-                  active={activeItem === 'clients'}
-                  onClick={handleItemClick}
-                >
-                  Add Client
-                </Dropdown.Item>
-                <Dropdown.Item
-                  name="editclient"
-                  active={activeItem === 'clients'}
-                  onClick={handleItemClick}
-                >
-                  Edit Client
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          )}
-
-          <Menu.Menu position="right">
-            {[Role.Admin, Role.Super].includes(user.role) && (
+            {[Role.Super].includes(user.role) && (
               <Menu.Item
-                name="release"
-                active={activeItem === 'release'}
+                name="customers"
+                active={activeItem === 'customers'}
                 onClick={handleItemClick}
               >
-                Release Notes & Bugs
+                Customers
               </Menu.Item>
             )}
-            <Menu.Item>
-              <Dropdown
-                className="icon"
-                icon="user"
-                labeled
-                onClick={() => handleProfileClick(true)}
-                open={open}
-                text={user.firstName}
+
+            <Menu.Item
+              name="reports"
+              active={activeItem === 'reports'}
+              onClick={handleItemClick}
+            >
+              Reports
+            </Menu.Item>
+
+            <Menu.Item
+              name="upload"
+              active={activeItem === 'upload'}
+              onClick={handleItemClick}
+            >
+              Upload
+            </Menu.Item>
+
+            {[Role.Admin, Role.Super].includes(user.role) && (
+              <Menu.Item
+                name="users"
+                active={activeItem === 'users'}
+                onClick={handleItemClick}
               >
+                User Admin
+              </Menu.Item>
+            )}
+
+            {user.role === Role.Super && (
+              <Dropdown item text="Client Admin">
                 <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <Profile
-                      handleProfileClick={handleProfileClick}
-                      //clickOutside={clickOutside}
-                      open={open}
-                      setOpen={setOpen}
-                    />
+                  <Dropdown.Item
+                    name="addclient"
+                    active={activeItem === 'clients'}
+                    onClick={handleItemClick}
+                  >
+                    Add Client
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    name="editclient"
+                    active={activeItem === 'clients'}
+                    onClick={handleItemClick}
+                  >
+                    Edit Client
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
+            )}
+
+            <Menu.Menu position="right">
+              {[Role.Admin, Role.Super].includes(user.role) && (
+                <Menu.Item
+                  name="release"
+                  active={activeItem === 'release'}
+                  onClick={handleItemClick}
+                >
+                  Release Notes & Bugs
+                </Menu.Item>
+              )}
+              <Menu.Item>
+                <Dropdown
+                  className="icon"
+                  icon="user"
+                  labeled
+                  onClick={() => handleProfileClick(true)}
+                  open={open}
+                  text={user.firstName}
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <Profile
+                        handleProfileClick={handleProfileClick}
+                        //clickOutside={clickOutside}
+                        open={open}
+                        setOpen={setOpen}
+                      />
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+              {logButton}
+            </Menu.Menu>
+          </Menu>
+        )}
+
+        {/*!user && (
+          <Menu stackable fixed="top" inverted>
+            <Link to="/">
+              <Menu.Item>
+                <img
+                  src="https://react.semantic-ui.com/logo.png"
+                  alt="menu logo"
+                />
+              </Menu.Item>
+            </Link>
+
+            <Menu.Item
+              name="pay"
+              active={activeItem === 'pay'}
+              onClick={handleItemClick}
+            >
+              Pay Now
             </Menu.Item>
-            {logButton}
-          </Menu.Menu>
-        </Menu>
+
+            <Menu.Item
+              name="ptp"
+              active={activeItem === 'ptp'}
+              onClick={handleItemClick}
+            >
+              Promise To Pay
+            </Menu.Item>
+
+            <Menu.Item
+              name="dispute"
+              active={activeItem === 'dispute'}
+              onClick={handleItemClick}
+            >
+              Dispute
+            </Menu.Item>
+          </Menu>
+        )*/}
       </>
     );
-  }
+  };
 
-  function mobileNavbar() {
+  const mobileNavbar = () => {
     //console.log('mobileNavbar user: ', user);
     return (
       <>
@@ -562,49 +593,203 @@ export const NavBar = () => {
             </Sidebar.Pushable>
           </Container>
         )}
+
+        {!user && (
+          <Container as={Sidebar.Pushable} at="mobile">
+            <Sidebar.Pushable>
+              <Sidebar
+                as={Menu}
+                animation="overlay"
+                inverted
+                onHide={handleSidebarHide}
+                vertical
+                visible={sidebarOpened}
+              >
+                <Menu.Item as="a" active>
+                  Promise To Pay
+                </Menu.Item>
+                <Menu.Item as="a">Dispute</Menu.Item>
+                <Menu.Item as="a">Stuff to come here</Menu.Item>
+              </Sidebar>
+
+              <Sidebar.Pusher dimmed={sidebarOpened}>
+                <Segment
+                  inverted
+                  textAlign="center"
+                  style={{ minHeight: 50, padding: '1em 0em' }}
+                  vertical
+                >
+                  <Container>
+                    <Menu inverted pointing secondary size="large">
+                      <Menu.Item onClick={handleToggle}>
+                        <Icon name="sidebar" />
+                      </Menu.Item>
+                      <Menu.Item position="right">
+                        <Button as={Link} to="/stuff" inverted>
+                          Stuff to come here
+                        </Button>
+                      </Menu.Item>
+                    </Menu>
+                  </Container>
+                </Segment>
+              </Sidebar.Pusher>
+            </Sidebar.Pushable>
+          </Container>
+        )}
       </>
     );
-  }
+  };
 
-  function desktopDefault() {
+  const desktopNavbarCustomer = () => {
+    console.log('desktopNavbarCustomer user: ', user);
     return (
-      <Menu stackable fixed="top" inverted>
-        <Link to="/">
-          <Menu.Item>
-            <img src="https://react.semantic-ui.com/logo.png" alt="menu logo" />
-          </Menu.Item>
-        </Link>
+      <>
+        {user && (
+          <Menu stackable fixed="top" inverted>
+            <Link to="/">
+              <Menu.Item>
+                <img
+                  src="https://react.semantic-ui.com/logo.png"
+                  alt="menu logo"
+                />
+              </Menu.Item>
+            </Link>
 
-        <Menu.Item
-          name="pay"
-          active={activeItem === 'pay'}
-          onClick={handleItemClick}
-        >
-          Pay Now
-        </Menu.Item>
+            {[Role.Super, Role.Customer].includes(user.role) && (
+              <Menu.Item
+                name="customer"
+                active={activeItem === 'customer'}
+                onClick={handleItemClick}
+              >
+                Customer
+              </Menu.Item>
+            )}
 
-        <Menu.Item
-          name="ptp"
-          active={activeItem === 'ptp'}
-          onClick={handleItemClick}
-        >
-          Promise To Pay
-        </Menu.Item>
+            <Menu.Item
+              name="reports"
+              active={activeItem === 'reports'}
+              onClick={handleItemClick}
+            >
+              Reports
+            </Menu.Item>
 
-        <Menu.Item
-          name="dispute"
-          active={activeItem === 'dispute'}
-          onClick={handleItemClick}
-        >
-          Dispute
-        </Menu.Item>
-      </Menu>
+            <Menu.Item
+              name="upload"
+              active={activeItem === 'upload'}
+              onClick={handleItemClick}
+            >
+              Upload
+            </Menu.Item>
+
+            {[Role.Admin, Role.Super].includes(user.role) && (
+              <Menu.Item
+                name="users"
+                active={activeItem === 'users'}
+                onClick={handleItemClick}
+              >
+                User Admin
+              </Menu.Item>
+            )}
+
+            {user.role === Role.Super && (
+              <Dropdown item text="Client Admin">
+                <Dropdown.Menu>
+                  <Dropdown.Item
+                    name="addclient"
+                    active={activeItem === 'clients'}
+                    onClick={handleItemClick}
+                  >
+                    Add Client
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    name="editclient"
+                    active={activeItem === 'clients'}
+                    onClick={handleItemClick}
+                  >
+                    Edit Client
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+
+            <Menu.Menu position="right">
+              {[Role.Admin, Role.Super].includes(user.role) && (
+                <Menu.Item
+                  name="release"
+                  active={activeItem === 'release'}
+                  onClick={handleItemClick}
+                >
+                  Release Notes & Bugs
+                </Menu.Item>
+              )}
+              <Menu.Item>
+                <Dropdown
+                  className="icon"
+                  icon="user"
+                  labeled
+                  onClick={() => handleProfileClick(true)}
+                  open={open}
+                  text={user.firstName}
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item>
+                      <Profile
+                        handleProfileClick={handleProfileClick}
+                        //clickOutside={clickOutside}
+                        open={open}
+                        setOpen={setOpen}
+                      />
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+              {logButton}
+            </Menu.Menu>
+          </Menu>
+        )}
+
+        {/*!user && (
+          <Menu stackable fixed="top" inverted>
+            <Link to="/">
+              <Menu.Item>
+                <img
+                  src="https://react.semantic-ui.com/logo.png"
+                  alt="menu logo"
+                />
+              </Menu.Item>
+            </Link>
+
+            <Menu.Item
+              name="pay"
+              active={activeItem === 'pay'}
+              onClick={handleItemClick}
+            >
+              Pay Now
+            </Menu.Item>
+
+            <Menu.Item
+              name="ptp"
+              active={activeItem === 'ptp'}
+              onClick={handleItemClick}
+            >
+              Promise To Pay
+            </Menu.Item>
+
+            <Menu.Item
+              name="dispute"
+              active={activeItem === 'dispute'}
+              onClick={handleItemClick}
+            >
+              Dispute
+            </Menu.Item>
+          </Menu>
+        )*/}
+      </>
     );
-  }
+  };
 
-  function menuToDisplay() {
-    // Order of priority
-    // 1) Is it the Home page?
+  const menuToDisplay = () => {
+    // Home page
     if (history.location.pathname === '/') {
       console.log('Home page');
       return (
@@ -615,7 +800,7 @@ export const NavBar = () => {
       );
     }
 
-    // 2) Is it the Login page?
+    // Login page
     if (history.location.pathname === '/login') {
       console.log('history.location.pathname === /login');
       return (
@@ -626,27 +811,28 @@ export const NavBar = () => {
       );
     }
 
-    // 3) Is user logged in?
-    // 3a) If yes, then display workspace navbar
-    if (user) {
+    // Customer pages
+    if (user && [Role.Customer, Role.Super].includes(user.role)) {
       return (
         <div>
-          <Media greaterThan="mobile">{desktopNavbar()}</Media>
-          <Media at="mobile">{mobileNavbar()}</Media>
+          <Media greaterThan="mobile">{desktopNavbarCustomer()}</Media>
+          <Media at="mobile">{mobileNavbarLogin()}</Media>
         </div>
       );
     }
 
-    // 3b) If no, then determine role and subsequent navbar
-
-    console.log('default return');
-    return desktopDefault();
-  }
+    // Within workspace
+    return (
+      <div>
+        <Media greaterThan="mobile">{desktopNavbar()}</Media>
+        <Media at="mobile">{mobileNavbar()}</Media>
+      </div>
+    );
+  };
 
   return (
     <MediaContextProvider>
       <style>{mediaStyles}</style>
-      {console.log('user: ', user)}
       {menuToDisplay()}
     </MediaContextProvider>
   );

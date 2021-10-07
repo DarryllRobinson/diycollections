@@ -61,8 +61,7 @@ export const RouteDetermination = () => {
 
         <PrivateRoute
           path="/customer"
-          exact
-          roles={[Role.Super]}
+          roles={[Role.Customer, Role.Super]}
           component={Customer}
         />
         <PrivateRoute
