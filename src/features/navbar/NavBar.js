@@ -602,6 +602,51 @@ export const NavBar = () => {
     );
   }
 
+  function mobileDefault() {
+    return (
+      <Container as={Sidebar.Pushable} at="mobile">
+        <Sidebar.Pushable>
+          <Sidebar
+            as={Menu}
+            animation="overlay"
+            inverted
+            onHide={handleSidebarHide}
+            vertical
+            visible={sidebarOpened}
+          >
+            <Menu.Item as="a" active>
+              Promise To Pay
+            </Menu.Item>
+            <Menu.Item as="a">Dispute</Menu.Item>
+            <Menu.Item as="a">Stuff to come here</Menu.Item>
+          </Sidebar>
+
+          <Sidebar.Pusher dimmed={sidebarOpened}>
+            <Segment
+              inverted
+              textAlign="center"
+              style={{ minHeight: 50, padding: '1em 0em' }}
+              vertical
+            >
+              <Container>
+                <Menu inverted pointing secondary size="large">
+                  <Menu.Item onClick={handleToggle}>
+                    <Icon name="sidebar" />
+                  </Menu.Item>
+                  <Menu.Item position="right">
+                    <Button as={Link} to="/stuff" inverted>
+                      Stuff to come here
+                    </Button>
+                  </Menu.Item>
+                </Menu>
+              </Container>
+            </Segment>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      </Container>
+    );
+  }
+
   function menuToDisplay() {
     // Order of priority
     // 1) Is it the Home page?
@@ -640,7 +685,12 @@ export const NavBar = () => {
     // 3b) If no, then determine role and subsequent navbar
 
     console.log('default return');
-    return desktopDefault();
+    return (
+      <div>
+        <Media greaterThan="mobile">{desktopDefault()}</Media>
+        <Media at="mobile">{mobileDefault()}</Media>
+      </div>
+    );
   }
 
   return (
