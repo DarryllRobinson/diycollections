@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const cardContent = [
   {
-    href: '/customer/AIM101',
+    href: '/customer/edit',
     header: 'Edit',
     icon: 'edit',
   },

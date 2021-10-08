@@ -867,7 +867,7 @@ export const NavBar = () => {
 
     // 3b) If no, then return the default
 
-    console.log('default return');
+    //console.log('default return');
     return (
       <div>
         <Media greaterThan="mobile">{desktopDefault()}</Media>

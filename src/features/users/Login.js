@@ -27,7 +27,7 @@ const LoginForm = ({ history, location }) => {
     userService
       .login(email, password)
       .then((user) => {
-        //console.log('user.role: ', user.role);
+        console.log('user: ', user);
 
         // determine which workspace to push into
         //console.log('user.role === Customer', user.role === 'Customer');
