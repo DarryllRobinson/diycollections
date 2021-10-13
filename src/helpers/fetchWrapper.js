@@ -103,7 +103,7 @@ function handleResponse(response) {
 }
 
 function handleResponseForDocuments(response) {
-  //console.log('handleResponseForDocuments response: ', response);
+  console.log('handleResponseForDocuments response: ', response);
   //return response;
   return response.text().then((text) => {
     const data = text; // && JSON.parse(text);

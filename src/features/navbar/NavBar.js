@@ -356,12 +356,12 @@ export const NavBar = () => {
               active={activeItem === 'users'}
               onClick={handleItemClick}
             >
-              User Admin
+              Users
             </Menu.Item>
           )}
 
           {user.role === Role.Super && (
-            <Dropdown item text="Client Admin">
+            <Dropdown item text="Clients">
               <Dropdown.Menu>
                 <Dropdown.Item
                   name="addclient"
@@ -482,12 +482,12 @@ export const NavBar = () => {
                     active={activeItem === 'users'}
                     onClick={handleItemClick}
                   >
-                    User Admin
+                    Users
                   </Menu.Item>
                 )}
 
                 {user.role === Role.Super && (
-                  <Dropdown item text="Client Admin">
+                  <Dropdown item text="Clients">
                     <Dropdown.Menu>
                       <Dropdown.Item
                         name="addclient"

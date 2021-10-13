@@ -52,7 +52,7 @@ export const Invoices = () => {
 
   async function fetchInvoice(fileLocation) {
     setInvoiceStatus('loading');
-    //console.log('getting invoice');
+    console.log('getting invoice with file location: ', fileLocation);
     setInvoice(await invoiceService.getDocByLoc({ location: fileLocation }));
     //const inv = await invoiceService.getDocByLoc(location);
     //setInvoice(inv);

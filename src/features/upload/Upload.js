@@ -503,6 +503,7 @@ class Upload extends Component {
 
   async postToDb(records, workspace) {
     //const newRecord = workspace.slice(0, -1);
+    //console.log('records:', records);
     return uploadService.bulkCreate(workspace, records);
   }
 
