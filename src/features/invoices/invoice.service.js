@@ -12,11 +12,14 @@ function getAllByCustomer(customerRefNo) {
   return fetchWrapper.get(`/invoices/${customerRefNo}`);
 }
 
-function getDocByLoc(location) {
+async function getDocByLoc(location) {
   //console.log('getDocByLoc: ', location);
-  return fetchWrapper.getDocument(`/invoices/document`, location);
-  //console.log('invoice: ', invoice);
-  //return invoice;
+  const invoice = await fetchWrapper.getDocument(
+    `/invoices/document`,
+    location
+  );
+  //console.log('invoice.service invoice: ', invoice);
+  return invoice;
 }
 
 function getDocByLocUnauth(location) {

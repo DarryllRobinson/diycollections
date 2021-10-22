@@ -117,7 +117,7 @@ function handleResponseForDocuments(response) {
       const error = (data && data.message) || response.statusText;
       return Promise.reject(error);
     }
-    //console.log('data: ', data);
+    console.log('data: ', data);
     return data;
   });
 }

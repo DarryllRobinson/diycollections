@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { createRef, useEffect, useState } from 'react';
 import {
   Button,
   Container,
@@ -12,6 +12,7 @@ import {
 } from 'semantic-ui-react';
 import moment from 'moment';
 
+import { alertService } from '../alerts/alert.service';
 import { invoiceService } from './invoice.service';
 import { InvoiceViewer } from './InvoiceViewer';
 
@@ -52,24 +53,57 @@ export const Invoices = () => {
 
   async function fetchInvoice(fileLocation) {
     setInvoiceStatus('loading');
-    console.log('getting invoice with file location: ', fileLocation);
+    //console.log('getting invoice with file location: ', fileLocation);
     setInvoice(await invoiceService.getDocByLoc({ location: fileLocation }));
     //const inv = await invoiceService.getDocByLoc(location);
     //setInvoice(inv);
-    console.log('got invoice: ', invoice);
     setInvoiceStatus('succeeded');
-    downloadFile(invoice);
   }
 
-  // download file
-  function downloadFile(invoice) {
-    if (invoiceStatus === 'succeeded') {
-      let url = window.URL.createObjectURL(invoice);
-      let a = document.createElement('a');
-      a.href = url;
-      a.download = 'test.pdf';
-      a.click();
+  const URL = createRef();
+
+  useEffect(() => {
+    //console.log('useEffect triggered: ', invoice, invoiceStatus);
+
+    // download file
+    function downloadFile(invoice) {
+      //console.log('downloadFile ', invoice);
+      if (invoiceStatus === 'succeeded' && invoice) {
+        //console.log('got invoice', invoice);
+        try {
+          const file = base64ToArrayBuffer(invoice);
+          // window.URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}))
+          const objectURL = window.URL.createObjectURL(
+            new Blob([file], { type: 'application/pdf' })
+          );
+          console.log('objectURL: ', objectURL);
+          let a = document.createElement('a');
+          a.href = objectURL;
+          a.download = 'test.pdf';
+          console.log('a: ', a);
+          a.click();
+          //window.URL.revokeObjectURL(objectURL);
+        } catch (e) {
+          alertService.error('Error', e.message);
+        }
+      }
     }
+
+    downloadFile(invoice);
+  }, [invoice, invoiceStatus]);
+
+  function base64ToArrayBuffer(base64) {
+    //atob(imageData.replace(/^data:image\/(png|jpeg|jpg);base64,/, ''));
+    var binaryString = window.atob(
+      base64.replace(/^data:application\/pdf;base64,/, '')
+    );
+    var binaryLen = binaryString.length;
+    var bytes = new Uint8Array(binaryLen);
+    for (var i = 0; i < binaryLen; i++) {
+      var ascii = binaryString.charCodeAt(i);
+      bytes[i] = ascii;
+    }
+    return bytes;
   }
 
   let content;
@@ -83,7 +117,7 @@ export const Invoices = () => {
   } else if (invoicesStatus === 'error') {
     content = <Message>error</Message>;
   } else if (invoicesStatus === 'succeeded') {
-    console.log('invoices: ', invoices);
+    //console.log('invoices: ', invoices);
     content = (
       <Table celled striped>
         <Table.Header>

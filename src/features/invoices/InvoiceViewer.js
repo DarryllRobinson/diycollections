@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Dimmer, Loader, Message, Segment } from 'semantic-ui-react';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-import queryString from 'query-string';
 
 import { invoiceService } from './invoice.service';
 
@@ -77,7 +76,7 @@ export const InvoiceViewer = (props) => {
       </Message>
     );
   } else if (invoiceStatus === 'succeeded') {
-    //console.log('invoices: ', invoices);
+    console.log('invoice: ', invoice);
     content = (
       <Segment compact>
         <Document file={invoice} onLoadSuccess={onDocumentLoadSuccess}>
