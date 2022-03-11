@@ -19,6 +19,7 @@ import { ClientEditor } from '../features/clients/ClientEditor';
 
 import Upload from '../features/upload/Upload';
 import Reports from '../features/reports/Reports';
+import { Mappings } from '../features/mappings';
 import { Role } from '../helpers';
 
 import { ReleaseNotes } from '../features/release/ReleaseNotes';
@@ -34,7 +35,7 @@ export const RouteDetermination = () => {
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
         <PrivateRoute
           path="/upload"
-          roles={[Role.Admin, Role.Super]}
+          roles={[Role.Admin, Role.Agent, Role.Super]}
           exact
           component={Upload}
         />
@@ -47,6 +48,13 @@ export const RouteDetermination = () => {
           roles={[Role.Admin, Role.Super]}
           component={ReleaseNotes}
         />
+
+        <PrivateRoute
+          path="/mapping"
+          roles={[Role.Super]}
+          component={Mappings}
+        />
+
         <PrivateRoute
           path="/users"
           exact

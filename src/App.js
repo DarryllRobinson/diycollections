@@ -33,7 +33,6 @@ function App() {
         <Route path="/users/reset-password" exact component={ResetPassword} />
         <Route path="/customer/view-invoice" exact component={ViewInvoice} />
         <PrivateRoute component={RouteDetermination} />
-        <Redirect from="*" to="/" />
       </Switch>
     </Container>
   );

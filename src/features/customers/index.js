@@ -7,10 +7,11 @@ import CustomerCreator from './CustomerCreator';
 
 function Customers({ history, match }) {
   const { path } = match;
+  //console.log('Customers index: ', history, match);
 
   return (
     <Switch>
-      <Route path={path} component={CustomerManagement} />
+      <Route path={path} exact component={CustomerManagement} />
       <Route path={`${path}/create`} component={CustomerCreator} />
       <Route path={`${path}/:id`} component={CustomerEditor} />
     </Switch>

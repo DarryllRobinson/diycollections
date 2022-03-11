@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Container,
@@ -11,19 +11,23 @@ import {
   Table,
 } from 'semantic-ui-react';
 import moment from 'moment';
+import { StripeProvider, Elements } from 'react-stripe-elements';
 
 import { alertService } from '../alerts/alert.service';
 import { invoiceService } from './invoice.service';
 import { InvoiceViewer } from './InvoiceViewer';
+import CheckoutForm from '../checkout/CheckoutForm';
 
 export const Invoices = () => {
   const [invoice, setInvoice] = useState(null);
   const [invoiceStatus, setInvoiceStatus] = useState('idle');
   const [invoices, setInvoices] = useState(null);
   const [invoicesStatus, setInvoicesStatus] = useState('idle');
+  const [stripe, setStripe] = useState(null);
 
   // Portal handlers
   const [open, setOpen] = useState(false);
+  const [openPay, setOpenPay] = useState(false);
 
   // will end up coming from the customer details
   const f_customerRefNo = 'AIM101';
@@ -37,6 +41,25 @@ export const Invoices = () => {
 
     fetchInvoices();
     //console.log('invoices: ', invoices);
+
+    // updating stripe state
+    if (window.Stripe) {
+      //console.log('window.Stripe: ', window.Stripe);
+      setStripe(
+        window.Stripe(
+          'pk_test_51HPJUZJeh1J89HJLLI2exUECsaBOvVK5EYHRdlNSb5y1LfABiI0zhMRMw2nEmi7JxMfbo0Q1qGYTxbOP3R1eM4hm001ggeVfEJ'
+        )
+      );
+    } else {
+      document.querySelector('#stripe-js').addEventListener('load', () => {
+        // Create Stripe instance once Stripe.js loads
+        setStripe(
+          window.Stripe(
+            'pk_test_51HPJUZJeh1J89HJLLI2exUECsaBOvVK5EYHRdlNSb5y1LfABiI0zhMRMw2nEmi7JxMfbo0Q1qGYTxbOP3R1eM4hm001ggeVfEJ'
+          )
+        );
+      });
+    }
   }, []);
 
   // Currency converter function
@@ -59,8 +82,6 @@ export const Invoices = () => {
     //setInvoice(inv);
     setInvoiceStatus('succeeded');
   }
-
-  const URL = createRef();
 
   useEffect(() => {
     //console.log('useEffect triggered: ', invoice, invoiceStatus);
@@ -145,8 +166,16 @@ export const Invoices = () => {
     if (daysLeft(term, dueDate) < 0 && !datePaid) return true;
   }
 
-  function payButton(datePaid) {
-    return !datePaid && <Button color="red" icon="credit card" />;
+  function payButton(datePaid, totalBalance) {
+    return (
+      !datePaid && (
+        <Button
+          color="red"
+          icon="credit card"
+          onClick={() => setOpenPay(true)} //payInvoice(totalBalance)}
+        />
+      )
+    );
   }
 
   function createTable(invoices) {
@@ -177,7 +206,7 @@ export const Invoices = () => {
               {daysLeft(paymentTermDays, created, datePaid)}
             </Table.Cell>
             <Table.Cell collapsing>
-              {payButton(datePaid)}
+              {payButton(datePaid, totalBalance)}
               <Button onClick={() => setOpen(true)} primary icon="eye" />{' '}
               <Button
                 onClick={() => fetchInvoice(invoiceLocation)}
@@ -189,6 +218,10 @@ export const Invoices = () => {
         );
       }
     );
+  }
+
+  function closePayPortal() {
+    setOpenPay(false);
   }
 
   return (
@@ -212,6 +245,31 @@ export const Invoices = () => {
             <Button content="X" onClick={() => setOpen(false)} />
           </Container>
           <InvoiceViewer token="1f7f37ade72371ab1f0a53705029d769ad1d31ca3c78e9fbbb04aa1729339cc59efb0a799c585d0b" />
+        </Segment>
+      </Portal>
+
+      <Portal open={openPay}>
+        <Segment
+          style={{
+            height: '1000px',
+            left: '30%',
+            position: 'fixed',
+            top: '3%',
+            width: '660px',
+            zIndex: 1000,
+          }}
+        >
+          <Container textAlign="center">
+            <Header>Pay Invoice</Header>
+          </Container>
+          <Container textAlign="right">
+            <Button content="X" onClick={closePayPortal} />
+          </Container>
+          <StripeProvider stripe={stripe}>
+            <Elements>
+              <CheckoutForm closePayPortal={closePayPortal} />
+            </Elements>
+          </StripeProvider>
         </Segment>
       </Portal>
     </Container>

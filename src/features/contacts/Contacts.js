@@ -55,15 +55,12 @@ export const Contacts = (props) => {
     //console.log('Updated contacts');
   };
 
-  let content;
+  function createContent(contacts) {
+    //console.log('createContent: ', contacts);
 
-  if (!contacts) {
-    content = <div className="loading">No contacts</div>;
-  } else if (contactStatus === 'error') {
-    content = <div>error</div>;
-  } else if (contactStatus === 'succeeded' && contacts) {
-    //console.log('contacts: ', contacts);
-    content = (
+    let contact = contacts.length > 0 ? contacts[0] : contacts;
+
+    let content = (
       <Accordion>
         <Accordion.Title
           active={activeIndex === 0}
@@ -77,7 +74,7 @@ export const Contacts = (props) => {
             <Form>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].primaryContactName || ''}
+                  defaultValue={contact.primaryContactName || ''}
                   fluid
                   id="form-input-control-primary-contact-name"
                   name="primaryContactName"
@@ -86,7 +83,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].primaryContactNumber || ''}
+                  defaultValue={contact.primaryContactNumber || ''}
                   fluid
                   id="form-input-control-primary-contact-number"
                   name="primaryContactNumber"
@@ -95,7 +92,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].primaryContactEmail || ''}
+                  defaultValue={contact.primaryContactEmail || ''}
                   fluid
                   id="form-input-control-primary-contact-email"
                   name="primaryContactEmail"
@@ -106,7 +103,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].representativeName || ''}
+                  defaultValue={contact.representativeName || ''}
                   fluid
                   id="form-input-control-representative-name"
                   name="representativeName"
@@ -115,7 +112,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].representativeNumber || ''}
+                  defaultValue={contact.representativeNumber || ''}
                   fluid
                   id="form-input-control-representative-number"
                   name="representativeNumber"
@@ -124,7 +121,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].representativeEmail || ''}
+                  defaultValue={contact.representativeEmail || ''}
                   fluid
                   id="form-input-control-representative-email"
                   name="representativeEmail"
@@ -135,7 +132,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].alternativeRepName || ''}
+                  defaultValue={contact.alternativeRepName || ''}
                   fluid
                   id="form-input-control-alternative-rep-name"
                   name="alternativeRepName"
@@ -144,7 +141,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].alternativeRepNumber || ''}
+                  defaultValue={contact.alternativeRepNumber || ''}
                   fluid
                   id="form-input-control-alternative-rep-number"
                   name="alternativeRepNumber"
@@ -153,7 +150,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].alternativeRepEmail || ''}
+                  defaultValue={contact.alternativeRepEmail || ''}
                   fluid
                   id="form-input-control-representative-email"
                   name="alternativeRepEmail"
@@ -164,7 +161,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber1 || ''}
+                  defaultValue={contact.otherNumber1 || ''}
                   fluid
                   id="form-input-control-other-number-1"
                   name="otherNumber1"
@@ -173,7 +170,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber2 || ''}
+                  defaultValue={contact.otherNumber2 || ''}
                   fluid
                   id="form-input-control-other-number-2"
                   name="otherNumber2"
@@ -182,7 +179,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber3 || ''}
+                  defaultValue={contact.otherNumber3 || ''}
                   fluid
                   id="form-input-control-other-number-3"
                   name="otherNumber3"
@@ -193,7 +190,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber4 || ''}
+                  defaultValue={contact.otherNumber4 || ''}
                   fluid
                   id="form-input-control-other-number-4"
                   name="otherNumber4"
@@ -202,7 +199,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber5 || ''}
+                  defaultValue={contact.otherNumber5 || ''}
                   fluid
                   id="form-input-control-other-number-5"
                   name="otherNumber5"
@@ -211,7 +208,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber6 || ''}
+                  defaultValue={contact.otherNumber6 || ''}
                   fluid
                   id="form-input-control-other-number-6"
                   name="otherNumber6"
@@ -222,7 +219,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber7 || ''}
+                  defaultValue={contact.otherNumber7 || ''}
                   fluid
                   id="form-input-control-other-number-7"
                   name="otherNumber7"
@@ -231,7 +228,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber8 || ''}
+                  defaultValue={contact.otherNumber8 || ''}
                   fluid
                   id="form-input-control-other-number-8"
                   name="otherNumber8"
@@ -240,7 +237,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber9 || ''}
+                  defaultValue={contact.otherNumber9 || ''}
                   fluid
                   id="form-input-control-other-number-9"
                   name="otherNumber9"
@@ -251,7 +248,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].otherNumber10 || ''}
+                  defaultValue={contact.otherNumber10 || ''}
                   fluid
                   id="form-input-control-other-number-10"
                   name="otherNumber10"
@@ -264,7 +261,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail1 || ''}
+                  defaultValue={contact.otherEmail1 || ''}
                   fluid
                   id="form-input-control-other-email-1"
                   name="otherEmail1"
@@ -273,7 +270,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail2 || ''}
+                  defaultValue={contact.otherEmail2 || ''}
                   fluid
                   id="form-input-control-other-email-2"
                   name="otherEmail2"
@@ -282,7 +279,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail3 || ''}
+                  defaultValue={contact.otherEmail3 || ''}
                   fluid
                   id="form-input-control-other-email-3"
                   name="otherEmail3"
@@ -293,7 +290,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail4 || ''}
+                  defaultValue={contact.otherEmail4 || ''}
                   fluid
                   id="form-input-control-other-email-4"
                   name="otherEmail4"
@@ -302,7 +299,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail5 || ''}
+                  defaultValue={contact.otherEmail5 || ''}
                   fluid
                   id="form-input-control-other-email-5"
                   name="otherEmail5"
@@ -311,7 +308,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail6 || ''}
+                  defaultValue={contact.otherEmail6 || ''}
                   fluid
                   id="form-input-control-other-email-6"
                   name="otherEmail6"
@@ -322,7 +319,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail7 || ''}
+                  defaultValue={contact.otherEmail7 || ''}
                   fluid
                   id="form-input-control-other-email-7"
                   name="otherEmail7"
@@ -331,7 +328,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail8 || ''}
+                  defaultValue={contact.otherEmail8 || ''}
                   fluid
                   id="form-input-control-other-email-8"
                   name="otherEmail8"
@@ -340,7 +337,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail9 || ''}
+                  defaultValue={contact.otherEmail9 || ''}
                   fluid
                   id="form-input-control-other-email-9"
                   name="otherEmail9"
@@ -351,7 +348,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].otherEmail10 || ''}
+                  defaultValue={contact.otherEmail10 || ''}
                   fluid
                   id="form-input-control-other-email-10"
                   name="otherEmail10"
@@ -364,7 +361,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].dnc1 || ''}
+                  defaultValue={contact.dnc1 || ''}
                   fluid
                   id="form-input-control-dnc-1"
                   name="dnc1"
@@ -373,7 +370,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].dnc2 || ''}
+                  defaultValue={contact.dnc2 || ''}
                   fluid
                   id="form-input-control-dnc-2"
                   name="dnc2"
@@ -382,7 +379,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].dnc3 || ''}
+                  defaultValue={contact.dnc3 || ''}
                   fluid
                   id="form-input-control-dnc-3"
                   name="dnc3"
@@ -393,7 +390,7 @@ export const Contacts = (props) => {
               </Form.Group>
               <Form.Group widths="equal">
                 <Form.Input
-                  defaultValue={contacts[0].dnc4 || ''}
+                  defaultValue={contact.dnc4 || ''}
                   fluid
                   id="form-input-control-dnc-4"
                   name="dnc4"
@@ -402,7 +399,7 @@ export const Contacts = (props) => {
                   type="text"
                 />
                 <Form.Input
-                  defaultValue={contacts[0].dnc5 || ''}
+                  defaultValue={contact.dnc5 || ''}
                   fluid
                   id="form-input-control-dnc-5"
                   name="dnc5"
@@ -418,6 +415,17 @@ export const Contacts = (props) => {
         </Accordion.Content>
       </Accordion>
     );
+    return content;
+  }
+
+  let content;
+
+  if (!contacts) {
+    content = <div className="loading">No contacts</div>;
+  } else if (contactStatus === 'error') {
+    content = <div>error</div>;
+  } else if (contactStatus === 'succeeded' && contacts) {
+    content = createContent(contacts);
   }
 
   return <div>{content}</div>;

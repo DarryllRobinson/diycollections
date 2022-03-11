@@ -5,6 +5,7 @@ import {
   Dimmer,
   Header,
   Loader,
+  Message,
   Table,
 } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
@@ -31,12 +32,9 @@ export const Collections = (props) => {
 
   const loadRecords = useCallback(async (caseStatus) => {
     const records = await collectionService.getAll();
-    /*console.log('records:', records);
-    const message = records[0].message;
-    console.log('message:', message);
-    if (records[0].status === 'error') {
-      alertService.error('Error', message);
-    }*/
+    console.log('records:', records);
+    setCollectionStatus('loading');
+
     setCollections(records);
     setRecordStatus(caseStatus);
     setCollectionStatus('succeeded');
@@ -52,7 +50,7 @@ export const Collections = (props) => {
 
   let content;
 
-  if (!collections) {
+  if (collectionStatus === 'loading') {
     content = (
       <Table.Row>
         <Table.Cell>
@@ -62,7 +60,9 @@ export const Collections = (props) => {
         </Table.Cell>
       </Table.Row>
     );
-  } else {
+  } else if (collectionStatus === 'error') {
+    content = <Message>error</Message>;
+  } else if (collectionStatus === 'succeeded') {
     content = collections.map((collections) => {
       //console.log('got some collections: ', collections.customerName);
       if (collections.currentStatus === recordStatus) {

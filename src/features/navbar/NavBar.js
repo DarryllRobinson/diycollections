@@ -20,6 +20,17 @@ export const NavBar = () => {
   //const [user, setUser] = useState(null);
   const [user, setUser] = useState(null);
 
+  // Toggle for light mode
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    const nextTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(nextTheme);
+  };
+
+  const mode = (whatMode) => {
+    return whatMode === 'light' ? <Icon name="sun" /> : <Icon name="moon" />;
+  };
+
   // Controls the Profile dropdown menu component so it stays open when clicked
   const [open, setOpen] = useState(false);
   const [fixed, setFixed] = useState(false);
@@ -342,13 +353,15 @@ export const NavBar = () => {
             Reports
           </Menu.Item>
 
-          <Menu.Item
-            name="upload"
-            active={activeItem === 'upload'}
-            onClick={handleItemClick}
-          >
-            Upload
-          </Menu.Item>
+          {[Role.Super].includes(user.role) && (
+            <Menu.Item
+              name="upload"
+              active={activeItem === 'upload'}
+              onClick={handleItemClick}
+            >
+              Upload
+            </Menu.Item>
+          )}
 
           {[Role.Admin, Role.Super].includes(user.role) && (
             <Menu.Item
@@ -382,6 +395,20 @@ export const NavBar = () => {
           )}
 
           <Menu.Menu position="right">
+            {[Role.Super].includes(user.role) && (
+              <Menu.Item name="mode" onClick={toggleTheme}>
+                {mode(theme)}
+              </Menu.Item>
+            )}
+            {[Role.Admin, Role.Super].includes(user.role) && (
+              <Menu.Item
+                name="mapping"
+                active={activeItem === 'mapping'}
+                onClick={handleItemClick}
+              >
+                Data Mapping
+              </Menu.Item>
+            )}
             {[Role.Admin, Role.Super].includes(user.role) && (
               <Menu.Item
                 name="release"
@@ -505,6 +532,15 @@ export const NavBar = () => {
                       </Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
+                )}
+                {[Role.Admin, Role.Super].includes(user.role) && (
+                  <Menu.Item
+                    name="mapping"
+                    active={activeItem === 'mapping'}
+                    onClick={handleItemClick}
+                  >
+                    Data Mapping
+                  </Menu.Item>
                 )}
                 {[Role.Admin, Role.Super].includes(user.role) && (
                   <Menu.Item

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Dimmer, Loader, Message, Segment } from 'semantic-ui-react';
+//import { Document, Page } from 'react-pdf';
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
 import queryString from 'query-string';
 

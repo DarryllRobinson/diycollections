@@ -4,6 +4,7 @@ export const invoiceService = {
   getAllByCustomer,
   getDocByLoc,
   getDocByLocUnauth,
+  payInvoice,
   verifyInvoice,
 };
 
@@ -27,6 +28,11 @@ function getDocByLocUnauth(location) {
   return fetchWrapper.getDocument(`/invoices/u-document`, location);
   //console.log('invoice: ', invoice);
   //return invoice;
+}
+
+function payInvoice(paymentDetails) {
+  console.log(paymentDetails);
+  return fetchWrapper.post('/stripe/charge', paymentDetails);
 }
 
 function verifyInvoice(token) {

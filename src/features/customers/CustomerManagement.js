@@ -59,12 +59,12 @@ export const CustomerManagement = () => {
   } else if (invoicesStatus === 'succeeded') {
     //console.log('invoices: ', invoices);
     content = invoices.map(
-      ({ customerRefNo, customerName, viewed, totalBalance }) => {
+      ({ customerRefNo, customerName, viewed, totalBalance }, idx) => {
         //if (invoice.customerRefNo === 'AEO101')
         //console.log('invoice.hasViewed: ', invoice.hasViewed);
         //console.log('content: ', content);
         return (
-          <Table.Row key={customerRefNo} positive={!!viewed}>
+          <Table.Row key={idx} positive={!!viewed}>
             <Table.Cell collapsing>
               <Button animated as={Link} to={`/customers/${customerRefNo}`}>
                 <Button.Content visible>
