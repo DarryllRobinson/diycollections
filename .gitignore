@@ -10,9 +10,11 @@
 
 # testing
 /coverage
+/__mocks__
 
 # production
 /build
+/new_build
 
 # misc
 .DS_Store
