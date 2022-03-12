@@ -14,15 +14,79 @@ class CustomerDetails extends Component {
 
   saveAndContinue = (e) => {
     e.preventDefault();
-    this.checkFields();
+    const { values } = this.props;
+    //if (this.props.checkFields(values)) {
     this.props.nextStep();
+    //}
   };
 
-  checkFields() {}
+  /*checkFields() {
+    this.setState({ error: false });
+    const {
+      operatorShortCode,
+      customerRefNo,
+      customerName,
+      customerEntity,
+      regIdNumber,
+      customerType,
+      productType,
+      address1,
+      address2,
+      address3,
+      address4,
+      address5,
+      closedDate,
+      regIdStatus,
+      f_clientId,
+    } = this.props.values;
+    // check if all fields are populated
+    if (
+      !(
+        operatorShortCode &&
+        customerRefNo &&
+        customerName &&
+        customerEntity &&
+        regIdNumber &&
+        customerType &&
+        productType &&
+        address1 &&
+        address2 &&
+        address3 &&
+        address4 &&
+        address5 &&
+        closedDate &&
+        regIdStatus &&
+        f_clientId
+      )
+    ) {
+      console.log(
+        'checkFields failed ',
+        operatorShortCode,
+        customerRefNo,
+        customerName,
+        customerEntity,
+        regIdNumber,
+        customerType,
+        productType,
+        address1,
+        address2,
+        address3,
+        address4,
+        address5,
+        closedDate,
+        regIdStatus,
+        f_clientId
+      );
+      this.setState({ error: true });
+      return false;
+    }
+    return true;
+  }*/
 
   render() {
     const { values } = this.props;
     const { error } = this.state;
+    //console.log('this.props: ', this.props.checkFields);
 
     return (
       <Grid.Column>
@@ -41,9 +105,9 @@ class CustomerDetails extends Component {
               <Form.Field required>
                 <label>Operator Short Code</label>
                 <input
-                  placeholder="Operator Short Code"
-                  onChange={this.props.handleChange('operatorShortCode')}
                   defaultValue={values.operatorShortCode}
+                  onChange={this.props.handleChange('operatorShortCode')}
+                  placeholder={values.operatorShortCode}
                 />
               </Form.Field>
 
@@ -82,6 +146,17 @@ class CustomerDetails extends Component {
                   defaultValue={values.regIdNumber}
                 />
               </Form.Field>
+            </Form.Group>
+
+            <Form.Group widths="equal">
+              <Form.Field required>
+                <label>Reg ID Status</label>
+                <input
+                  placeholder="Reg ID Status"
+                  onChange={this.props.handleChange('regIdStatus')}
+                  defaultValue={values.regIdStatus}
+                />
+              </Form.Field>
 
               <Form.Field required>
                 <label>Customer Type</label>
@@ -89,6 +164,24 @@ class CustomerDetails extends Component {
                   placeholder="Customer Type"
                   onChange={this.props.handleChange('customerType')}
                   defaultValue={values.customerType}
+                />
+              </Form.Field>
+
+              <Form.Field required>
+                <label>Client ID</label>
+                <input
+                  placeholder="Client ID"
+                  onChange={this.props.handleChange('f_clientId')}
+                  defaultValue={values.f_clientId}
+                />
+              </Form.Field>
+
+              <Form.Field required>
+                <label>Product Type</label>
+                <input
+                  defaultValue={values.productType}
+                  onChange={this.props.handleChange('productType')}
+                  placeholder="Product Type"
                 />
               </Form.Field>
             </Form.Group>
@@ -136,26 +229,6 @@ class CustomerDetails extends Component {
                   placeholder="Address Line 5"
                   onChange={this.props.handleChange('address5')}
                   defaultValue={values.address5}
-                />
-              </Form.Field>
-            </Form.Group>
-
-            <Form.Group widths="equal">
-              <Form.Field required>
-                <label>Client ID</label>
-                <input
-                  placeholder="Client ID"
-                  onChange={this.props.handleChange('f_clientId')}
-                  defaultValue={values.f_clientId}
-                />
-              </Form.Field>
-
-              <Form.Field required>
-                <label>Product Type</label>
-                <input
-                  defaultValue={values.productType}
-                  onChange={this.props.handleChange('productType')}
-                  placeholder="Product Type"
                 />
               </Form.Field>
             </Form.Group>

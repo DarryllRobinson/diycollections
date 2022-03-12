@@ -10,7 +10,7 @@ import Success from './Success';
 class MappingCreator extends Component {
   state = {
     // customer
-    step: 1,
+    step: 2,
     operatorShortCode: '',
     customerRefNo: '',
     customerName: '',
@@ -115,6 +115,16 @@ class MappingCreator extends Component {
 
   handleChange = (input) => (event) => {
     this.setState({ [input]: event.target.value });
+  };
+
+  checkFields = (fields) => {
+    this.setState({ error: false });
+    // check if all fields are populated
+    if (!fields) {
+      this.setState({ error: true });
+      return false;
+    }
+    return true;
   };
 
   render() {
@@ -295,6 +305,7 @@ class MappingCreator extends Component {
       case 1:
         content = (
           <CustomerDetails
+            checkFields={this.checkFields}
             nextStep={this.nextStep}
             handleChange={this.handleChange}
             values={values}
