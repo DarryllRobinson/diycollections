@@ -1,14 +1,28 @@
 import React, { Component } from 'react';
-import { Grid, Header, Segment, Form, Button } from 'semantic-ui-react';
+import {
+  Grid,
+  Header,
+  Input,
+  Message,
+  Segment,
+  Form,
+  Button,
+} from 'semantic-ui-react';
 
 class CustomerDetails extends Component {
+  state = { error: false };
+
   saveAndContinue = (e) => {
     e.preventDefault();
+    this.checkFields();
     this.props.nextStep();
   };
 
+  checkFields() {}
+
   render() {
     const { values } = this.props;
+    const { error } = this.state;
 
     return (
       <Grid.Column>
@@ -16,10 +30,15 @@ class CustomerDetails extends Component {
           <h1>Enter Customer Mapping Details</h1>
         </Header>
 
-        <Form>
+        <Form error={error}>
+          <Message
+            error
+            header="Action Forbidden"
+            content="You can only sign up for an account once with a given e-mail address."
+          />
           <Segment>
             <Form.Group widths="equal">
-              <Form.Field>
+              <Form.Field required>
                 <label>Operator Short Code</label>
                 <input
                   placeholder="Operator Short Code"
@@ -28,7 +47,7 @@ class CustomerDetails extends Component {
                 />
               </Form.Field>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Customer Reference Number</label>
                 <input
                   placeholder="Customer Reference Number"
@@ -37,7 +56,7 @@ class CustomerDetails extends Component {
                 />
               </Form.Field>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Customer Name</label>
                 <input
                   placeholder="Customer Name"
@@ -46,7 +65,7 @@ class CustomerDetails extends Component {
                 />
               </Form.Field>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Customer Entity</label>
                 <input
                   placeholder="Customer Entity"
@@ -54,10 +73,8 @@ class CustomerDetails extends Component {
                   defaultValue={values.customerEntity}
                 />
               </Form.Field>
-            </Form.Group>
 
-            <Form.Group widths="equal">
-              <Form.Field>
+              <Form.Field required>
                 <label>Registration Number</label>
                 <input
                   placeholder="Registration Number"
@@ -66,7 +83,7 @@ class CustomerDetails extends Component {
                 />
               </Form.Field>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Customer Type</label>
                 <input
                   placeholder="Customer Type"
@@ -74,19 +91,10 @@ class CustomerDetails extends Component {
                   defaultValue={values.customerType}
                 />
               </Form.Field>
-
-              <Form.Field>
-                <label>Product Type</label>
-                <input
-                  placeholder="Product Type"
-                  onChange={this.props.handleChange('productType')}
-                  defaultValue={values.productType}
-                />
-              </Form.Field>
             </Form.Group>
 
             <Form.Group widths="equal">
-              <Form.Field>
+              <Form.Field required>
                 <label>Address Line 1</label>
                 <input
                   placeholder="Address Line 1"
@@ -95,7 +103,7 @@ class CustomerDetails extends Component {
                 />
               </Form.Field>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Address Line 2</label>
                 <input
                   placeholder="Address Line 2"
@@ -104,7 +112,7 @@ class CustomerDetails extends Component {
                 />
               </Form.Field>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Address Line 3</label>
                 <input
                   placeholder="Address Line 3"
@@ -112,10 +120,8 @@ class CustomerDetails extends Component {
                   defaultValue={values.address3}
                 />
               </Form.Field>
-            </Form.Group>
 
-            <Form.Group widths="equal">
-              <Form.Field>
+              <Form.Field required>
                 <label>Address Line 4</label>
                 <input
                   placeholder="Address Line 4"
@@ -124,7 +130,7 @@ class CustomerDetails extends Component {
                 />
               </Form.Field>
 
-              <Form.Field>
+              <Form.Field required>
                 <label>Address Line 5</label>
                 <input
                   placeholder="Address Line 5"
@@ -132,13 +138,24 @@ class CustomerDetails extends Component {
                   defaultValue={values.address5}
                 />
               </Form.Field>
+            </Form.Group>
 
-              <Form.Field>
+            <Form.Group widths="equal">
+              <Form.Field required>
                 <label>Client ID</label>
                 <input
                   placeholder="Client ID"
                   onChange={this.props.handleChange('f_clientId')}
                   defaultValue={values.f_clientId}
+                />
+              </Form.Field>
+
+              <Form.Field required>
+                <label>Product Type</label>
+                <input
+                  defaultValue={values.productType}
+                  onChange={this.props.handleChange('productType')}
+                  placeholder="Product Type"
                 />
               </Form.Field>
             </Form.Group>
