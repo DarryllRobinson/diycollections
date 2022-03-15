@@ -27,6 +27,8 @@ class Confirmation extends Component {
         address3,
         address4,
         address5,
+        closedDate,
+        regIdStatus,
         f_clientId,
 
         // account
@@ -101,7 +103,7 @@ class Confirmation extends Component {
     } = this.props;
 
     return (
-      <Grid.Column style={{ maxWidth: 450 }}>
+      <Grid stackable columns={3}>
         <Header textAlign="center">
           <h1>Confirm Customer Details</h1>
 
@@ -110,107 +112,144 @@ class Confirmation extends Component {
           </p>
         </Header>
 
-        <Segment>
-          <List divided relaxed>
-            <List.Item>
-              <List.Icon name="users" size="large" />
-              <List.Content>
-                Customer Reference Number: {customerRefNo}
-              </List.Content>
-            </List.Item>
+        <Segment.Group horizontal>
+          <Grid.Column>
+            <Segment>
+              <List divided relaxed>
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>
+                    Operator Short Code: {operatorShortCode}
+                  </List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="users" size="large" />
-              <List.Content>Customer Name: {customerName}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>
+                    Customer Reference Number: {customerRefNo}
+                  </List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="caret up" size="large" />
-              <List.Content>Customer Entity: {customerEntity}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>Customer Name: {customerName}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="building outline" size="large" />
-              <List.Content>Registration Number: {regIdNumber}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>Customer Entity: {customerEntity}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="caret up" size="large" />
-              <List.Content>Customer Type: {customerType}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>
+                    Registration Number: {regIdNumber}
+                  </List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="caret up" size="large" />
-              <List.Content>Product Type: {productType}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>Customer Type: {customerType}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="caret up" size="large" />
-              <List.Content>Customer Entity: {customerEntity}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>Product Type: {productType}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="building outline" size="large" />
-              <List.Content>Address Line 1: {address1}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>Customer Entity: {customerEntity}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="building outline" size="large" />
-              <List.Content>Address Line 2: {address2}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Address Line 1: {address1}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="building outline" size="large" />
-              <List.Content>Address Line 3: {address3}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Address Line 2: {address2}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="building outline" size="large" />
-              <List.Content>Address Line 4: {address4}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Address Line 3: {address3}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="building outline" size="large" />
-              <List.Content>Address Line 5: {address5}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Address Line 4: {address4}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="user" size="large" />
-              <List.Content>Client ID: {f_clientId}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Address Line 5: {address5}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="calendar" size="large" />
-              <List.Content>Direct Debit Date: {debitOrderDate}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>Closed Date: {closedDate}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="calendar" size="large" />
-              <List.Content>Payment Terms: {paymentTermDays}</List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>Reg ID Status: {regIdStatus}</List.Content>
+                </List.Item>
 
-            <List.Item>
-              <List.Icon name="marker" size="large" />
-              <List.Content>
-                Primary Contact Name: {primaryContactName}
-              </List.Content>
-            </List.Item>
+                <List.Item>
+                  <List.Icon name="user" size="large" />
+                  <List.Content>Client ID: {f_clientId}</List.Content>
+                </List.Item>
+              </List>
+            </Segment>
+          </Grid.Column>
 
-            <List.Item>
-              <List.Icon name="marker" size="large" />
-              <List.Content>
-                Primary Contact Number: {primaryContactNumber}
-              </List.Content>
-            </List.Item>
-          </List>
-        </Segment>
+          <Grid.Column>
+            <Segment>
+              <List divided relaxed>
+                <List.Item>
+                  <List.Icon name="calendar" size="large" />
+                  <List.Content>
+                    Direct Debit Date: {debitOrderDate}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="calendar" size="large" />
+                  <List.Content>Payment Terms: {paymentTermDays}</List.Content>
+                </List.Item>
+              </List>
+            </Segment>
+          </Grid.Column>
+
+          <Grid.Column>
+            <Segment>
+              <List divided relaxed>
+                <List.Item>
+                  <List.Icon name="marker" size="large" />
+                  <List.Content>
+                    Primary Contact Name: {primaryContactName}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="marker" size="large" />
+                  <List.Content>
+                    Primary Contact Number: {primaryContactNumber}
+                  </List.Content>
+                </List.Item>
+              </List>
+            </Segment>
+          </Grid.Column>
+        </Segment.Group>
 
         <Segment textAlign="center">
           <Button onClick={this.back}>Back</Button>
 
           <Button onClick={this.saveAndContinue}>Confirm</Button>
         </Segment>
-      </Grid.Column>
+      </Grid>
     );
   }
 }
