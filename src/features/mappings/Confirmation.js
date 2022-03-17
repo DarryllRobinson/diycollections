@@ -209,15 +209,165 @@ class Confirmation extends Component {
             <Segment>
               <List divided relaxed>
                 <List.Item>
-                  <List.Icon name="calendar" size="large" />
+                  <List.Icon name="users" size="large" />
+                  <List.Content>Account Number: {accountNumber}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>Account Name: {accountName}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>Open Date: {openDate}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>Debit Age: {debtorAge}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
                   <List.Content>
-                    Direct Debit Date: {debitOrderDate}
+                    Payment Term Days: {paymentTermDays}
                   </List.Content>
                 </List.Item>
 
                 <List.Item>
-                  <List.Icon name="calendar" size="large" />
-                  <List.Content>Payment Terms: {paymentTermDays}</List.Content>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>Credit Limt: {creditLimit}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>Total Balance: {totalBalance}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>Amount Due: {amountDue}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Current Balance: {currentBalance}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>30 Days: {days30}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>60 Days: {days60}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>90 Days: {days90}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>120 Days: {days120}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>150 Days: {days150}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>180 Days: {days180}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Over 180 Days: {days180Over}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Payment Method: {paymentMethod}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>
+                    Payment Due Date: {paymentDueDate}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>
+                    Debit Order Date: {debitOrderDate}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>
+                    Last Payment Date: {lastPaymentDate}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>
+                    Last Payment Date: {lastPaymentAmount}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="user" size="large" />
+                  <List.Content>Last PTP Date: {lastPTPDate}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Last PTP Amount: {lastPTPAmount}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Account Notes: {accountNotes}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Accunt Status: {accountStatus}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>ARG: {arg}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Tenant: {tenant}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>Created By: {createdBy}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>Updated By: {updatedBy}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="user" size="large" />
+                  <List.Content>
+                    f_customerRefNo: {f_customerRefNo}
+                  </List.Content>
                 </List.Item>
               </List>
             </Segment>
@@ -227,16 +377,197 @@ class Confirmation extends Component {
             <Segment>
               <List divided relaxed>
                 <List.Item>
-                  <List.Icon name="marker" size="large" />
+                  <List.Icon name="users" size="large" />
                   <List.Content>
                     Primary Contact Name: {primaryContactName}
                   </List.Content>
                 </List.Item>
 
                 <List.Item>
-                  <List.Icon name="marker" size="large" />
+                  <List.Icon name="users" size="large" />
                   <List.Content>
                     Primary Contact Number: {primaryContactNumber}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="users" size="large" />
+                  <List.Content>
+                    Primary Contact Email: {primaryContactEmail}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>
+                    Representative Name: {representativeName}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>
+                    Representative Number: {representativeNumber}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>
+                    Representative Email: {representativeEmail}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>
+                    Alternative Representative Name: {alternativeRepName}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="caret up" size="large" />
+                  <List.Content>
+                    Alternative Representative Number: {alternativeRepNumber}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>
+                    Alternative Representative Email: {alternativeRepEmail}
+                  </List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 1: {otherNumber1}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 2: {otherNumber2}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 3: {otherNumber3}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 4: {otherNumber4}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 5: {otherNumber5}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 6: {otherNumber6}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 7: {otherNumber7}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 8: {otherNumber8}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 9: {otherNumber9}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Number 10: {otherNumber10}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 1: {otherEmail1}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 2: {otherEmail2}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 3: {otherEmail3}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 4: {otherEmail4}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 5: {otherEmail5}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 6: {otherEmail6}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 7: {otherEmail7}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 8: {otherEmail8}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 9: {otherEmail9}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Other Email 10: {otherEmail10}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Do Not Contact 1: {dnc1}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Do Not Contact 2: {dnc2}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Do Not Contact 3: {dnc3}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Do Not Contact 4: {dnc4}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="building outline" size="large" />
+                  <List.Content>Do Not Contact 5: {dnc5}</List.Content>
+                </List.Item>
+
+                <List.Item>
+                  <List.Icon name="user" size="large" />
+                  <List.Content>
+                    f_customerRefNo: {f_customerRefNo}
                   </List.Content>
                 </List.Item>
               </List>
