@@ -11,7 +11,7 @@ import {
 class Confirmation extends Component {
   saveAndContinue = (e) => {
     e.preventDefault();
-    this.props.nextStep();
+    this.props.save();
   };
 
   back = (e) => {

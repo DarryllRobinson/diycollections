@@ -3,6 +3,7 @@ import { fetchWrapper } from '../../helpers';
 export const mappingService = {
   getAll,
   getMapping,
+  createMapping,
   updateMapping,
 };
 
@@ -14,6 +15,12 @@ function getMapping(id) {
   return fetchWrapper.get(`/mappings/${id}`);
 }
 
-function updateMapping(params) {
-  return fetchWrapper.put(`/mappings/`, params);
+function createMapping(params) {
+  console.log('createMapping params: ', params);
+  return fetchWrapper.post(`/mappings/`, params);
+}
+
+function updateMapping(id, params) {
+  console.log('updateMapping params: ', params);
+  return fetchWrapper.put(`/mappings/${id}`, params);
 }

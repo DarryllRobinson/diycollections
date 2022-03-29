@@ -6,11 +6,12 @@ import AccountDetails from './AccountDetails';
 import ContactDetails from './ContactDetails';
 import Confirmation from './Confirmation';
 import Success from './Success';
+import { mappingService } from './mapping.service';
 
 class MappingCreator extends Component {
   state = {
     // customer
-    step: 4,
+    step: 1,
     operatorShortCode: 'operatorShortCode',
     customerRefNo: 'customerRefNo',
     customerName: 'customerName',
@@ -123,6 +124,10 @@ class MappingCreator extends Component {
       return false;
     }
     return true;
+  };
+
+  updateDatabase = async () => {
+    mappingService.updateMapping(this.state);
   };
 
   render() {
@@ -306,6 +311,7 @@ class MappingCreator extends Component {
             checkFields={this.checkFields}
             nextStep={this.nextStep}
             handleChange={this.handleChange}
+            updateMapping={this.updateMapping}
             values={values}
           />
         );
@@ -316,6 +322,7 @@ class MappingCreator extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            updateMapping={this.updateMapping}
             values={values}
           />
         );
@@ -326,6 +333,7 @@ class MappingCreator extends Component {
             nextStep={this.nextStep}
             prevStep={this.prevStep}
             handleChange={this.handleChange}
+            updateMapping={this.updateMapping}
             values={values}
           />
         );
@@ -335,6 +343,7 @@ class MappingCreator extends Component {
           <Confirmation
             nextStep={this.nextStep}
             prevStep={this.prevStep}
+            updateMapping={this.updateMapping}
             values={values}
           />
         );

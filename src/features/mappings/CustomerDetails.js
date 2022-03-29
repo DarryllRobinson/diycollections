@@ -14,9 +14,10 @@ class CustomerDetails extends Component {
 
   saveAndContinue = (e) => {
     e.preventDefault();
-    const { values } = this.props;
+    const { createMapping, nextStep, values } = this.props;
     //if (this.props.checkFields(values)) {
-    this.props.nextStep();
+    createMapping(values);
+    nextStep();
     //}
   };
 
@@ -86,7 +87,7 @@ class CustomerDetails extends Component {
   render() {
     const { values } = this.props;
     const { error } = this.state;
-    //console.log('this.props: ', this.props.checkFields);
+    console.log({ values });
 
     return (
       <Grid.Column>
