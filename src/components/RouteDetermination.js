@@ -25,7 +25,7 @@ import { Role } from '../helpers';
 import { ReleaseNotes } from '../features/release/ReleaseNotes';
 
 import { Users } from '../features/users/Users';
-import Register from '../features/users/Register';
+import { Register } from '../features/users/Register';
 
 import { NotFound } from './NotFound';
 
