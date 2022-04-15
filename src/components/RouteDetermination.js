@@ -25,17 +25,20 @@ import { Role } from '../helpers';
 import { ReleaseNotes } from '../features/release/ReleaseNotes';
 
 import { Users } from '../features/users/Users';
+import { Register } from '../features/users/Register';
 
 import { NotFound } from './NotFound';
 
 export const RouteDetermination = () => {
+  // Leave out [roles] if you want all users to have access
+  // roles={[Role.Agent, Role.Lead, Role.KAM, Role.Admin, Role.Super]}
   return (
     <Container fluid className="RouteDetermination">
       <Switch>
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
         <PrivateRoute
           path="/upload"
-          roles={[Role.Admin, Role.Agent, Role.Super]}
+          roles={[Role.Agent, Role.Lead, Role.KAM, Role.Admin, Role.Super]}
           exact
           component={Upload}
         />
