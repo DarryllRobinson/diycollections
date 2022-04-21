@@ -32,7 +32,7 @@ function login(email, password) {
   return fetchWrapper
     .post(`/users/authenticate`, { email, password })
     .then((user) => {
-      //console.log(user);
+      console.log(user);
       if (user.status === 'Error') {
         return user;
       }
