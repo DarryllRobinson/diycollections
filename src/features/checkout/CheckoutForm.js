@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Container, Form, Header, Label } from 'semantic-ui-react';
+import { Button, Container, Form, Header } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import {
   CardNumberElement,

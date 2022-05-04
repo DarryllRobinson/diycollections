@@ -14,7 +14,7 @@ import { ResetPassword } from './features/users/ResetPassword';
 import { VerifyEmail } from './features/users/VerifyEmail';
 
 import { ViewInvoice } from './features/invoices/ViewInvoice';
-import { Invoices } from './features/invoices/Invoices';
+//import { Invoices } from './features/invoices/Invoices';
 
 function App() {
   const { pathname } = useLocation();

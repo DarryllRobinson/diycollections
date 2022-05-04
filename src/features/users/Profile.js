@@ -256,7 +256,7 @@ export const Profile = ({ handleProfileClick, open, setOpen }) => {
                 <Form.Input
                   error={state.fields.entities['phone'].error}
                   fluid
-                  id="form-input-control-phone"
+                  id="form-input-control-phonedd"
                   name="phone"
                   label="Phone"
                   onChange={handleChange}

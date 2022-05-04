@@ -15,7 +15,8 @@ export const InvoiceViewer = (props) => {
   const [invoice, setInvoice] = useState(null);
   const [invoiceStatus, setInvoiceStatus] = useState('idle');
   const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
+  // setting page number to 1 to keep the React warning happy
+  const [pageNumber, setPageNumber] = useState(0);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -28,6 +29,7 @@ export const InvoiceViewer = (props) => {
   useEffect(() => {
     //const { token } = queryString.parse(window.location.search);
     //console.log('token', token);
+    setPageNumber(1);
 
     if (token) {
       setToken(token);

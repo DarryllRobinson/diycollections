@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'semantic-ui-react';
 
-import { ClientCreator } from './ClientCreator';
-import { ClientEditor } from './ClientEditor';
+//import { ClientCreator } from './ClientCreator';
+//import { ClientEditor } from './ClientEditor';
 import { clientService } from './client.service';
 
 export const ClientManagement = () => {
@@ -22,5 +22,5 @@ export const ClientManagement = () => {
     fetchClients();
   }, []);
 
-  return <Container>Clients</Container>;
+  return <Container>Clients {(clients, clientsStatus)}</Container>;
 };

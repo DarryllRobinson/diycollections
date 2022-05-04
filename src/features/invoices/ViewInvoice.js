@@ -15,7 +15,7 @@ export const ViewInvoice = ({ history }) => {
   const [invoice, setInvoice] = useState(null);
   const [invoiceStatus, setInvoiceStatus] = useState('idle');
   const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [pageNumber, setPageNumber] = useState(0);
 
   function onDocumentLoadSuccess({ numPages }) {
     setNumPages(numPages);
@@ -27,6 +27,7 @@ export const ViewInvoice = ({ history }) => {
 
   useEffect(() => {
     const { token } = queryString.parse(window.location.search);
+    setPageNumber(1);
     //console.log('token', token);
 
     if (token) {

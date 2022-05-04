@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Dimmer, Form, Loader, Message } from 'semantic-ui-react';
+import { Container, Form, Message } from 'semantic-ui-react';
 
 //import { accountService } from '../accounts/account.service';
-import { alertService } from '../alerts/alert.service';
+//import { alertService } from '../alerts/alert.service';
 import { customerService } from './customer.service';
 
 export const CustomerEditor = ({ match }) => {
@@ -12,6 +12,8 @@ export const CustomerEditor = ({ match }) => {
   const [customer, setCustomer] = useState(null);
   const [customerStatus, setCustomerStatus] = useState('idle');
   const [state, setState] = useState({
+    // the id state just to keep the React warning happy
+    id: null,
     fields: {
       ids: [
         'customerRefNo',
@@ -52,9 +54,10 @@ export const CustomerEditor = ({ match }) => {
     }
 
     fetchCustomer();
+    setState({ id: 1 });
   }, [id]);
 
-  let content;
+  let content, oldcontent;
 
   if (customerStatus === 'error') {
     content = <Message>error</Message>;
@@ -78,14 +81,14 @@ export const CustomerEditor = ({ match }) => {
 
     const fields = state.fields;
     console.log('fields: ', fields);
-    let content = fields.ids.map((field, idx) => {
+    content = fields.ids.map((field, idx) => {
       console.log('value: ', fields.entities[field].value);
       return (
         <Form.Input defaultValue={fields.entities[field].value}></Form.Input>
       );
     });
 
-    let oldcontent = (
+    oldcontent = (
       <>
         <Form.Group>
           <Form.Input
@@ -151,7 +154,9 @@ export const CustomerEditor = ({ match }) => {
 
   return (
     <Container>
-      <Form loading={customerStatus === 'loading'}>{content}</Form>
+      <Form loading={customerStatus === 'loading'}>
+        {(content, oldcontent)}
+      </Form>
     </Container>
   );
 };

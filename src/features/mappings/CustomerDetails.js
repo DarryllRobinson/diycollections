@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {
   Grid,
   Header,
-  Input,
   Message,
   Segment,
   Form,

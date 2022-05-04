@@ -57,7 +57,12 @@ function Register({ history }) {
           <Input name="email" type="text" className={'form-control'} />
 
           <label>Phone</label>
-          <Input name="phone" type="text" className={'form-control'} />
+          <Input
+            name="phone"
+            type="text"
+            className={'form-control'}
+            autoComplete="on"
+          />
         </div>
         <div className="form-row">
           <div className="form-group col">
