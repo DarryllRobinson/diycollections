@@ -406,6 +406,7 @@ class Upload extends Component {
         createdAt: createdAt,
         createdBy: record.CreatedBy,
         currentAssignment: record.CurrentAssignment,
+        initialAssignment: record.InitialAssignment,
         nextVisitDateTime: nextVisitDateTime,
         updatedDate: updatedDate,
         updatedBy: record.LastUpdatedBy,
