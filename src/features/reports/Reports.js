@@ -5,9 +5,13 @@ import {
   Container,
   Grid,
   Header,
+  Icon,
+  Label,
+  Menu,
   Message,
   Segment,
   Sidebar,
+  Table,
 } from 'semantic-ui-react';
 
 import { Report } from './Report';
@@ -20,7 +24,7 @@ class Reports extends React.Component {
     super(props);
     this.state = {
       reports: {
-        ids: ['aging', 'agentPTP', 'datePTP'],
+        ids: ['aging', 'agentPTP', 'datePTP', 'agentActivity'],
         entities: {
           aging: {
             data: null,
@@ -39,6 +43,12 @@ class Reports extends React.Component {
             description: 'PTP sum per date',
             title: 'PTP by Date',
             type: 'bar',
+          },
+          agentActivity: {
+            data: null,
+            description: 'Agent Activity per Customer',
+            title: 'Agent Activity',
+            type: 'table',
           },
         },
       },
@@ -68,7 +78,7 @@ class Reports extends React.Component {
       const reportData = await reportService.getReport(report);
 
       reportObject.data = this.prepData(reportData);
-      //console.log('reportObject: ', reportObject);
+      console.log('reportObject: ', reportObject);
       this.setState({ ...this.state, reportObject });
     });
   }
@@ -161,6 +171,73 @@ class Reports extends React.Component {
                   styleType="sidebar"
                   title={reports.entities[report].title}
                 />
+              )}
+              {!reports.entities[report].data && (
+                <div key={idx}>
+                  <Grid.Column width={4} style={{ padding: 0 }}>
+                    <div className="ui active inverted dimmer">
+                      <div className="ui text loader">Loading</div>
+                    </div>
+                    <p></p>
+                  </Grid.Column>
+                </div>
+              )}
+            </Grid.Column>
+          </div>
+        );
+      } else if (reports.entities[report].type === 'table') {
+        return (
+          <div key={idx}>
+            <Grid.Column width={4} style={{ padding: 0 }}>
+              {reports.entities[report].data && (
+                <Table celled>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.HeaderCell>Header</Table.HeaderCell>
+                      <Table.HeaderCell>Header</Table.HeaderCell>
+                      <Table.HeaderCell>Header</Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Header>
+
+                  <Table.Body>
+                    <Table.Row>
+                      <Table.Cell>
+                        <Label ribbon>First</Label>
+                      </Table.Cell>
+                      <Table.Cell>Cell</Table.Cell>
+                      <Table.Cell>Cell</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell>Cell</Table.Cell>
+                      <Table.Cell>Cell</Table.Cell>
+                      <Table.Cell>Cell</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                      <Table.Cell>Cell</Table.Cell>
+                      <Table.Cell>Cell</Table.Cell>
+                      <Table.Cell>Cell</Table.Cell>
+                    </Table.Row>
+                  </Table.Body>
+
+                  <Table.Footer>
+                    <Table.Row>
+                      <Table.HeaderCell colSpan="3">
+                        <Menu floated="right" pagination>
+                          <Menu.Item as="a" icon>
+                            <Icon name="chevron left" />
+                          </Menu.Item>
+                          <Menu.Item as="a">1</Menu.Item>
+                          <Menu.Item as="a">2</Menu.Item>
+                          <Menu.Item as="a">3</Menu.Item>
+                          <Menu.Item as="a">4</Menu.Item>
+                          <Menu.Item as="a" icon>
+                            <Icon name="chevron right" />
+                          </Menu.Item>
+                        </Menu>
+                      </Table.HeaderCell>
+                    </Table.Row>
+                  </Table.Footer>
+                </Table>
               )}
               {!reports.entities[report].data && (
                 <div key={idx}>
