@@ -21,7 +21,7 @@ class Reports extends React.Component {
     super(props);
     this.state = {
       reports: {
-        ids: ['aging', 'agentPTP', 'datePTP', 'agentActivity'],
+        ids: ['agentActivity', 'aging', 'agentPTP', 'datePTP'],
         entities: {
           aging: {
             data: null,
@@ -254,7 +254,7 @@ class Reports extends React.Component {
     if (this.state.selected) {
       const reportObject = this.state.reports.entities[this.state.selected];
       const { data, description, title, type } = reportObject;
-      console.log('reportObject: ', reportObject);
+      //console.log('reportObject: ', reportObject);
 
       return (
         <Report

@@ -6,7 +6,7 @@ import CustomTable from './CustomTable';
 //const mysqlLayer = new MysqlLayer();
 
 export const Report = (props) => {
-  console.log('Report props: ', props);
+  //console.log('Report props: ', props);
   const { data, description, report, styleType, title, type } = props;
 
   const renderChart = () => {
