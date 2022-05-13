@@ -5,18 +5,15 @@ import {
   Container,
   Grid,
   Header,
-  Icon,
-  Label,
-  Menu,
   Message,
   Segment,
   Sidebar,
-  Table,
 } from 'semantic-ui-react';
 
 import { Report } from './Report';
 import CustomBar from './CustomBar';
 import CustomLine from './CustomLine';
+import CustomTable from './CustomTable';
 import { reportService } from './report.service';
 
 class Reports extends React.Component {
@@ -73,17 +70,26 @@ class Reports extends React.Component {
     reportList.forEach(async (report) => {
       const reportObject = this.state.reports.entities[report];
       reportObject.data = null;
+      //console.log('report', report);
       this.setState({ ...this.state, reportObject });
 
       const reportData = await reportService.getReport(report);
+      //console.log('reportData', report, reportData);
 
-      reportObject.data = this.prepData(reportData);
-      console.log('reportObject: ', reportObject);
-      this.setState({ ...this.state, reportObject });
+      // Check if report type <> table as tables are prepped differently
+      if (reportObject.type !== 'table') {
+        reportObject.data = this.prepChartData(reportData);
+        //console.log('reportObject: ', reportObject);
+        this.setState({ ...this.state, reportObject });
+      } else if (reportObject.type === 'table') {
+        reportObject.data = reportData;
+        //console.log('reportObject: ', reportObject);
+        this.setState({ ...this.state, reportObject });
+      }
     });
   }
 
-  prepData(data) {
+  prepChartData(data) {
     let tempArray = [];
 
     if (data.length === 1) {
@@ -187,69 +193,32 @@ class Reports extends React.Component {
         );
       } else if (reports.entities[report].type === 'table') {
         return (
-          <div key={idx}>
-            <Grid.Column width={4} style={{ padding: 0 }}>
-              {reports.entities[report].data && (
-                <Table celled>
-                  <Table.Header>
-                    <Table.Row>
-                      <Table.HeaderCell>Header</Table.HeaderCell>
-                      <Table.HeaderCell>Header</Table.HeaderCell>
-                      <Table.HeaderCell>Header</Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Header>
-
-                  <Table.Body>
-                    <Table.Row>
-                      <Table.Cell>
-                        <Label ribbon>First</Label>
-                      </Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
-                    <Table.Row>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                      <Table.Cell>Cell</Table.Cell>
-                    </Table.Row>
-                  </Table.Body>
-
-                  <Table.Footer>
-                    <Table.Row>
-                      <Table.HeaderCell colSpan="3">
-                        <Menu floated="right" pagination>
-                          <Menu.Item as="a" icon>
-                            <Icon name="chevron left" />
-                          </Menu.Item>
-                          <Menu.Item as="a">1</Menu.Item>
-                          <Menu.Item as="a">2</Menu.Item>
-                          <Menu.Item as="a">3</Menu.Item>
-                          <Menu.Item as="a">4</Menu.Item>
-                          <Menu.Item as="a" icon>
-                            <Icon name="chevron right" />
-                          </Menu.Item>
-                        </Menu>
-                      </Table.HeaderCell>
-                    </Table.Row>
-                  </Table.Footer>
-                </Table>
-              )}
-              {!reports.entities[report].data && (
-                <div key={idx}>
-                  <Grid.Column width={4} style={{ padding: 0 }}>
-                    <div className="ui active inverted dimmer">
-                      <div className="ui text loader">Loading</div>
-                    </div>
-                    <p></p>
-                  </Grid.Column>
-                </div>
-              )}
-            </Grid.Column>
+          <div
+            key={idx}
+            style={{
+              paddingBottom: '15px',
+            }}
+          >
+            <Button
+              onClick={() => {
+                this.setState({ selected: report, visible: false });
+              }}
+              style={{
+                backgroundColor: 'white',
+                border: '1px solid black',
+                paddingBottom: '15px',
+              }}
+            >
+              <Grid.Column width={4} style={{ padding: 0 }}>
+                <CustomTable
+                  chartNumber={idx}
+                  data={reports.entities[report].data}
+                  description={reports.entities[report].description}
+                  styleType="sidebar"
+                  title={reports.entities[report].title}
+                />
+              </Grid.Column>
+            </Button>
           </div>
         );
       } else {
@@ -284,8 +253,8 @@ class Reports extends React.Component {
   selectedChartRender() {
     if (this.state.selected) {
       const reportObject = this.state.reports.entities[this.state.selected];
-      const { data, description, title } = reportObject;
-      //console.log('reportObject: ', reportObject);
+      const { data, description, title, type } = reportObject;
+      console.log('reportObject: ', reportObject);
 
       return (
         <Report
@@ -294,6 +263,7 @@ class Reports extends React.Component {
           report={this.state.selected}
           styleType="main"
           title={title}
+          type={type}
         />
       );
     } else {
