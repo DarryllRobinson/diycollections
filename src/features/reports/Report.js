@@ -18,27 +18,23 @@ export const Report = (props) => {
       </div>;
     } else if (type !== 'table') {
       return (
-        <div>
-          <CustomBar
-            chartNumber={null}
-            data={data}
-            description={description}
-            styleType={styleType}
-            title={title}
-          />
-        </div>
+        <CustomBar
+          chartNumber={null}
+          data={data}
+          description={description}
+          styleType={styleType}
+          title={title}
+        />
       );
     } else if (type === 'table') {
       return (
-        <div>
-          <CustomTable
-            chartNumber={null}
-            data={data}
-            description={description}
-            styleType={styleType}
-            title={title}
-          />
-        </div>
+        <CustomTable
+          chartNumber={null}
+          data={data}
+          description={description}
+          styleType={styleType}
+          title={title}
+        />
       );
     }
   };

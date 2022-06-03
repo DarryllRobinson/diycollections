@@ -26,6 +26,10 @@ class CustomTable extends React.Component {
         margin: '15px 3px',
         fontFamily: "'Fira Sans', sans-serif",
       },
+      svg: {
+        overflow: 'scroll',
+        viewBox: '0 0 600 640',
+      },
       title: {
         textAnchor: 'start',
         verticalAnchor: 'end',
@@ -94,31 +98,39 @@ class CustomTable extends React.Component {
     return {
       parent: {
         background: '#ffffff',
-        border: '1px solid #000000',
+        //border: '3px dashed black',
         boxSizing: 'border-box',
         display: 'inline',
-        height: '80vh',
+        minHeight: '80vh',
         margin: '15px 3px',
-        fontFamily: "'Fira Sans', sans-serif",
         width: '80vw',
+      },
+      svg: {
+        overflow: 'auto',
+        viewBox: '0 0 650 400',
       },
       title: {
         textAnchor: 'start',
         verticalAnchor: 'end',
         fill: '#333740',
         fontFamily: 'inherit',
-        fontSize: '18px',
         fontWeight: 'bold',
       },
       foreignObject: {
-        height: '400',
-        width: '800',
-        x: '-120',
+        height: '200',
+        overflow: 'auto',
+        width: '650',
+        x: '0',
         y: '80',
       },
       table: {
-        fontFamily: "'Fira Sans', sans-serif",
-        width: '100%',
+        collapsing: true,
+        compact: true,
+        height: '100vh',
+        margin: '10px',
+        tableLayout: 'fixed',
+        width: '97%',
+        wordBreak: 'break-word',
       },
       labelNumber: {
         textAnchor: 'middle',
@@ -183,9 +195,15 @@ class CustomTable extends React.Component {
         border: '1px solid #000000',
         boxSizing: 'border-box',
         display: 'inline',
-        height: '200',
+        height: '200px',
         margin: '15px 3px',
-        fontFamily: "'Fira Sans', sans-serif",
+        overflow: 'hidden',
+        viewBox: '0 0 450 350',
+        zoomAndPan: 'magnify',
+      },
+      svg: {
+        overflow: 'hidden',
+        viewBox: '0 0 450 350',
       },
       title: {
         textAnchor: 'start',
@@ -202,7 +220,9 @@ class CustomTable extends React.Component {
         y: '80',
       },
       table: {
-        color: 'red',
+        fontSize: '10px',
+        tableLayout: 'fixed',
+        wordBreak: 'break-word',
       },
       labelNumber: {
         textAnchor: 'middle',
@@ -315,7 +335,11 @@ class CustomTable extends React.Component {
     const dataSetOne = this.getDataSetOne();
 
     return (
-      <svg style={styles.parent} viewBox="0 0 450 350">
+      <svg
+        style={styles.parent}
+        overflow={styles.svg.overflow}
+        viewBox={styles.svg.viewBox}
+      >
         {/* Create stylistic elements */}
         <rect x="0" y="0" width="10" height="30" fill="#ee303d" />
         <rect x="420" y="10" width="20" height="20" fill="#517790" />
@@ -337,43 +361,49 @@ class CustomTable extends React.Component {
 
         <foreignObject
           height={styles.foreignObject.height}
+          overflow={styles.foreignObject.overflow}
           width={styles.foreignObject.width}
           x={styles.foreignObject.x}
           y={styles.foreignObject.y}
+          //style={{ border: '3px solid green' }}
         >
-          <div xmlns="http://www.w3.org/1999/xhtml">
-            <Table style={styles.table}>
-              <Table.Header>
-                <Table.Row>
-                  <Table.HeaderCell>Customer Name</Table.HeaderCell>
-                  <Table.HeaderCell>Case Number</Table.HeaderCell>
-                  <Table.HeaderCell>Last Updated</Table.HeaderCell>
-                  <Table.HeaderCell>Resolution</Table.HeaderCell>
-                </Table.Row>
-              </Table.Header>
+          <Table
+            collapsing={styles.table.collapsing}
+            compact={styles.table.compact}
+            striped
+            style={styles.table}
+            unstackable
+          >
+            <Table.Header>
+              <Table.Row>
+                <Table.HeaderCell>Customer Name</Table.HeaderCell>
+                <Table.HeaderCell>Case Number</Table.HeaderCell>
+                <Table.HeaderCell>Last Updated</Table.HeaderCell>
+                <Table.HeaderCell>Resolution</Table.HeaderCell>
+              </Table.Row>
+            </Table.Header>
 
-              <Table.Body>{this.prepRows(data)}</Table.Body>
+            <Table.Body>{this.prepRows(data)}</Table.Body>
 
-              <Table.Footer>
-                <Table.Row>
-                  <Table.HeaderCell colSpan="4">
-                    <Menu floated="right" pagination>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron left" />
-                      </Menu.Item>
-                      <Menu.Item as="a">1</Menu.Item>
-                      <Menu.Item as="a">2</Menu.Item>
-                      <Menu.Item as="a">3</Menu.Item>
-                      <Menu.Item as="a">4</Menu.Item>
-                      <Menu.Item as="a" icon>
-                        <Icon name="chevron right" />
-                      </Menu.Item>
-                    </Menu>
-                  </Table.HeaderCell>
-                </Table.Row>
-              </Table.Footer>
-            </Table>
-          </div>
+            <Table.Footer>
+              <Table.Row>
+                <Table.HeaderCell colSpan="4">
+                  <Menu floated="right" pagination size="mini">
+                    <Menu.Item as="a" icon>
+                      <Icon name="chevron left" />
+                    </Menu.Item>
+                    <Menu.Item as="a">1</Menu.Item>
+                    <Menu.Item as="a">2</Menu.Item>
+                    <Menu.Item as="a">3</Menu.Item>
+                    <Menu.Item as="a">4</Menu.Item>
+                    <Menu.Item as="a" icon>
+                      <Icon name="chevron right" />
+                    </Menu.Item>
+                  </Menu>
+                </Table.HeaderCell>
+              </Table.Row>
+            </Table.Footer>
+          </Table>
         </foreignObject>
       </svg>
     );
