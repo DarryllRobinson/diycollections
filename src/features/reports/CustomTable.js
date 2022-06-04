@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  VictoryAxis,
-  VictoryBar,
-  VictoryChart,
-  VictoryContainer,
-  VictoryLabel,
-  VictoryTooltip,
-} from 'victory';
+import { VictoryLabel } from 'victory';
 import { Dimmer, Icon, Loader, Menu, Table } from 'semantic-ui-react';
 
 import { userService } from '../users/user.service';
@@ -19,86 +12,7 @@ class CustomTable extends React.Component {
     return {
       parent: {
         background: '#ffffff',
-        border: '1px solid #000000',
-        boxSizing: 'border-box',
-        display: 'inline',
-        height: '275',
-        margin: '15px 3px',
-        fontFamily: "'Fira Sans', sans-serif",
-      },
-      svg: {
-        overflow: 'scroll',
-        viewBox: '0 0 600 640',
-      },
-      title: {
-        textAnchor: 'start',
-        verticalAnchor: 'end',
-        fill: '#333740',
-        fontFamily: 'inherit',
-        fontSize: '18px',
-        fontWeight: 'bold',
-      },
-      labelNumber: {
-        textAnchor: 'middle',
-        fill: '#ffffff',
-        fontFamily: 'inherit',
-        fontSize: '14px',
-      },
-
-      // INDEPENDENT AXIS
-      axisX: {
-        axis: { stroke: 'black', strokeWidth: 1 },
-        domainPadding: { x: 20, y: 5 },
-        tickLabels: {
-          fill: '#333740',
-          fontFamily: 'inherit',
-          fontSize: 10,
-        },
-      },
-
-      // DATA SET
-      axisOne: {
-        grid: {
-          stroke: ({ tick }) => (tick === -10 ? 'transparent' : '#a8abac'),
-          strokeWidth: 2,
-        },
-        axis: { stroke: BLUE_COLOR, strokeWidth: 0 },
-        ticks: { strokeWidth: 0 },
-        tickLabels: {
-          fill: BLUE_COLOR,
-          fontFamily: 'inherit',
-          fontSize: 10,
-          padding: 3,
-        },
-      },
-      labelOne: {
-        fill: BLUE_COLOR,
-        fontFamily: 'inherit',
-        fontSize: 12,
-        fontStyle: 'italic',
-      },
-      barOne: {
-        data: { fill: PURPLE_COLOR },
-      },
-
-      // Tooltip
-      axisOneCustomLabel: {
-        fill: BLUE_COLOR,
-        fontFamily: 'inherit',
-        fontWeight: 300,
-        fontSize: 21,
-      },
-    };
-  }
-
-  getStylesMain() {
-    const BLUE_COLOR = '#003d6a';
-    const PURPLE_COLOR = '#2062ae';
-
-    return {
-      parent: {
-        background: '#ffffff',
-        //border: '3px dashed black',
+        border: '1px solid black',
         boxSizing: 'border-box',
         display: 'inline',
         minHeight: '80vh',
@@ -139,48 +53,70 @@ class CustomTable extends React.Component {
         fontSize: '14px',
       },
 
-      // INDEPENDENT AXIS
-      axisX: {
-        axis: { stroke: 'black', strokeWidth: 1 },
-        domainPadding: { x: 20, y: 5 },
-        tickLabels: {
-          fill: '#333740',
-          fontFamily: 'inherit',
-          fontSize: 10,
-        },
-      },
-
       // DATA SET
-      axisOne: {
-        grid: {
-          stroke: ({ tick }) => (tick === -10 ? 'transparent' : '#a8abac'),
-          strokeWidth: 2,
-        },
-        axis: { stroke: BLUE_COLOR, strokeWidth: 0 },
-        ticks: { strokeWidth: 0 },
-        tickLabels: {
-          fill: BLUE_COLOR,
-          fontFamily: 'inherit',
-          fontSize: 10,
-          padding: 3,
-        },
-      },
       labelOne: {
         fill: BLUE_COLOR,
         fontFamily: 'inherit',
         fontSize: 12,
         fontStyle: 'italic',
       },
-      barOne: {
-        data: { fill: PURPLE_COLOR },
+    };
+  }
+
+  getStylesMain() {
+    const BLUE_COLOR = '#003d6a';
+    const PURPLE_COLOR = '#2062ae';
+
+    return {
+      parent: {
+        background: '#ffffff',
+        border: '1px solid black',
+        boxSizing: 'border-box',
+        display: 'inline',
+        minHeight: '80vh',
+        margin: '15px 3px',
+        width: '80vw',
+      },
+      svg: {
+        overflow: 'auto',
+        viewBox: '0 0 650 400',
+      },
+      title: {
+        textAnchor: 'start',
+        verticalAnchor: 'end',
+        fill: '#333740',
+        fontFamily: 'inherit',
+        fontWeight: 'bold',
+      },
+      foreignObject: {
+        height: '200',
+        overflow: 'auto',
+        width: '650',
+        x: '0',
+        y: '80',
+      },
+      table: {
+        collapsing: true,
+        compact: true,
+        height: '100vh',
+        margin: '10px',
+        tableLayout: 'fixed',
+        width: '97%',
+        wordBreak: 'break-word',
+      },
+      labelNumber: {
+        textAnchor: 'middle',
+        fill: '#ffffff',
+        fontFamily: 'inherit',
+        fontSize: '14px',
       },
 
-      // Tooltip
-      axisOneCustomLabel: {
+      // DATA SET
+      labelOne: {
         fill: BLUE_COLOR,
         fontFamily: 'inherit',
-        fontWeight: 300,
-        fontSize: 21,
+        fontSize: 12,
+        fontStyle: 'italic',
       },
     };
   }
@@ -231,54 +167,14 @@ class CustomTable extends React.Component {
         fontSize: '14px',
       },
 
-      // INDEPENDENT AXIS
-      axisX: {
-        axis: { stroke: 'black', strokeWidth: 1 },
-        domainPadding: { x: 20, y: 5 },
-        tickLabels: {
-          fill: '#333740',
-          fontFamily: 'inherit',
-          fontSize: 10,
-        },
-      },
-
       // DATA SET
-      axisOne: {
-        grid: {
-          stroke: ({ tick }) => (tick === -10 ? 'transparent' : '#a8abac'),
-          strokeWidth: 2,
-        },
-        axis: { stroke: BLUE_COLOR, strokeWidth: 0 },
-        ticks: { strokeWidth: 0 },
-        tickLabels: {
-          fill: BLUE_COLOR,
-          fontFamily: 'inherit',
-          fontSize: 10,
-          padding: 3,
-        },
-      },
       labelOne: {
         fill: BLUE_COLOR,
         fontFamily: 'inherit',
         fontSize: 12,
         fontStyle: 'italic',
       },
-      barOne: {
-        data: { fill: PURPLE_COLOR },
-      },
-
-      // Tooltip
-      axisOneCustomLabel: {
-        fill: BLUE_COLOR,
-        fontFamily: 'inherit',
-        fontWeight: 300,
-        fontSize: 21,
-      },
     };
-  }
-
-  getDataSetOne() {
-    return this.props.data;
   }
 
   whichStyle() {
@@ -332,7 +228,6 @@ class CustomTable extends React.Component {
   render() {
     const { chartNumber, data, description, title } = this.props;
     const styles = this.whichStyle();
-    const dataSetOne = this.getDataSetOne();
 
     return (
       <svg
