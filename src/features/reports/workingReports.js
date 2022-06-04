@@ -257,12 +257,7 @@ class Reports extends React.Component {
       //console.log('reportObject: ', reportObject);
 
       return (
-        <Segment
-          style={{
-            //border: '5px dashed yellow',
-            height: '2000px',
-          }}
-        >
+        <Segment style={{ border: '5px solid yellow', height: '2000px' }}>
           <Report
             data={data}
             description={description}
@@ -288,7 +283,7 @@ class Reports extends React.Component {
         <Grid columns={1} divided stackable textAlign="center">
           <Grid.Column>{this.refreshButtonRender()}</Grid.Column>
           <Grid.Column>
-            <Sidebar.Pushable as={Segment} style={{ overflow: 'auto' }}>
+            <Sidebar.Pushable as={Segment} style={{ overflow: 'scroll' }}>
               <Sidebar
                 as={Segment}
                 animation="overlay"
@@ -304,9 +299,9 @@ class Reports extends React.Component {
               </Sidebar>
               <Sidebar.Pusher
                 style={{
-                  //border: '3px solid red',
+                  border: '3px solid red',
                   height: '100vh',
-                  //overflow: 'auto',
+                  overflow: 'scroll',
                 }}
               >
                 {this.selectedChartRender()}
