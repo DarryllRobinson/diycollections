@@ -7,7 +7,6 @@ import { userService } from '../users/user.service';
 class CustomTable extends React.Component {
   getStylesDashboard() {
     const BLUE_COLOR = '#003d6a';
-    const PURPLE_COLOR = '#2062ae';
 
     return {
       parent: {
@@ -65,7 +64,6 @@ class CustomTable extends React.Component {
 
   getStylesMain() {
     const BLUE_COLOR = '#003d6a';
-    const PURPLE_COLOR = '#2062ae';
 
     return {
       parent: {
@@ -123,7 +121,6 @@ class CustomTable extends React.Component {
 
   getStylesSidebar() {
     const BLUE_COLOR = '#003d6a';
-    const PURPLE_COLOR = '#2062ae';
 
     return {
       parent: {
