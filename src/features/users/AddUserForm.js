@@ -17,6 +17,13 @@ export const AddUserForm = (props) => {
         phone: { error: null, value: '' },
         role: { error: null, value: '' },
       },
+      /*entities: {
+        firstName: { error: null, value: 'Test' },
+        lastName: { error: null, value: 'Agent' },
+        email: { error: null, value: 'darryllrobinson@icloud.com' },
+        phone: { error: null, value: '0123456789' },
+        role: { error: null, value: 'Agent' },
+      },*/
     },
   });
 
@@ -183,6 +190,7 @@ export const AddUserForm = (props) => {
       .register(user)
       .then((response) => {
         console.log('response: ', response);
+        //console.log('response.status: ', response.status);
         if (response.status === 'success') {
           setLoading(false);
           clearState();
