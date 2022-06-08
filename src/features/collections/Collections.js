@@ -32,7 +32,7 @@ export const Collections = (props) => {
 
   const loadRecords = useCallback(async (caseStatus) => {
     const records = await collectionService.getAll();
-    console.log('records:', records);
+    //console.log('records:', records);
     setCollectionStatus('loading');
 
     setCollections(records);

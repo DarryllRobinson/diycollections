@@ -33,7 +33,7 @@ export const CollectionForm = (props) => {
     accountNumber,
     caseNotes,
     caseStatus,
-    currentAssignment,
+    //currentAssignment, // no longer used as derived from form
     currentStatus,
     id,
     kamNotes,
