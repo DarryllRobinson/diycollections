@@ -173,7 +173,7 @@ export const CollectionForm = (props) => {
 
   const handleSelect = (evt, data) => {
     const { name, value } = data;
-    //console.log('name, value', name, value);
+    console.log('name, value', name, value);
     setState((prevState) => ({
       fields: {
         ...prevState.fields,
@@ -561,36 +561,40 @@ export const CollectionForm = (props) => {
   });
 
   const updateDatabase = async (process) => {
+    // get values out of "state"
+    const updateObject = state.fields.entities;
+    //console.log('updateObject ', updateObject);
     let newCaseNote = null;
     let newKamNote = null;
     let newOutcomeNote = null;
 
-    if (state.fields.entities['newKamNotes'].value !== '') {
+    if (updateObject.newKamNotes.value !== '') {
       newKamNote =
         `${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')} by ${
           user.email
-        }\n${state.fields.entities['newKamNotes'].value}\n\r` + kamNotes;
+        }\n${updateObject.newKamNotes.value}\n\r` + kamNotes;
 
-      if (state.fields.entities['newCaseNotes'].value === '')
-        state.fields.entities['newCaseNotes'].value = 'KAM notes updated';
+      if (updateObject.newCaseNotes.value === '')
+        updateObject.newCaseNotes.value = 'KAM notes updated';
     }
 
-    if (state.fields.entities['newCaseNotes'].value !== '') {
+    if (updateObject.newCaseNotes.value !== '') {
       newCaseNote =
         `${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')} by ${
           user.email
-        }\n${state.fields.entities['newCaseNotes'].value}\n\r` + caseNotes;
+        }\n${updateObject.newCaseNotes.value}\n\r` + caseNotes;
     }
 
     newOutcomeNote = `${moment(new Date()).format('YYYY-MM-DD HH:mm:ss')} by ${
       user.email
-    }\n${state.fields.entities['outcomeNotes'].value}\n\r`;
+    }\n${updateObject.outcomeNotes.value}\n\r`;
 
     const closedDate = moment(new Date()).format('YYYY-MM-DD HH:mm:ss');
     const closedBy = user.email;
 
     let caseUpdate;
-    console.log('newKamNote: ', newKamNote);
+    //console.log('newKamNote: ', newKamNote);
+    //console.log('currentAssignment: ', currentAssignment, state.fields.entities);
     // Working out which role for notes and what action has been submitted
     if (process === 'Closed' && newKamNote && newCaseNote) {
       //console.log('1 ');
@@ -600,7 +604,7 @@ export const CollectionForm = (props) => {
         caseNotes: newCaseNote,
         kamNotes: newKamNote,
         nextVisitDateTime: null,
-        resolution: state.fields.entities['resolution'].value,
+        resolution: updateObject.resolution.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -611,7 +615,7 @@ export const CollectionForm = (props) => {
         currentStatus: process,
         kamNotes: newKamNote,
         nextVisitDateTime: null,
-        resolution: state.fields.entities['resolution'].value,
+        resolution: updateObject.resolution.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -622,7 +626,7 @@ export const CollectionForm = (props) => {
         currentStatus: process,
         caseNotes: newCaseNote,
         nextVisitDateTime: null,
-        resolution: state.fields.entities['resolution'].value,
+        resolution: updateObject.resolution.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -632,7 +636,7 @@ export const CollectionForm = (props) => {
         currentAssignment: null,
         currentStatus: process,
         nextVisitDateTime: null,
-        resolution: state.fields.entities['resolution'].value,
+        resolution: updateObject.resolution.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -642,12 +646,12 @@ export const CollectionForm = (props) => {
       newCaseNote !== ''
     ) {
       caseUpdate = {
-        currentAssignment: currentAssignment,
+        currentAssignment: updateObject.currentAssignment.value,
         currentStatus: process,
         caseNotes: newCaseNote,
         kamNotes: newKamNote,
-        nextVisitDateTime: state.fields.entities['nextVisitDateTime'].value,
-        resolution: state.fields.entities['resolution'].value,
+        nextVisitDateTime: updateObject.nextVisitDateTime.value,
+        resolution: updateObject.resolution.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -657,11 +661,11 @@ export const CollectionForm = (props) => {
       newCaseNote === ''
     ) {
       caseUpdate = {
-        currentAssignment: currentAssignment,
+        currentAssignment: updateObject.currentAssignment.value,
         currentStatus: process,
         kamNotes: newKamNote,
-        nextVisitDateTime: state.fields.entities['nextVisitDateTime'].value,
-        resolution: state.fields.entities['resolution'].value,
+        nextVisitDateTime: updateObject.nextVisitDateTime.value,
+        resolution: updateObject.resolution.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -671,11 +675,11 @@ export const CollectionForm = (props) => {
       newCaseNote !== ''
     ) {
       caseUpdate = {
-        currentAssignment: currentAssignment,
+        currentAssignment: updateObject.currentAssignment.value,
         currentStatus: process,
         caseNotes: newCaseNote,
-        nextVisitDateTime: state.fields.entities['nextVisitDateTime'].value,
-        resolution: state.fields.entities['resolution'].value,
+        nextVisitDateTime: updateObject.nextVisitDateTime.value,
+        resolution: updateObject.resolution.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -685,10 +689,10 @@ export const CollectionForm = (props) => {
       newCaseNote === ''
     ) {
       caseUpdate = {
-        currentAssignment: currentAssignment,
+        currentAssignment: updateObject.currentAssignment.value,
         currentStatus: process,
-        nextVisitDateTime: state.fields.entities['nextVisitDateTime'].value,
-        resolution: state.fields.entities['resolution'].value,
+        nextVisitDateTime: updateObject.nextVisitDateTime.value,
+        resolution: updateObject.resolution.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -699,8 +703,8 @@ export const CollectionForm = (props) => {
 
     // Working out PTP and Debit Resubmission arrangement
     if (
-      !state.fields.entities['ptpDate'].value &&
-      !state.fields.entities['debitResubmissionDate'].value
+      !updateObject.ptpDate.value &&
+      !updateObject.debitResubmissionDate.value
     ) {
       accountUpdate = {
         //accountStatus: this.state.accountStatus,
@@ -711,25 +715,25 @@ export const CollectionForm = (props) => {
       outcomeInsert = {
         createdBy: user.email,
         outcomeStatus: 'Closed',
-        transactionType: state.fields.entities['transactionType'].value,
-        numberCalled: state.fields.entities['numberCalled'].value,
-        emailUsed: state.fields.entities['emailUsed'].value,
-        contactPerson: state.fields.entities['contactPerson'].value,
-        outcomeResolution: state.fields.entities['resolution'].value,
+        transactionType: updateObject.transactionType.value,
+        numberCalled: updateObject.numberCalled.value,
+        emailUsed: updateObject.emailUsed.value,
+        contactPerson: updateObject.contactPerson.value,
+        outcomeResolution: updateObject.resolution.value,
         outcomeNotes: newOutcomeNote,
-        nextSteps: state.fields.entities['nextSteps'].value,
+        nextSteps: updateObject.nextSteps.value,
         closedDate: closedDate,
         closedBy: closedBy,
         f_caseNumber: id,
       };
     } else if (
-      state.fields.entities['ptpDate'].value &&
-      !state.fields.entities['debitResubmissionDate'].value
+      updateObject.ptpDate.value &&
+      !updateObject.debitResubmissionDate.value
     ) {
       accountUpdate = {
         //accountStatus: this.state.accountStatus,
-        lastPTPDate: state.fields.entities['ptpDate'].value,
-        lastPTPAmount: state.fields.entities['ptpAmount'].value,
+        lastPTPDate: updateObject.ptpDate.value,
+        lastPTPAmount: updateObject.ptpAmount.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -737,22 +741,22 @@ export const CollectionForm = (props) => {
       outcomeInsert = {
         createdBy: user.email,
         outcomeStatus: 'Closed',
-        transactionType: state.fields.entities['transactionType'].value,
-        numberCalled: state.fields.entities['numberCalled'].value,
-        emailUsed: state.fields.entities['emailUsed'].value,
-        contactPerson: state.fields.entities['contactPerson'].value,
-        outcomeResolution: state.fields.entities['resolution'].value,
+        transactionType: updateObject.transactionType.value,
+        numberCalled: updateObject.numberCalled.value,
+        emailUsed: updateObject.emailUsed.value,
+        contactPerson: updateObject.contactPerson.value,
+        outcomeResolution: updateObject.resolution.value,
         outcomeNotes: newOutcomeNote,
-        ptpDate: state.fields.entities['ptpDate'].value,
-        ptpAmount: state.fields.entities['ptpAmount'].value,
-        nextSteps: state.fields.entities['nextSteps'].value,
+        ptpDate: updateObject.ptpDate.value,
+        ptpAmount: updateObject.ptpAmount.value,
+        nextSteps: updateObject.nextSteps.value,
         closedDate: closedDate,
         closedBy: closedBy,
         f_caseNumber: id,
       };
     } else if (
-      !state.fields.entities['ptpDate'].value &&
-      state.fields.entities['debitResubmissionDate'].value
+      !updateObject.ptpDate.value &&
+      updateObject.debitResubmissionDate.value
     ) {
       accountUpdate = {
         //accountStatus: this.state.accountStatus,
@@ -763,29 +767,27 @@ export const CollectionForm = (props) => {
       outcomeInsert = {
         createdBy: user.email,
         outcomeStatus: 'Closed',
-        transactionType: state.fields.entities['transactionType'].value,
-        numberCalled: state.fields.entities['numberCalled'].value,
-        emailUsed: state.fields.entities['emailUsed'].value,
-        contactPerson: state.fields.entities['contactPerson'].value,
-        outcomeResolution: state.fields.entities['resolution'].value,
+        transactionType: updateObject.transactionType.value,
+        numberCalled: updateObject.numberCalled.value,
+        emailUsed: updateObject.emailUsed.value,
+        contactPerson: updateObject.contactPerson.value,
+        outcomeResolution: updateObject.resolution.value,
         outcomeNotes: newOutcomeNote,
-        nextSteps: state.fields.entities['nextSteps'].value,
+        nextSteps: updateObject.nextSteps.value,
         closedDate: closedDate,
         closedBy: closedBy,
-        debitResubmissionAmount:
-          state.fields.entities['debitResubmissionAmount'].value,
-        debitResubmissionDate:
-          state.fields.entities['debitResubmissionDate'].value,
+        debitResubmissionAmount: updateObject.debitResubmissionAmount.value,
+        debitResubmissionDate: updateObject.debitResubmissionDate.value,
         f_caseNumber: id,
       };
     } else if (
-      state.fields.entities['ptpDate'].value &&
-      state.fields.entities['debitResubmissionDate'].value
+      updateObject.ptpDate.value &&
+      updateObject.debitResubmissionDate.value
     ) {
       accountUpdate = {
         //accountStatus: this.state.accountStatus,
-        lastPTPDate: state.fields.entities['ptpDate'].value,
-        lastPTPAmount: state.fields.entities['ptpAmount'].value,
+        lastPTPDate: updateObject.ptpDate.value,
+        lastPTPAmount: updateObject.ptpAmount.value,
         updatedBy: user.email,
         //updatedDate: moment(new Date()).format('YYYY-MM-DD HH:mm:ss'),
       };
@@ -793,21 +795,19 @@ export const CollectionForm = (props) => {
       outcomeInsert = {
         createdBy: user.email,
         outcomeStatus: 'Closed',
-        transactionType: state.fields.entities['transactionType'].value,
-        numberCalled: state.fields.entities['numberCalled'].value,
-        emailUsed: state.fields.entities['emailUsed'].value,
-        contactPerson: state.fields.entities['contactPerson'].value,
-        outcomeResolution: state.fields.entities['resolution'].value,
+        transactionType: updateObject.transactionType.value,
+        numberCalled: updateObject.numberCalled.value,
+        emailUsed: updateObject.emailUsed.value,
+        contactPerson: updateObject.contactPerson.value,
+        outcomeResolution: updateObject.resolution.value,
         outcomeNotes: newOutcomeNote,
-        ptpDate: state.fields.entities['ptpDate'].value,
-        ptpAmount: state.fields.entities['ptpAmount'].value,
-        nextSteps: state.fields.entities['nextSteps'].value,
+        ptpDate: updateObject.ptpDate.value,
+        ptpAmount: updateObject.ptpAmount.value,
+        nextSteps: updateObject.nextSteps.value,
         closedDate: closedDate,
         closedBy: closedBy,
-        debitResubmissionAmount:
-          state.fields.entities['debitResubmissionAmount'].value,
-        debitResubmissionDate:
-          state.fields.entities['debitResubmissionDate'].value,
+        debitResubmissionAmount: updateObject.debitResubmissionAmount.value,
+        debitResubmissionDate: updateObject.debitResubmissionDate.value,
         f_caseNumber: id,
       };
     }
@@ -815,7 +815,7 @@ export const CollectionForm = (props) => {
     //console.log('account about to be updated');
     await accountService.updateAccount(accountNumber, accountUpdate);
     //console.log('account updated');
-    console.log('case update: ', caseUpdate);
+    //console.log('case update: ', caseUpdate);
     await caseService.updateCase(id, caseUpdate);
     const outcomeStatus = await outcomeService.createOutcome(outcomeInsert);
 
