@@ -16,7 +16,7 @@ import { collectionService } from './collection.service';
 import SearchComponent from '../search/Search';
 
 export const Collections = (props) => {
-  //console.log('Collections props', props);
+  console.log('Collections props', props.location.state);
   // Scroll to top
   useEffect(() => {
     window.scrollTo(0, 0);

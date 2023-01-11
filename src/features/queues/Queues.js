@@ -52,7 +52,17 @@ export const Queues = () => {
     );
 
     const item = listWithCount.map((item, idx) => (
-      <List.Item key={idx} as={Link} to="/collections">
+      <List.Item
+        key={idx}
+        as={Link}
+        to={{
+          pathname: '/collections',
+          state: {
+            caseStatus: item.item,
+            user: user.email,
+          },
+        }}
+      >
         <List.Content floated="left" verticalAlign="middle">
           {item.item}
         </List.Content>
